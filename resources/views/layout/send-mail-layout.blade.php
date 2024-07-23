@@ -345,13 +345,13 @@
               <!-- START MAIN CONTENT AREA -->
               <tr>
                 <td class="wrapper">
-                  <p align="center"><img src="https://kingsconsult.com.ng/kbc/images/meetmelogo.png"></p>
+                  <p align="center"><img src="https://kingsconsult.com.ng/kbc/images/talent_loom_logo.png"></p>
                   <hr>
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td width="99%" rowspan="3">
                       <strong><p>Dear user,</p></strong>
-                        <p>Thank you for registering with MeetMe. 
+                        <p>Thank you for registering with TalentLoom. 
                           To complete your registration, please click the button below to verify your email address:</p>
                         <table width="85%" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" role="presentation">
                           <tbody>

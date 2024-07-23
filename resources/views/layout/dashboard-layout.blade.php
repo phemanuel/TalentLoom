@@ -259,10 +259,16 @@ li {
                                                     <hr>
                                                     <div class="profile-btn text-center">
                                                     <table class="table" align="center">
+                                                        @if(auth()->user()->user_type == 'Freelancer')
                                                         <tr>
                                                             <td><div><a href="{{route('user-page')}}" class="btn btn-primary" target="_blank">View Profile</a></div></td>
                                                             <td><div><a href="{{route('profile-picture')}}" class="btn btn-light text-primary mb-2">Update Picture</a></div></td>
                                                         </tr>
+                                                        @else
+                                                        <tr>                                                            
+                                                            <td colspan="2"><div><a href="{{route('profile-picture')}}" class="btn btn-light text-primary mb-2">Update Picture</a></div></td>
+                                                        </tr>
+                                                        @endif
                                                     </table>
                                                     </div>
                                                     
@@ -342,7 +348,8 @@ li {
                                                                    <p class="style1">{{auth()->user()->email}}</p>
                                                                 </div>
                                                           </div>
-                                                            <div class="form-group">
+                                                           @if(auth()->user()->user_type == 'Freelancer')
+                                                           <div class="form-group">
                                                                 <label for="add1"><span class="style1">Username</span></label>
                                                                 <input type="text" class="form-control" name="user_name" value="{{auth()->user()->user_name}}" style="color: black;">
                                                             </div>
@@ -350,6 +357,9 @@ li {
                                                                 <label for="add2"><span class="style1">User Url</span></label>
                                                                 <p class="style1"> {{auth()->user()->user_url}} </p>
                                                             </div>  
+                                                            @else
+
+                                                            @endif
                                                             <hr>
                                                             <div class="form-group">
                                                                 <label for="add1"><span class="style1">About yourself(400 words)</span></label>
@@ -383,20 +393,31 @@ li {
                                                                 <label for="fb"><span class="style1">Facebook URL:</span></label>
                                                                 <input type="text" class="form-control" name="user_facebook" value="{{auth()->user()->user_facebook}}" style="color: black;">
                                                             </div>
+                                                            @error('user_facebook')
+									<span class="invalid-feedback">{{ $message }}</span>
+									@enderror
                                                             <div class="form-group">
                                                                 <label for="tr"><span class="style1">Twitter URL:</span></label>
                                                               <input type="text" class="form-control" name="user_twitter" value="{{auth()->user()->user_twitter}}" style="color: black;">
                                                             </div>
-
+                                                            @error('user_twitter')
+									<span class="invalid-feedback">{{ $message }}</span>
+									@enderror
                                                             <div class="form-group">
                                                                 <label for="br"><span class="style1">Instagram URL:</span></label>
                                                               <input type="text" class="form-control" name="user_instagram" value="{{auth()->user()->user_instagram}}" style="color: black;">
                                                             </div>
+                                                            @error('user_instagram')
+									<span class="invalid-feedback">{{ $message }}</span>
+									@enderror
 
                                                             <div class="form-group">
                                                                 <label for="li"><span class="style1">LinkedIn URL:</span></label>
                                                                 <input type="text" class="form-control" name="user_linkedin" value="{{auth()->user()->user_linkedin}}" style="color: black;">
                                                             </div>
+                                                            @error('user_linkedin')
+									<span class="invalid-feedback">{{ $message }}</span>
+									@enderror
 
                                                             <button type="submit" class="btn btn-primary">Update Socials</button>
                                                         </form>

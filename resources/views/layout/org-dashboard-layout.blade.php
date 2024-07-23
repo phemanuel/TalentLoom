@@ -262,10 +262,16 @@ li {
                                                     <hr>
                                                     <div class="profile-btn text-center">
                                                     <table class="table" align="center">
+                                                        @if(auth()->user()->user_type == 'Freelancer')
                                                         <tr>
                                                             <td><div><a href="{{route('user-page')}}" class="btn btn-primary" target="_blank">View Profile</a></div></td>
                                                             <td><div><a href="{{route('profile-picture')}}" class="btn btn-light text-primary mb-2">Update Picture</a></div></td>
                                                         </tr>
+                                                        @else
+                                                        <tr>                                                            
+                                                            <td colspan="2"><div><a href="{{route('profile-picture')}}" class="btn btn-light text-primary mb-2">Update Picture</a></div></td>
+                                                        </tr>
+                                                        @endif
                                                     </table>
                                                     </div>
                                                     
@@ -330,7 +336,8 @@ li {
                                                                    <p class="style1">{{auth()->user()->email}}</p>
                                                                 </div>
                                                           </div>
-                                                            <div class="form-group">
+                                                          @if(auth()->user()->user_type == 'Freelancer')
+                                                           <div class="form-group">
                                                                 <label for="add1"><span class="style1">Username</span></label>
                                                                 <input type="text" class="form-control" name="user_name" value="{{auth()->user()->user_name}}" style="color: black;">
                                                             </div>
@@ -338,6 +345,9 @@ li {
                                                                 <label for="add2"><span class="style1">User Url</span></label>
                                                                 <p class="style1"> {{auth()->user()->user_url}} </p>
                                                             </div>  
+                                                            @else
+
+                                                            @endif 
                                                             <hr>
                                                             <div class="form-group">
                                                                 <label for="add1"><span class="style1">About yourself(200 words)</span></label>

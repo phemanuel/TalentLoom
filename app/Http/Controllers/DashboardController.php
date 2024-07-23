@@ -17,6 +17,7 @@ use App\Models\JobApply;
 use App\Models\UserMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\Chat ;
 
 class DashboardController extends Controller
 {
@@ -26,11 +27,18 @@ class DashboardController extends Controller
         $user_id = auth()->user()->id;
         $countries = Countries::all();
         $categories = UserCategory::all();
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
+        // $messages = UserMessage::where('to_user_id', '=', $user_id)   
+        // ->where('message_status', 'Unread')
+        // ->orderBy('created_at', 'desc')
+        // ->get();
 
+        // $unreadMessagesCount = $messages->count();
+        
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
         $unreadMessagesCount = $messages->count();
         return view('dashboard.dashboard', compact('countries','categories','messages','unreadMessagesCount'));        
     }
@@ -43,11 +51,11 @@ class DashboardController extends Controller
         $allRoles = UserRoles::all(); // Retrieve all roles from the database
         $user = auth()->user(); // Get the authenticated user
         $userRoles = explode(',', $user->user_roles); // Convert the user's saved roles to an array
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
-
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
         $unreadMessagesCount = $messages->count();
         return view('dashboard.user-roles')->with([
             'allRoles' => $allRoles,
@@ -60,34 +68,44 @@ class DashboardController extends Controller
     public function userRoleSave(Request $request, string $id)
     {
         try {
-            $validatedData = $request->validate([
+            // Set up the validation rules
+            $rules = [
                 'user_roles_major' => 'required|string',
-                'user_roles' => 'required|array|valid_roles|max_roles:6',
-            ], [
+            ];
+    
+            if ($request->has('user_roles')) {
+                $rules['user_roles'] = 'array|valid_roles|max_roles:6';
+            }
+    
+            // Set up custom error messages
+            $messages = [
                 'user_roles.valid_roles' => 'One or more selected roles are invalid.',
-            ],
-                [
-                    'user_roles.max_roles' => 'You cannnot select more than 6 roles.',                
-            ]);
-            
-            // Process the selected roles and save them in the database
-            $userRoles = implode(',', $validatedData['user_roles']);
-
+                'user_roles.max_roles' => 'You cannot select more than 6 roles.',
+            ];
+    
+            // Validate the request
+            $validatedData = $request->validate($rules, $messages);
+    
+            // Process the selected roles if they are present
+            $userRoles = $request->has('user_roles') ? implode(',', $validatedData['user_roles']) : null;
+    
+            // Find the user and update their roles
             $user = User::findOrFail($id);
-            $user->user_roles = $userRoles;
+            if ($userRoles !== null) {
+                $user->user_roles = $userRoles;
+            }
             $user->user_roles_major = $validatedData['user_roles_major'];
             $user->save();
-        
+    
             return redirect()->route('user-role')->with('success', 'Roles update successful.');
         } catch (\Exception $e) {
             // Handle the exception, log the error, and return with an error message
-            //$errorMessage = 'Error-save user role: ' . $e->getMessage();
-            $errorMessage = 'You cannot select more than 6 roles.';
-            Log::error($errorMessage);
+            Log::error('Error updating user roles: ' . $e->getMessage());
             
-            return redirect()->route('user-role')->with('error', $errorMessage);
+            return redirect()->route('user-role')->with('error', 'An error occurred while updating roles. Please try again.');
         }
-    }    
+    }
+
 
     public function userSkill()
     {
@@ -97,12 +115,12 @@ class DashboardController extends Controller
             
             $userSkills = UserSkill::where('user_id', $user_id)
             ->paginate(5);
-            $messages = UserMessage::where('to_user_id', '=', $user_id)   
-            ->where('message_status', 'Unread')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-            $unreadMessagesCount = $messages->count();
+            $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
+        $unreadMessagesCount = $messages->count();
     
             return view('dashboard.user-skills', compact('userSkills','messages','unreadMessagesCount'));
         } catch (QueryException $e) {
@@ -207,11 +225,11 @@ class DashboardController extends Controller
             
             $userEducations = UserEducation::where('user_id', $user_id)
             ->paginate(4);
-            $messages = UserMessage::where('to_user_id', '=', $user_id)   
-            ->where('message_status', 'Unread')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
+            $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
             $unreadMessagesCount = $messages->count();
     
             return view('dashboard.user-education', compact('userEducations','messages', 'unreadMessagesCount'));
@@ -370,11 +388,11 @@ class DashboardController extends Controller
             $userExperiences = UserExperience::where('user_id', $user_id)
             ->orderBy('company_year', 'desc')
             ->paginate(5);
-            $messages = UserMessage::where('to_user_id', '=', $user_id)   
-            ->where('message_status', 'Unread')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
+            $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
             $unreadMessagesCount = $messages->count();
     
             return view('dashboard.user-experience', compact('userExperiences','messages','unreadMessagesCount'));
@@ -498,11 +516,11 @@ class DashboardController extends Controller
             $userServices = UserService::where('user_id', $user_id)
             ->orderBy('user_service', 'desc')
             ->paginate(5);
-            $messages = UserMessage::where('to_user_id', '=', $user_id)   
-            ->where('message_status', 'Unread')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
+            $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
             $unreadMessagesCount = $messages->count();
     
             return view('dashboard.user-service', compact('userServices','messages','unreadMessagesCount'));
@@ -615,12 +633,12 @@ class DashboardController extends Controller
             
             $userPortfolios = UserPortfolio::where('user_id', $user_id)
             ->paginate(5);
-            $messages = UserMessage::where('to_user_id', '=', $user_id)   
-            ->where('message_status', 'Unread')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $unreadMessagesCount = $messages->count();
+            $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
+             $unreadMessagesCount = $messages->count();
     
             return view('dashboard.user-portfolio', compact('userPortfolios','messages','unreadMessagesCount'));
         } catch (QueryException $e) {
@@ -773,11 +791,11 @@ class DashboardController extends Controller
         $user_id = auth()->user()->id;
         $countries = Countries::all();
         $categories = UserCategory::all();
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
-
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
         $unreadMessagesCount = $messages->count();
         return view('dashboard.org-dashboard', compact('countries','categories','messages',
         'unreadMessagesCount'));        
@@ -787,12 +805,13 @@ class DashboardController extends Controller
     {
         $allRoles = UserCategory::all(); // Retrieve all category from the database
         $user = auth()->user(); // Get the authenticated user
+        $user_id = $user->id;
         $userRoles = explode(',', $user->user_roles); // Convert the user's saved roles to an array
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
-
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+             
         $unreadMessagesCount = $messages->count();
         return view('dashboard.user-roles-org')->with([
             'allRoles' => $allRoles,
@@ -840,12 +859,12 @@ class DashboardController extends Controller
         $records = PostJobs::where('user_id', '=', $user_id)            
             ->orderBy('created_at', 'desc')
             ->paginate(10);   
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-        $unreadMessagesCount = $messages->count();         
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
+        $unreadMessagesCount = $messages->count();        
         return view('dashboard.post-job', compact('categories','records','messages','unreadMessagesCount'));        
     }
 
@@ -1068,11 +1087,11 @@ class DashboardController extends Controller
         $records = PostUpskill::where('user_id', '=', $user_id)            
             ->orderBy('created_at', 'desc')
             ->paginate(10);      
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
-
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
         $unreadMessagesCount = $messages->count();      
         return view('dashboard.post-upskill', compact('categories','records','messages','unreadMessagesCount'));        
     }
@@ -1232,51 +1251,52 @@ class DashboardController extends Controller
     //         ->paginate(10);            
     //     return view('dashboard.job-application', compact('categories','records'));        
     // }
-
+    
     public function userMessage()
     {
-        $user = auth()->user();
+       $user = auth()->user();
 
         if(!$user){
             return redirect()->route('login');
         }
-        return view('chat.redirect-message');        
+        // return view('chat.redirect-message'); 
+        return redirect()->route(config('chatify.routes.prefix'));
     }
+
 
     // public function userMessage()
     // {
-
-        // try {
-        //     $user_id = auth()->user()->id;               
-        //     //---All Messages --------------------------------
-        //     $userMessages = UserMessage::join('users', 'users.id', '=', 'from_user_id')
-        //     ->where(function ($query) use ($user_id) {
-        //         $query->where('to_user_id', $user_id)
-        //             ->orWhere('from_user_id', $user_id);
-        //     })
-        //     ->selectRaw('users.id as user_id, users.full_name, users.user_picture, from_user_id, COUNT(*) as message_count, user_messages.message_type, user_messages.message_status')
-        //     ->groupBy('users.id', 'users.full_name', 'users.user_picture', 'from_user_id', 'user_messages.message_type', 'user_messages.message_status')
-        //     ->orderBy('user_messages.created_at', 'desc')
-        //     ->get();
+    //     try {
+    //         $user_id = auth()->user()->id;               
+    //         //---All Messages --------------------------------
+    //         $userMessages = UserMessage::join('users', 'users.id', '=', 'from_user_id')
+    //         ->where(function ($query) use ($user_id) {
+    //             $query->where('to_user_id', $user_id)
+    //                 ->orWhere('from_user_id', $user_id);
+    //         })
+    //         ->selectRaw('users.id as user_id, users.full_name, users.user_picture, from_user_id, COUNT(*) as message_count, user_messages.message_type, user_messages.message_status')
+    //         ->groupBy('users.id', 'users.full_name', 'users.user_picture', 'from_user_id', 'user_messages.message_type', 'user_messages.message_status')
+    //         ->orderBy('user_messages.created_at', 'desc')
+    //         ->get();
             
-        //     //---Unread Messages --------------------------------
-        //     $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        //     ->where('message_status', 'Unread')
-        //     ->orderBy('created_at', 'desc')
-        //     ->get();
+    //         //---Unread Messages --------------------------------
+    //         $messages = UserMessage::where('to_user_id', '=', $user_id)   
+    //         ->where('message_status', 'Unread')
+    //         ->orderBy('created_at', 'desc')
+    //         ->get();
 
-        //      $unreadMessagesCount = $messages->count();
-        //     // return response()->json([
-        //     //     'unreadCount' => $unreadMessagesCount,
-        //     //     'user_id' => $user_id
-        //     // ]);
-        //    return view('dashboard.user-message', compact('messages','unreadMessagesCount','userMessages'));
-        // } catch (QueryException $e) {
-        //     $errorMessage = 'Error-load user message: ' . $e->getMessage();
-        //     Log::error($errorMessage);
-        //     // Handle the exception (e.g., log it or display an error message)
-        //     return redirect()->route('user-message')->with('error', 'An error occurred while retrieving user message.');
-        // }
+    //          $unreadMessagesCount = $messages->count();
+    //         // return response()->json([
+    //         //     'unreadCount' => $unreadMessagesCount,
+    //         //     'user_id' => $user_id
+    //         // ]);
+    //       return view('dashboard.user-message', compact('messages','unreadMessagesCount','userMessages'));
+    //     } catch (QueryException $e) {
+    //         $errorMessage = 'Error-load user message: ' . $e->getMessage();
+    //         Log::error($errorMessage);
+    //         // Handle the exception (e.g., log it or display an error message)
+    //         return redirect()->route('user-message')->with('error', 'An error occurred while retrieving user message.');
+    //     }
         
     // }
 

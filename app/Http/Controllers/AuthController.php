@@ -24,6 +24,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use App\Models\Chat;
 //use Image;
 
 class AuthController extends Controller
@@ -74,12 +75,18 @@ class AuthController extends Controller
                 ->paginate(5);
                 $totalRecords = PostJobs::count();
 
-                $messages = UserMessage::where('to_user_id', '=', $user_id)   
-                ->where('message_status', 'Unread')
-                ->orderBy('created_at', 'desc')
-                ->get();
+                // $messages = UserMessage::where('to_user_id', '=', $user_id)   
+                // ->where('message_status', 'Unread')
+                // ->orderBy('created_at', 'desc')
+                // ->get();
 
-                $unreadMessagesCount = $messages->count();
+                // $unreadMessagesCount = $messages->count();
+                  $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
+                    $unreadMessagesCount = $messages->count();
         return view('home', compact('categories','totalPercent','postJob','jobLocation','postUpskill'
                     ,'totalRecords','postJobAll','messages','unreadMessagesCount'));
         }
@@ -157,6 +164,7 @@ class AuthController extends Controller
                 'email_verified_status' => 0,
                 'remember_token' => $email_token,
                 'user_picture' => 'profile_pictures/blank.jpg',
+                'avatar' => 'blank.jpg',
                 'user_url' => 'https://talentloom.kingsconsult.com.ng/'. $uniqueUsername,
                 'user_name_link' =>  $uniqueUsername,
                 'user_type' => 'Freelancer',
@@ -217,6 +225,8 @@ class AuthController extends Controller
                 'email_verified_status' => 0,
                 'remember_token' => $email_token,
                 'user_picture' => 'profile_pictures/blank.jpg',
+                'avatar' => 'blank.jpg',
+                'avatar' => 'users_avatar/blank.jpg',
                 'user_url' => 'https://talentloom.kingsconsult.com.ng/'. $uniqueUsername,
                 'user_name_link' =>  $uniqueUsername,
                 'user_type' => 'Organization',
@@ -306,16 +316,30 @@ class AuthController extends Controller
     {
         try {
             $user_type = auth()->user()->user_type;
-            $validatedData = $request->validate([
-                'full_name' => 'nullable|string|max:255',
-                'user_name' => 'nullable|string|max:20|unique:users,user_name,' . $id,
-                'user_phone' => 'nullable|numeric|unique:users,user_phone,' . $id,
-                'country_code' => 'nullable|string',
-                'user_category' => 'nullable|string',
-                'user_about' => 'nullable|string|max_words:400',
-            ], [
-                'user_about.max_words' => 'The "About Yourself" field cannot exceed 400 words.',
-            ]);
+            if ($user_type == 'Freelancer') {
+                $validatedData = $request->validate([
+                    'full_name' => 'nullable|string|max:255',
+                    'user_name' => 'nullable|string|max:20|unique:users,user_name,' . $id,
+                    'user_phone' => 'nullable|numeric|unique:users,user_phone,' . $id,
+                    'country_code' => 'nullable|string',
+                    'user_category' => 'nullable|string',
+                    'user_about' => 'nullable|string|max_words:400',
+                ], [
+                    'user_about.max_words' => 'The "About Yourself" field cannot exceed 400 words.',
+                ]);
+            }
+            elseif ($user_type == 'Organization') {
+                $validatedData = $request->validate([
+                    'full_name' => 'nullable|string|max:255',
+                    // 'user_name' => 'nullable|string|max:20|unique:users,user_name,' . $id,
+                    'user_phone' => 'nullable|numeric|unique:users,user_phone,' . $id,
+                    'country_code' => 'nullable|string',
+                    'user_category' => 'nullable|string',
+                    'user_about' => 'nullable|string|max_words:400',
+                ], [
+                    'user_about.max_words' => 'The "About Yourself" field cannot exceed 400 words.',
+                ]);
+            }
         
             // Get the user's preferred username
             $preferredUsername = $validatedData['user_name'];
@@ -332,7 +356,8 @@ class AuthController extends Controller
             }
 
             $user = User::findOrFail($id);
-            $user->full_name = $validatedData['full_name'];
+            if($user_type == 'Freelancer'){
+                $user->full_name = $validatedData['full_name'];
             $user->name = $validatedData['full_name'];
             $user->user_phone = $validatedData['user_phone'];
             $user->country_code = $validatedData['country_code'];
@@ -341,6 +366,18 @@ class AuthController extends Controller
             $user->user_category = $validatedData['user_category'];
             $user->user_url = 'https://meetme.kingsconsult.com.ng/'.$uniqueUsername;
             $user->user_name_link =  $uniqueUsername;
+            }
+            elseif($user_type == 'Organization'){
+                $user->full_name = $validatedData['full_name'];
+            $user->name = $validatedData['full_name'];
+            $user->user_phone = $validatedData['user_phone'];
+            $user->country_code = $validatedData['country_code'];
+            // $user->user_name = $validatedData['user_name'];
+            $user->user_about = $validatedData['user_about'];
+            $user->user_category = $validatedData['user_category'];
+            // $user->user_url = 'https://meetme.kingsconsult.com.ng/'.$uniqueUsername;
+            // $user->user_name_link =  $uniqueUsername;
+            }
         
             $user->save();
             if($user_type == 'Freelancer') {
@@ -368,7 +405,20 @@ class AuthController extends Controller
     public function profileUpdateSocial(Request $request, string $id)
     {
         try {
+            
             $user_type = auth()->user()->user_type;
+            $input = $request->all();
+        
+            $socialLinks = ['user_facebook', 'user_instagram', 'user_twitter', 'user_linkedin'];
+        
+            foreach ($socialLinks as $link) {
+                if (!empty($input[$link]) && !preg_match('~^(?:f|ht)tps?://~i', $input[$link])) {
+                    $input[$link] = 'http://' . $input[$link];
+                }
+            }
+        
+            $request->replace($input);
+        
             $rules = [
                 'user_facebook' => 'url|nullable',
                 'user_instagram' => 'url|nullable',
@@ -390,8 +440,13 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             // Handle the exception, log the error, and return with an error message
             \Log::error('Error updating social links: ' . $e->getMessage());
-        
-            return redirect()->route('user-about')->with('error', 'An error occurred while updating your social links. Please try again.');
+            if($user_type == 'Freelancer') {
+                return redirect()->route('user-about')->with('error-new', 'An error occurred while updating your social links. Please try again.');
+            }
+            elseif($user_type == 'Organization') {
+                return redirect()->route('user-about-organization')->with('error-new', 'An error occurred while updating your social links. Please try again.');
+            }
+            
         }        
     
     }
@@ -403,11 +458,11 @@ class AuthController extends Controller
         $userMessages = UserMessage::where('to_user_id', $user_id)
         ->paginate(5);
         //---Unread Messages --------------------------------
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
-
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
         $unreadMessagesCount = $messages->count();
         return view('dashboard.user-profile-picture', compact('unreadMessagesCount', 'messages','userMessages'));
 
@@ -417,7 +472,10 @@ class AuthController extends Controller
     public function profilePictureUpdate(Request $request)
     {
         $user = auth()->user();
-
+        $request->validate([
+            'profile_picture' => 'required|image|mimes:jpg,jpeg,png|max:2048', // 2048 KB = 2 MB
+        ]);
+        
         try {
             if ($request->hasFile('profile_picture')) {
                 $userPictureFile = $request->file('profile_picture');
@@ -426,12 +484,17 @@ class AuthController extends Controller
                 $username = $user->user_name_link; // Get the user's username
         
                 // Generate filenames for both pictures
-                $userPictureFilename = $username . '_user_picture.' . $userPictureFile->getClientOriginalExtension();
-                $profilePictureFilename = $username . '_profile_picture.' . $profilePictureFile->getClientOriginalExtension();
+                $uniqueId = time();
+
+                // Generate filenames for both pictures with a unique identifier
+                $userPictureFilename = $username . '_user_picture_' . $uniqueId . '.' . $userPictureFile->getClientOriginalExtension();
+                $profilePictureFilename = $username . '_profile_picture_' . $uniqueId . '.' . $profilePictureFile->getClientOriginalExtension();
+
         
                 // Store both pictures with the customized filenames
                 $userPicturePath = $userPictureFile->storeAs('profile_pictures', $userPictureFilename, 'public');
                 $profilePicturePath = $profilePictureFile->storeAs('profile_pictures', $profilePictureFilename, 'public');
+                //$userAvatarPath = $userPictureFile->storeAs('users-avatar', $userPictureFilename, 'public');
         
                 // Resize and save the user_picture
                 $userPicture = Image::make(public_path('storage/' . $userPicturePath));
@@ -442,13 +505,25 @@ class AuthController extends Controller
                 $profilePicture = Image::make(public_path('storage/' . $profilePicturePath));
                 $profilePicture->fit(668, 690); // Adjust dimensions as needed
                 $profilePicture->save();
+                
+                // Resize and save the avatar
+                // $avatarPicture = Image::make(public_path('storage/' . $userAvatarPath));
+                // $avatarPicture->fit(300, 300); // Adjust dimensions as needed
+                // $avatarPicture->save();
         
                 // Update user's profile pictures in the database
                 $user->user_picture = $userPicturePath;
                 $user->profile_picture = $profilePicturePath;
+                $user->avatar = $userPictureFilename;
                 $user->save();
-        
-                return redirect()->route('profile-picture')->with('success', 'Profile picture updated successfully.');
+                
+                $user_type = $user->user_type;
+                if($user_type == 'Freelancer') {
+                    return redirect()->route('user-about')->with('success', 'Profile picture update successful.');
+                }
+                elseif($user_type == 'Organization') {
+                    return redirect()->route('user-about-organization')->with('success', 'Profile picture update successful.');
+                }
             }
         
             return redirect()->route('profile-picture')->with('error', 'Both user and profile picture must be provided.');
