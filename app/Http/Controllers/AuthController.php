@@ -110,7 +110,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        return view('auth.user-login');
+        return view('auth.user-login-new');
     }
 
     public function signup()
@@ -121,12 +121,12 @@ class AuthController extends Controller
 
     public function signupFreelancer()
     {
-        return view('auth.user-signup-freelancer');
+        return view('auth.user-signup-freelancer-new');
     }
 
     public function signupOrganization()
     {
-        return view('auth.user-signup-organization');
+        return view('auth.user-signup-organization-new');
     }
 
     public function signupAction(Request $request)
@@ -342,6 +342,8 @@ class AuthController extends Controller
             }
         
             // Get the user's preferred username
+            if($user_type == 'Freelancer') {
+                // Get the user's preferred username
             $preferredUsername = $validatedData['user_name'];
 
             // Generate a URL-friendly username
@@ -354,6 +356,10 @@ class AuthController extends Controller
                 $counter++;
                 $uniqueUsername = $username . '-' . $counter;
             }
+           }
+            else {
+                
+            }
 
             $user = User::findOrFail($id);
             if($user_type == 'Freelancer'){
@@ -364,7 +370,7 @@ class AuthController extends Controller
             $user->user_name = $validatedData['user_name'];
             $user->user_about = $validatedData['user_about'];
             $user->user_category = $validatedData['user_category'];
-            $user->user_url = 'https://meetme.kingsconsult.com.ng/'.$uniqueUsername;
+            $user->user_url = 'https://talentloom.kingsconsult.com.ng/'.$uniqueUsername;
             $user->user_name_link =  $uniqueUsername;
             }
             elseif($user_type == 'Organization'){
@@ -375,7 +381,7 @@ class AuthController extends Controller
             // $user->user_name = $validatedData['user_name'];
             $user->user_about = $validatedData['user_about'];
             $user->user_category = $validatedData['user_category'];
-            // $user->user_url = 'https://meetme.kingsconsult.com.ng/'.$uniqueUsername;
+            // $user->user_url = 'https://talentloom.kingsconsult.com.ng/'.$uniqueUsername;
             // $user->user_name_link =  $uniqueUsername;
             }
         
