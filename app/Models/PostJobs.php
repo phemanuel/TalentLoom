@@ -25,5 +25,6 @@ class PostJobs extends Model
         'job_location',
         'no_of_views',
         'job_apply',
+        'verify_job',
     ];
 }

@@ -32,7 +32,7 @@
     <input type="checkbox" id="flip">
     <div class="cover">
       <div class="front">
-        <img src="{{asset('loginback/vendor/images/frontImg.jpg')}}" alt="">
+       <img src="{{asset('loginback/img/frontImgNew.jpg')}}" alt="">
         <div class="text">
           <span class="text-1">Transform your experiences into a visual story</span>
           <span class="text-2">Where your achievements come to life</span>
@@ -59,7 +59,8 @@
 						</div>
             else
 						@endif
-            
+            <div align="center"><img src="{{asset('loginback/img/big_logo.png')}}" alt=""></div>
+            <br>
             <div class="title">Reset Password</div>
             @if(auth()->guest())
           <form action="{{ route('password.email') }}" method="POST">
@@ -73,10 +74,12 @@
                 @error('email')
 									<span class="invalid-feedback">{{ $message }}</span>
 									@enderror
-                  <div class="text"><a href="{{ route('login') }}">Login</a></div>
+                  
               <div class="button input-box">
                 <input type="submit" value="{{ __('Send Password Reset Link') }}">
-              </div>              
+              </div>  
+              <div class="text sign-up-text">Already have an account? <a href="{{ route('login') }}"><label>Login now</label></a></div>
+            </div>
             </div>
         </form>
         @else

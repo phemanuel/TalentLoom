@@ -168,6 +168,7 @@ class AuthController extends Controller
                 'user_url' => 'https://talentloom.kingsconsult.com.ng/'. $uniqueUsername,
                 'user_name_link' =>  $uniqueUsername,
                 'user_type' => 'Freelancer',
+                'user_type_status' => 'User',
             ]);
 
             $email_message = "We have sent instructions to verify your email, kindly follow instructions to continue, 
@@ -230,6 +231,7 @@ class AuthController extends Controller
                 'user_url' => 'https://talentloom.kingsconsult.com.ng/'. $uniqueUsername,
                 'user_name_link' =>  $uniqueUsername,
                 'user_type' => 'Organization',
+                'user_type_status' => 'User',
             ]);
 
             $email_message = "We have sent instructions to verify your email, kindly follow instructions to continue, 

@@ -132,14 +132,23 @@
                             <li class="nav-static-title">Dashboard</li>
                             
                             <li><a href="{{ route('home') }}" aria-expanded="false"><i class="nav-icon ti ti-list"></i><span class="nav-title">TalentLoom Job Board</span></a> </li>
-                            
+                            @if(auth()->user()->user_type == 'Freelancer')
                             <li class="active"><a href="{{ route('user-about') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">About Me</span></a> </li>
                             <li><a href="{{ route('user-role') }}" aria-expanded="false"><i class="nav-icon ti ti-info"></i><span class="nav-title">Roles</span></a> </li>
                             <li><a href="{{ route('user-skill') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Skills/Expertise</span></a> </li>
 <li><a href="{{ route('user-service') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Services</span></a> </li>
                             <li><a href="{{ route('user-education') }}" aria-expanded="false"><i class="nav-icon ti ti-layout"></i><span class="nav-title">Education/Certification</span></a> </li>
                             <li><a href="{{ route('user-experience') }}" aria-expanded="false"><i class="nav-icon ti ti-pencil-alt"></i><span class="nav-title">Work Experience</span></a> </li> <li><a href="{{ route('user-portfolio') }}" aria-expanded="false"><i class="nav-icon ti ti-list"></i><span class="nav-title">Project</span></a> </li>    
-
+                            @elseif(auth()->user()->user_type == 'Organization')
+                            <li class="active"><a href="{{ route('user-about-organization') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">About Me</span></a> </li>
+                            <li><a href="{{ route('user-role-organization') }}" aria-expanded="false"><i class="nav-icon ti ti-info"></i><span class="nav-title">Industry Sector</span></a> </li>
+                            <li><a href="{{ route('post-job') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Post Jobs</span></a> </li>
+                            
+<li><a href="{{ route('post-upskill') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Post Upskill</span></a> </li>
+                            <li><a href="{{ route('give-review') }}" aria-expanded="false"><i class="nav-icon ti ti-layout"></i><span class="nav-title">Review</span></a> </li>
+                            
+<li><a href="{{ route('payment-setup') }}" aria-expanded="false"><i class="nav-icon ti ti-pencil-alt"></i><span class="nav-title">Payment Setup</span></a> </li>
+                            @endif
 <li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li> <li class="nav-static-title">Account</li>                           
                             
                             <li><a href="{{ route('change-password') }}" aria-expanded="false"><i class="nav-icon ti ti-key"></i><span class="nav-title">Change Password</span></a>
@@ -171,16 +180,25 @@
                                                     <a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a>
                                                 </li>
                                                 <li class="breadcrumb-item"> TalentLoom</li>
-<li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
-
                                                 <li class="breadcrumb-item active text-primary" aria-current="page">Profile Picture</li>
+                                            @if(auth()->user()->user_type == 'Freelancer')
                                                  <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-about')}}">About</a></li>
                                                 <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-role')}}">Roles</a></li>
                                                 <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-experience')}}">Experience</a></li>
                                                 <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-skill')}}">Skills</a></li>
                                                 <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-education')}}">Education</a></li>
                                                 <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-service')}}">Services</a></li>
-                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-portfolio')}}">Project</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-portfolio')}}">Project</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
+                                                @elseif(auth()->user()->user_type == 'Organization')                                                                                                
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-about-organization')}}">About</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-role-organization')}}">Industry Sector</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('post-job')}}">Post Jobs</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('post-upskill')}}">Post Upskill</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('give-review')}}">Review</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('payment-setup')}}">Payment Setup</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
+                                                @endif
                                             </ol>
                                         </nav>
                                     </div>

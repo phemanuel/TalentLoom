@@ -178,8 +178,7 @@
                                                 <li class="breadcrumb-item"> TalentLoom</li>
 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
 
-                                                <li class="breadcrumb-item active text-primary" aria-current="page">Post Jobs</li>
-                                                
+                                                <li class="breadcrumb-item active text-primary" aria-current="page">Post Jobs</li>                                                
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-about-organization')}}">About</a></li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-role-organization')}}">Industry Sector</a></li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('post-upskill')}}">Post Upskill</a></li>
@@ -200,17 +199,17 @@
                                     <div class="card-body">
                                         <div class="tab nav-center">
                                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active show" id="research-tab" data-toggle="tab" href="#research" role="tab" aria-controls="research" aria-selected="true"> Post Jobs</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="design-tab" data-toggle="tab" href="#design" role="tab" aria-controls="design" aria-selected="false"> View Jobs
+                                            <li class="nav-item">
+                                                    <a class="nav-link  active show" id="design-tab" data-toggle="tab" href="#design" role="tab" aria-controls="design" aria-selected="false"> View Jobs
                                                     </a>
                                                 </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="research-tab" data-toggle="tab" href="#research" role="tab" aria-controls="research" aria-selected="true"> Post Jobs</a>
+                                                </li>                                                
                                                 
                                             </ul>
-                                            <div class="tab-content" id="v-pills-tabContent">
-                                                <div class="tab-pane fade show pt-20 active" id="research" role="tabpanel">
+                                            <div class="tab-content" id="v-pills-tabContent">                                           
+                                                <div class="tab-pane fade pt-20" id="research" role="tabpanel">
                                                     <div class="accordion" id="accordionsimplefill">
                                                         <div class="mb-2 acd-group">
                                                             <div class="card-header bg-primary rounded-0">
@@ -301,7 +300,7 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade pt-20" id="design" role="tabpanel">
+                                                <div class="tab-pane fade show pt-20 active" id="design" role="tabpanel">
                                                     <div class="accordion" id="accordionsimpleborder">
                                                         <div class="mb-2 acd-group">
                                                             <div class="card-header rounded-0 bg-primary">

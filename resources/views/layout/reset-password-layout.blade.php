@@ -32,7 +32,7 @@
     <input type="checkbox" id="flip">
     <div class="cover">
       <div class="front">
-        <img src="{{asset('loginback/vendor/images/frontImg.jpg')}}" alt="">
+        <img src="{{asset('loginback/img/frontImgNew.jpg')}}" alt="">
         <div class="text">
           <span class="text-1">Transform your experiences into a visual story</span>
           <span class="text-2">Where your achievements come to life</span>
@@ -54,6 +54,8 @@
 							{{ session('success') }}
 						</div>
 						@endif
+						<div align="center"><img src="{{asset('loginback/img/big_logo.png')}}" alt=""></div>
+            <br>
             <div class="title">Reset Password</div>
           <form action="{{ route('password.update') }}" method="POST">
           @csrf	

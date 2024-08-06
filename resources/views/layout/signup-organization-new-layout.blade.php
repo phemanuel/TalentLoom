@@ -33,7 +33,7 @@
     <input type="checkbox" id="flip">
     <div class="cover">
       <div class="front">
-        <img src="{{asset('loginback/img/front.jpg')}}" alt="">
+      <img src="{{asset('loginback/img/frontImgNew.jpg')}}" alt="">
         <div class="text">
           <span class="text-1">Transform your experiences into a visual story</span>
           <span class="text-2">Where your achievements come to life</span>
@@ -59,6 +59,8 @@
 							{{ session('error') }}
 						</div>
 						@endif
+            <div align="center"><img src="{{asset('loginback/img/big_logo.png')}}" alt=""></div>
+            <br>
            <div class="title">Signup - Organization</div>
         <form action="{{ route('signup.org.action') }}" method="POST">
                  @csrf									

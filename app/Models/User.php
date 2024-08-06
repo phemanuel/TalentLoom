@@ -43,6 +43,7 @@ class User extends Authenticatable
         'login_attempts',
         'user_category',
         'user_type',
+        'user_type_status',
         
     ];    
 

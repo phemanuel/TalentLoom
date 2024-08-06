@@ -33,7 +33,7 @@
     <input type="checkbox" id="flip">
     <div class="cover">
       <div class="front">
-        <img src="{{asset('loginback/img/front.jpg')}}" alt="">
+      <img src="{{asset('loginback/img/frontImgNew.jpg')}}" alt="">
         <div class="text">
           <span class="text-1">Transform your experiences into a visual story</span>
           <span class="text-2">Where your achievements come to life</span>
@@ -59,6 +59,8 @@
 							{{ session('error') }}
 						</div>
 						@endif
+            <div align="center"><img src="{{asset('loginback/img/big_logo.png')}}" alt=""></div>
+            <br>
             <div class="title">Signup - Freelancer</div>
         <form action="{{ route('signup.action') }}" method="POST">
                  @csrf									
@@ -84,7 +86,7 @@
                 @error('user_name')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
-                    <div class="text sign-up-text"><p>https://talentloom.kingsconsult.com.ng/<br><strong>Username</strong> </p></div>
+                    <div class="text sign-up-text"><p>talentloom.kingsconsult.com.ng/<br><strong>Username</strong> </p></div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
                 <input type="password" name="password" placeholder="Enter password" required>
