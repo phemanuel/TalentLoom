@@ -196,6 +196,10 @@ use App\Http\Controllers\MessageController;
         ->name('update-job');
         Route::get('delete-job/{id}', [DashboardController::class, 'deleteJob'])
         ->name('delete-job');
+        Route::get('verify-job/{id}', [DashboardController::class, 'verifyJob'])
+        ->name('verify-job');
+        Route::get('decline-job/{id}', [DashboardController::class, 'declineJob'])
+        ->name('decline-job');
         
 
         Route::get('post-upskill', [DashboardController::class, 'postUpskill'])

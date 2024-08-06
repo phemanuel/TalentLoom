@@ -854,11 +854,21 @@ class DashboardController extends Controller
     public function postJob()
     {
         $user_id = auth()->user()->id;
+        $user_type_status = auth()->user()->user_type_status;
         $categories = UserCategory::all();
-        // Get all jobs posted by authenticated user----
-        $records = PostJobs::where('user_id', '=', $user_id)            
+
+        if($user_type_status == 'Superadmin') {
+            //Get all jobs posted by all users-----
+            $records = PostJobs::orderBy('created_at', 'desc')
+            ->paginate(10);
+        }
+        else{
+            // Get all jobs posted by authenticated user----
+            $records = PostJobs::where('user_id', '=', $user_id)            
             ->orderBy('created_at', 'desc')
-            ->paginate(10);   
+            ->paginate(10);
+        }        
+           
         $messages = Chat::where('to_id', '=', $user_id)   
                     ->where('seen', '=', 0)
                     ->orderBy('created_at', 'desc')
@@ -1078,6 +1088,43 @@ class DashboardController extends Controller
     
         return view('post-job', compact('records'))->render(); 
     }
+
+    public function verifyJob($id)
+    {
+        // Retrieve the specific job record
+        $job = PostJobs::find($id);
+
+        // Check if the job record exists
+        if ($job) {
+            // Update the verify_job attribute
+            $job->update(['verify_job' => 1]);
+
+            // Redirect with success message
+            return redirect()->route('post-job')->with('success', 'Job verified successfully.');
+        } else {
+            // If the job record doesn't exist, redirect with an error message
+            return redirect()->route('post-job')->with('error', 'Job not found.');
+        }
+    }    
+
+    public function declineJob($id)
+    {
+        // Retrieve the specific job record
+        $job = PostJobs::find($id);
+
+        // Check if the job record exists
+        if ($job) {
+            // Update the verify_job attribute
+            $job->update(['verify_job' => 0]);
+
+            // Redirect with success message
+            return redirect()->route('post-job')->with('success', 'Job declined successfully.');
+        } else {
+            // If the job record doesn't exist, redirect with an error message
+            return redirect()->route('post-job')->with('error', 'Job not found.');
+        }
+    }
+
     
     public function postUpskill()
     {
@@ -1533,7 +1580,7 @@ class DashboardController extends Controller
             //return redirect()->back()->with('error', 'An error occurred during work experience update. Please try again.');
         }
 
-    }
+    }    
 
     public function textArea()
     {

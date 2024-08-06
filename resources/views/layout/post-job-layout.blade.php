@@ -37,6 +37,38 @@
 .style1 {color: #000000}
     .style3 {color: #000000; font-weight: bold; }
     </style>
+    <style>
+        /* body {
+    font-family: Arial, sans-serif;
+} */
+
+.table-container {
+    width: 100%;
+    max-width: 100%; /* Adjust as needed */
+    height: 100%; /* Adjust as needed */
+    overflow: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    position: sticky;
+    top: 0;
+}
+    </style>
 </head>
 
 <body>
@@ -308,6 +340,15 @@
                                                                     <a href="#collapse01" class="btn-block text-left text-white acd-heading" data-toggle="collapse"></a>
                                                                 </h5>
                                                             </div>
+                                                            @if(session('success'))
+						<div class="alert alert-success">
+							{{ session('success') }}
+						</div>
+          @elseif(session('error'))
+						<div class="alert alert-error">
+							{{ session('error') }}
+						</div>
+						@endif
                                                             <div id="collapse01" class="collapse show" data-parent="#accordionsimpleborder">
                                                                 <div class="card-body">                                                            
                                                                   <p>
@@ -319,7 +360,8 @@
                                             <input type="text" class="form-control form-control-sm" placeholder="Search Jobs" id="searchInput"/>
                                         </div>
                                     </div>
-                                                                  <table id="datatable-buttons" class="table">
+                                    <div class="table-container">
+                                    <table id="datatable-buttons" class="table">
                                                                   <thead>
                                                                                     <tr>
                                                                                         <th class="table-plus">#</th>
@@ -329,6 +371,7 @@
                                                                                       <th><span class="style1"><strong>Payment</strong></span></th>
                                                                                       <th><span class="style3">Job Location</span></th>
                                                                                       <th><span class="style3">Status</span></th>	
+                                                                                      <th><span class="style3">Verified</span></th>
                                                                                       <th><span class="style1"><strong>Posted On</strong></span></th>
                                                                                       <th><span class="style1"><strong>Views</strong></span></th>
                                                                                       <th><span class="style1"><strong>Applied</strong></span></th>
@@ -353,13 +396,31 @@
                                                                             <label class="badge mb-0 badge-primary-inverse style1"> 
                                                                                 {{ $rs->job_status }}</label>
                                                                             @endif
-                                                            </td>
+                                                                            </td>
+                                                                            <td>
+                                                                            @if($rs->verify_job == 0)
+                                                                            <label class="btn btn-icon btn-xs btn-danger"> 
+                                                                                No</label>
+                                                                                @if(auth()->user()->user_type_status == 'Superadmin')
+                                                                                <a class="badge mb-0 badge-success style2" href="{{ route('verify-job', ['id' => $rs->id]) }}" data-placement="top" title="Verify">Verify</a>
+                                                                                @else  @endif
+                                                                            @elseif($rs->verify_job == 1)
+                                                                            <label class="btn btn-icon btn-xs btn-success"> 
+                                                                               Yes</label>
+                                                                               @if(auth()->user()->user_type_status == 'Superadmin')
+                                                                                <a class="badge mb-0 badge-danger style2" href="{{ route('decline-job', ['id' => $rs->id]) }}" data-placement="top" title="Decline">Decline</a>
+                                                                                @else  @endif
+                                                                            @endif
+                                                                            </td>
                                                                             <td><span class="style1">{{ $rs->created_at }}</span></td>
                                                                             <td><span class="style1">{{ $rs->no_of_views }}@if($rs->no_of_views==0)@else <u><a href="#">View</a></u></span></td> @endif
-                                                                            <td><span class="style1">{{ $rs->job_apply }}@if($rs->job_apply==0)@else <u><a href="#">View</a></u></span></td> @endif
-                                                                          <td>
+                                                                            <td><span class="style1">{{ $rs->job_apply }}@if($rs->job_apply==0)@else <u><a href="#">View</a></u></span></td> @endif                                                                          
+                                                                        <td>
                                                                             <a class="mr-3" href="{{ route('edit-job', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-edit"></i></a>
-                                                                            <a href="{{ route('delete-job', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-trash-2"></i></a></td>                                                                            				
+                                                                            <a href="{{ route('delete-job', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
+                                                                            
+                                                                        </td> 
+                                                                                                                                                   				
                                                                         </tr>
                                                                     @endforeach
                                                                 @else
@@ -371,6 +432,8 @@
                                                                                 </tbody>
                                                                     </table>
                                                                     {{ $records->links()}}
+                                                                    </div>
+                                                                  
                                                                   </p>
                                                
                                                                 </div>
