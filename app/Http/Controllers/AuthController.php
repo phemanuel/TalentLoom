@@ -62,18 +62,21 @@ class AuthController extends Controller
                 $totalPercent = $allPercent + $percent_role + $percent_about;
 
                 $categories = UserCategory::all();
-                $postUpskill = PostUpskill::all();
+                $postUpskill = PostUpskill::where('verify_upskill', 1)->get();
                 // $jobLocation = JobLocation::paginate(5);
-                $jobLocation = PostJobs::groupBy('job_location')
+                $jobLocation = PostJobs::where('verify_job', 1)
+                ->groupBy('job_location')
                 ->selectRaw('job_location, COUNT(*) as location_count')
                 ->paginate(5);
                 $postJobAll = PostJobs::where('job_status', 'Open')
+                ->where('verify_job', 1)
                 ->orderBy('created_at', 'desc')
                 ->get();
                 $postJob = PostJobs::where('job_status', 'Open')
+                ->where('verify_job', 1)
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
-                $totalRecords = PostJobs::count();
+                $totalRecords = PostJobs::where('verify_job', 1)->count();
 
                 // $messages = UserMessage::where('to_user_id', '=', $user_id)   
                 // ->where('message_status', 'Unread')
@@ -91,17 +94,23 @@ class AuthController extends Controller
                     ,'totalRecords','postJobAll','messages','unreadMessagesCount'));
         }
         else {
-            $jobLocation = PostJobs::groupBy('job_location')
+            $categories = UserCategory::all();
+            $postUpskill = PostUpskill::where('verify_upskill', 1)->get();
+                // $jobLocation = JobLocation::paginate(5);
+                $jobLocation = PostJobs::where('verify_job', 1)
+                ->groupBy('job_location')
                 ->selectRaw('job_location, COUNT(*) as location_count')
                 ->paginate(5);
-            $postUpskill = PostUpskill::all();
-            $postJob = PostJobs::orderBy('created_at', 'desc')
-            ->paginate(3);
-            $postJobAll = PostJobs::where('job_status', 'Open')
+                $postJobAll = PostJobs::where('job_status', 'Open')
+                ->where('verify_job', 1)
                 ->orderBy('created_at', 'desc')
                 ->get();
-            $categories = UserCategory::all();
-            $totalRecords = PostJobs::count();
+                $postJob = PostJobs::where('job_status', 'Open')
+                ->where('verify_job', 1)
+                ->orderBy('created_at', 'desc')
+                ->paginate(5);
+                $totalRecords = PostJobs::where('verify_job', 1)->count();
+
             return view('home', compact('categories','postJob','jobLocation','postUpskill',
             'totalRecords','postJobAll'));
         }            

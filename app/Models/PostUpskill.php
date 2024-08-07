@@ -20,5 +20,6 @@ class PostUpskill extends Model
         'upskill_link',
         'no_of_views',
         'upskill_apply',
+        'verify_upskill',
     ];
 }

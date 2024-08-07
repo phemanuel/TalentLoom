@@ -1130,10 +1130,20 @@ class DashboardController extends Controller
     {
         $user_id = auth()->user()->id;
         $categories = UserCategory::all();
-        // Get all jobs posted by authenticated user----
+        $user_type_status = auth()->user()->user_type_status;
+        
+        if($user_type_status == 'Superadmin') {
+        //---Get all upskill posted by all users----
+        $records = PostUpskill::orderBy('created_at', 'desc')
+            ->paginate(10);
+        }
+        else{
+            // Get all upskills posted by authenticated user----
         $records = PostUpskill::where('user_id', '=', $user_id)            
             ->orderBy('created_at', 'desc')
-            ->paginate(10);      
+            ->paginate(10);
+        }
+              
         $messages = Chat::where('to_id', '=', $user_id)   
                     ->where('seen', '=', 0)
                     ->orderBy('created_at', 'desc')
@@ -1288,6 +1298,41 @@ class DashboardController extends Controller
         }
     }    
 
+    public function verifyUpskill($id)
+    {
+        // Retrieve the specific job record
+        $upskill = PostUpskill::find($id);
+
+        // Check if the job record exists
+        if ($upskill) {
+            // Update the verify_job attribute
+            $upskill->update(['verify_upskill' => 1]);
+
+            // Redirect with success message
+            return redirect()->route('post-upskill')->with('success', 'Upskill verified successfully.');
+        } else {
+            // If the job record doesn't exist, redirect with an error message
+            return redirect()->route('post-upskill')->with('error', 'Upskill not found.');
+        }
+    }    
+
+    public function declineUpskill($id)
+    {
+        // Retrieve the specific job record
+        $upskill = PostUpskill::find($id);
+
+        // Check if the job record exists
+        if ($upskill) {
+            // Update the verify_job attribute
+            $upskill->update(['verify_upskill' => 0]);
+
+            // Redirect with success message
+            return redirect()->route('post-upskill')->with('success', 'Upskill verified successfully.');
+        } else {
+            // If the job record doesn't exist, redirect with an error message
+            return redirect()->route('post-upskill')->with('error', 'Upskill not found.');
+        }
+    }
     // public function JobApplication()
     // {
     //     $user_id = auth()->user()->id;

@@ -357,7 +357,7 @@ th {
                                             <h4 class="card-title">List of Jobs posted</h4>
                                         </div>
                                         <div class="dropdown">
-                                            <input type="text" class="form-control form-control-sm" placeholder="Search Jobs" id="searchInput"/>
+                                            <input type="text" class="form-control form-control-sm" placeholder="Search....." id="searchInput"/>
                                         </div>
                                     </div>
                                     <div class="table-container">
@@ -413,8 +413,8 @@ th {
                                                                             @endif
                                                                             </td>
                                                                             <td><span class="style1">{{ $rs->created_at }}</span></td>
-                                                                            <td><span class="style1">{{ $rs->no_of_views }}@if($rs->no_of_views==0)@else <u><a href="#">View</a></u></span></td> @endif
-                                                                            <td><span class="style1">{{ $rs->job_apply }}@if($rs->job_apply==0)@else <u><a href="#">View</a></u></span></td> @endif                                                                          
+                                                                            <td><span class="style1"><label class="btn btn-icon btn-xs btn-info" for="">{{ $rs->no_of_views }}</label> @if($rs->no_of_views==0)@else <u><a href="#">View</a></u></span></td> @endif
+                                                                            <td><span class="style1"><label class="btn btn-icon btn-xs btn-primary" for="">{{ $rs->job_apply }}</label> @if($rs->job_apply==0)@else <u><a href="#">View</a></u></span></td> @endif                                                                       
                                                                         <td>
                                                                             <a class="mr-3" href="{{ route('edit-job', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-edit"></i></a>
                                                                             <a href="{{ route('delete-job', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>

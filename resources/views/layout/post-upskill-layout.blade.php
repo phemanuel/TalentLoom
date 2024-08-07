@@ -37,6 +37,38 @@
 .style1 {color: #000000}
     .style3 {color: #000000; font-weight: bold; }
     </style>
+    <style>
+        /* body {
+    font-family: Arial, sans-serif;
+} */
+
+.table-container {
+    width: 100%;
+    max-width: 100%; /* Adjust as needed */
+    height: 100%; /* Adjust as needed */
+    overflow: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    position: sticky;
+    top: 0;
+}
+    </style>
 </head>
 
 <body>
@@ -200,17 +232,17 @@
                                     <div class="card-body">
                                         <div class="tab nav-center">
                                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active show" id="research-tab" data-toggle="tab" href="#research" role="tab" aria-controls="research" aria-selected="true"> Post Upskill Opportunities</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="design-tab" data-toggle="tab" href="#design" role="tab" aria-controls="design" aria-selected="false"> View Upskill Opportunities
+                                            <li class="nav-item">
+                                                    <a class="nav-link active show" id="design-tab" data-toggle="tab" href="#design" role="tab" aria-controls="design" aria-selected="false"> View Upskill Opportunities
                                                     </a>
                                                 </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="research-tab" data-toggle="tab" href="#research" role="tab" aria-controls="research" aria-selected="true"> Post Upskill Opportunities</a>
+                                                </li>                                               
                                                 
                                             </ul>
                                             <div class="tab-content" id="v-pills-tabContent">
-                                                <div class="tab-pane fade show pt-20 active" id="research" role="tabpanel">
+                                                <div class="tab-pane fade pt-20" id="research" role="tabpanel">
                                                     <div class="accordion" id="accordionsimplefill">
                                                         <div class="mb-2 acd-group">
                                                             <div class="card-header bg-primary rounded-0">
@@ -285,7 +317,7 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade pt-20" id="design" role="tabpanel">
+                                                <div class="tab-pane fade show pt-20 active" id="design" role="tabpanel">
                                                     <div class="accordion" id="accordionsimpleborder">
                                                         <div class="mb-2 acd-group">
                                                             <div class="card-header rounded-0 bg-primary">
@@ -293,6 +325,15 @@
                                                                     <a href="#collapse01" class="btn-block text-left text-white acd-heading" data-toggle="collapse"></a>
                                                                 </h5>
                                                             </div>
+                                                            @if(session('success'))
+						<div class="alert alert-success">
+							{{ session('success') }}
+						</div>
+          @elseif(session('error'))
+						<div class="alert alert-error">
+							{{ session('error') }}
+						</div>
+						@endif
                                                             <div id="collapse01" class="collapse show" data-parent="#accordionsimpleborder">
                                                                 <div class="card-body">                                                            
                                                                   <p>
@@ -301,18 +342,22 @@
                                             <h4 class="card-title">List of Upskill Opportunities posted</h4>
                                         </div>
                                         <div class="dropdown">
-                                            <input type="text" class="form-control form-control-sm" placeholder="Search Jobs" id="searchInput"/>
+                                            <input type="text" class="form-control form-control-sm" placeholder="Search...." id="searchInput"/>
                                         </div>
                                     </div>
-                                                                  <table id="datatable-buttons" class="table">
+                                    <div class="table-container">
+                                    <table id="datatable-buttons" class="table">
                                                                   <thead>
                                                                                     <tr>
                                                                                         <th class="table-plus">#</th>
                                                                                         <th class="table-plus"><span class="style1"><strong>Company Name</strong></span></th>
                                                                                       <th><span class="style3">Upskill Name</span></th>
                                                                                       <th><span class="style3">Upskill Category</span></th>
-                                                                                      <th><span class="style3">Status</span></th>	
+                                                                                      <th><span class="style3">Status</span></th>
+                                                                                      <th><span class="style3">Verified</span></th>	
                                                                                       <th><span class="style1"><strong>Posted On</strong></span></th>	
+                                                                                      <th><span class="style1"><strong>Views</strong></span></th>
+                                                                                      <th><span class="style1"><strong>Applied</strong></span></th>
                                                                                       <th><span class="style3">Actions</span></th>						
                                                                     </tr>
                                                                                 </thead>
@@ -325,15 +370,32 @@
                                                                           <td><span class="style1">{{ $rs->upskill_name }}</span></td>
                                                                           <td><span class="style1">{{ $rs->upskill_category }}</span></td>
                                                                           <td>
-                                                                            @if($rs->job_status == 'Open')
+                                                                            @if($rs->upskill_status == 'Open')
                                                                             <label class="badge mb-0 badge-success-inverse style1"> 
-                                                                                {{ $rs->job_status }}</label>
-                                                                            @elseif($rs->job_status == 'Closed')
+                                                                                {{ $rs->upskill_status }}</label>
+                                                                            @elseif($rs->upskill_status == 'Closed')
                                                                             <label class="badge mb-0 badge-primary-inverse style1"> 
-                                                                                {{ $rs->job_status }}</label>
+                                                                                {{ $rs->upskill_status }}</label>
                                                                             @endif
                                                             </td>
+                                                            <td>
+                                                                            @if($rs->verify_upskill == 0)
+                                                                            <label class="btn btn-icon btn-xs btn-danger"> 
+                                                                                No</label>
+                                                                                @if(auth()->user()->user_type_status == 'Superadmin')
+                                                                                <a class="badge mb-0 badge-success style2" href="{{ route('verify-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Verify">Verify</a>
+                                                                                @else  @endif
+                                                                            @elseif($rs->verify_upskill == 1)
+                                                                            <label class="btn btn-icon btn-xs btn-success"> 
+                                                                               Yes</label>
+                                                                               @if(auth()->user()->user_type_status == 'Superadmin')
+                                                                                <a class="badge mb-0 badge-danger style2" href="{{ route('decline-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Decline">Decline</a>
+                                                                                @else  @endif
+                                                                            @endif
+                                                                            </td>
                                                                             <td><span class="style1">{{ $rs->created_at }}</span></td>
+                                                                            <td><span class="style1"><label class="btn btn-icon btn-xs btn-info" for="">{{ $rs->no_of_views }}</label> @if($rs->no_of_views==0)@else <u><a href="#">View</a></u></span></td> @endif
+                                                                            <td><span class="style1"><label class="btn btn-icon btn-xs btn-primary" for="">{{ $rs->upskill_apply }}</label> @if($rs->upskill_apply==0)@else <u><a href="#">View</a></u></span></td> @endif     
                                                                           <td>
                                                                             <a class="mr-3" href="{{ route('edit-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-edit"></i></a>
                                                                             <a href="{{ route('delete-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-trash-2"></i></a></td>                                                                            				
@@ -348,6 +410,8 @@
                                                                                 </tbody>
                                                                     </table>
                                                                     {{ $records->links()}}
+                                                                    </div>
+                                                                  
                                                                   </p>
                                                
                                                                 </div>

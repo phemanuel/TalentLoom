@@ -199,7 +199,7 @@ use App\Http\Controllers\MessageController;
         Route::get('verify-job/{id}', [DashboardController::class, 'verifyJob'])
         ->name('verify-job');
         Route::get('decline-job/{id}', [DashboardController::class, 'declineJob'])
-        ->name('decline-job');
+        ->name('decline-job');      
         
 
         Route::get('post-upskill', [DashboardController::class, 'postUpskill'])
@@ -213,7 +213,11 @@ use App\Http\Controllers\MessageController;
         Route::put('update-upskill/{id}', [DashboardController::class, 'updateUpskill'])
         ->name('update-upskill');
         Route::get('delete-upskill/{id}', [DashboardController::class, 'deleteUpskill'])
-        ->name('delete-upskill');        
+        ->name('delete-upskill');   
+        Route::get('verify-upskill/{id}', [DashboardController::class, 'verifyUpskill'])
+        ->name('verify-upskill');
+        Route::get('decline-upskill/{id}', [DashboardController::class, 'declineUpskill'])
+        ->name('decline-upskill');     
         
         Route::get('payment-setup', [PageController::class, 'paymentSetup'])
             ->name('payment-setup');
