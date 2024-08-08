@@ -1327,7 +1327,7 @@ class DashboardController extends Controller
             $upskill->update(['verify_upskill' => 0]);
 
             // Redirect with success message
-            return redirect()->route('post-upskill')->with('success', 'Upskill verified successfully.');
+            return redirect()->route('post-upskill')->with('success', 'Upskill decline successfully.');
         } else {
             // If the job record doesn't exist, redirect with an error message
             return redirect()->route('post-upskill')->with('error', 'Upskill not found.');

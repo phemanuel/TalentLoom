@@ -413,8 +413,23 @@ th {
                                                                             @endif
                                                                             </td>
                                                                             <td><span class="style1">{{ $rs->created_at }}</span></td>
-                                                                            <td><span class="style1"><label class="btn btn-icon btn-xs btn-info" for="">{{ $rs->no_of_views }}</label> @if($rs->no_of_views==0)@else <u><a href="#">View</a></u></span></td> @endif
-                                                                            <td><span class="style1"><label class="btn btn-icon btn-xs btn-primary" for="">{{ $rs->job_apply }}</label> @if($rs->job_apply==0)@else <u><a href="#">View</a></u></span></td> @endif                                                                       
+                                                                            <td>
+    <span class="style1">
+        <label class="btn btn-icon btn-xs btn-info" for="">{{ $rs->no_of_views }}</label>
+        @if($rs->no_of_views != 0 && auth()->user()->user_type_status == 'Superadmin')
+            <u><a href="#">View</a></u>
+        @endif
+    </span>
+</td>
+<td>
+    <span class="style1">
+        <label class="btn btn-icon btn-xs btn-primary" for="">{{ $rs->job_apply }}</label>
+        @if($rs->job_apply != 0 && auth()->user()->user_type_status == 'Superadmin')
+            <u><a href="#">View</a></u>
+        @endif
+    </span>
+</td>
+                                                                      
                                                                         <td>
                                                                             <a class="mr-3" href="{{ route('edit-job', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-edit"></i></a>
                                                                             <a href="{{ route('delete-job', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>

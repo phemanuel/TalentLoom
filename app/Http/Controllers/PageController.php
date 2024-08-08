@@ -6,6 +6,7 @@ use App\Models\PostJobs;
 use App\Models\PostUpskill;
 use App\Models\JobLocation;
 use App\Models\JobApply;
+use App\Models\JobView;
 use App\Models\User;
 use App\Models\UserRoles;
 use App\Models\UserMessage;
@@ -43,22 +44,28 @@ class PageController extends Controller
     public function jobCategory($category)
     {
         $categories = UserCategory::all();
-        $postUpskill = PostUpskill::all();
+        $postUpskill = PostUpskill::where('verify_upskill' , 1)->get();
         $jobLocation = PostJobs::groupBy('job_location')
                 ->selectRaw('job_location, COUNT(*) as location_count')
                 ->WHERE('job_status', 'Open')
+                ->WHERE('verify_job', 1)
                 ->paginate(10);
         $postJobs = PostJobs::where('job_category', $category)
                 ->WHERE('job_status', 'Open')
+                ->WHERE('verify_job', 1)
                 ->orderBy('created_at', 'desc')
                 ->paginate(3);
-                $user_id = auth()->user()->id;
+        $user = auth()->user();
+        if ($user){
+            $user_id = auth()->user()->id;
         $messages = UserMessage::where('to_user_id', '=', $user_id)   
                 ->where('message_status', 'Unread')
                 ->orderBy('created_at', 'desc')
                 ->get();
-        
-        $unreadMessagesCount = $messages->count();
+                $unreadMessagesCount = $messages->count();
+                return view('dashboard.job-category' , compact('categories', 'postJobs','jobLocation','postUpskill',
+                'category','messages', 'unreadMessagesCount'));
+        }    
         //$postJobs = PostJobs::paginate(5); 
         return view('dashboard.job-category' , compact('categories', 'postJobs','jobLocation','postUpskill',
         'category','messages', 'unreadMessagesCount'));
@@ -68,72 +75,112 @@ class PageController extends Controller
     public function viewJob($id)
     {
         $categories = UserCategory::all();
-        $postUpskill = PostUpskill::all();
-        $postJobs = PostJobs::where('id', $id)
-        ->where('job_status', 'Open')
-        ->first();
+        $postUpskill = PostUpskill::where('verify_upskill' , 1)->get();        
+        // Fetch the job by ID and status
+        $postJobs = PostJobs::where('id', $id)->firstOrFail();
+
+        // Group jobs by location where status is Open
         $jobLocation = PostJobs::groupBy('job_location')
                 ->selectRaw('job_location, COUNT(*) as location_count')
                 ->WHERE('job_status', 'Open')
+                ->WHERE('verify_job', 1)
                 ->paginate(10);
-        $postJobs->increment('no_of_views');
+        
         // Store the intended URL in the session
-        $url = "view-job/{$id}";
-        session(['url.intended' => $url]);
-        $user_id = auth()->user()->id;
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
+        session(['url.intended' => "view-job/{$id}"]);
+        
+        $user = auth()->user();
+        if (!$user) {
+            $postJobs->increment('no_of_views');
+            return view('dashboard.view-job', compact('postJobs', 'jobLocation', 'categories', 'postUpskill'));
+        }
 
+        $userId = $user->id;
+
+        // Check if the user has already viewed the job
+        $checkUser = JobView::where('job_id', $id)
+            ->where('user_id', $userId)
+            ->where('view_type', 'Job-View')
+            ->exists();
+
+        if (!$checkUser) {
+            // Record the job view
+            JobView::create([
+                'job_id' => $id,
+                'user_id' => $userId,
+                'view_type' => 'Job-View',
+            ]);
+            $postJobs->increment('no_of_views');
+        }
+
+        // Get unread messages
+        $messages = UserMessage::where('to_user_id', $userId)   
+            ->where('message_status', 'Unread')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
         $unreadMessagesCount = $messages->count();
-        return view('dashboard.view-job', compact('postJobs','jobLocation','categories','postUpskill',
-    'messages','unreadMessagesCount'));
+
+        return view('dashboard.view-job', compact(
+            'postJobs', 'jobLocation', 'categories', 'postUpskill',
+            'messages', 'unreadMessagesCount'
+        ));
     }
 
     public function viewUpskill($id)
     {
-        $user= auth()->user();
-        if ($user){
-            $categories = UserCategory::all();
-        $postJobs = PostJobs::where('job_status', 'Open')
-        ->orderBy('created_at', 'desc')
-        ->get();;
-        $postUpskill = PostUpskill::where('id', $id)->first();
-        $jobLocation = PostJobs::groupBy('job_location')
-                ->selectRaw('job_location, COUNT(*) as location_count')
-                ->WHERE('job_status', 'Open')
-                ->paginate(10);
-        $postUpskill->increment('no_of_views');
-        // Store the intended URL in the session
-        $url = "view-upskill/{$id}";
-        session(['url.intended' => $url]);
-        $user_id = auth()->user()->id;
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-        $unreadMessagesCount = $messages->count();
-        return view('dashboard.view-upskill', compact('postJobs','jobLocation','categories','postUpskill',
-    'messages', 'unreadMessagesCount'));
-        }
-
+        $user = auth()->user();
         $categories = UserCategory::all();
         $postJobs = PostJobs::where('job_status', 'Open')
-        ->orderBy('created_at', 'desc')
-        ->get();;
-        $postUpskill = PostUpskill::where('id', $id)->first();
+            ->where('verify_job' , 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $postUpskill = PostUpskill::where('id', $id)->firstOrFail();
         $jobLocation = PostJobs::groupBy('job_location')
-                ->selectRaw('job_location, COUNT(*) as location_count')
-                ->WHERE('job_status', 'Open')
-                ->paginate(10);
-        $postUpskill->increment('no_of_views');
+        ->selectRaw('job_location, COUNT(*) as location_count')
+        ->WHERE('job_status', 'Open')
+        ->WHERE('verify_job', 1)
+        ->paginate(10);
+
         // Store the intended URL in the session
-        $url = "view-upskill/{$id}";
-        session(['url.intended' => $url]);
-        
-        return view('dashboard.view-upskill', compact('postJobs','jobLocation','categories','postUpskill'));
+        session(['url.intended' => "view-upskill/{$id}"]);
+
+        if ($user) {
+            $userId = $user->id;
+
+            // Check if the user has already viewed the upskill
+            $checkView = JobView::where('job_id', $id)
+                ->where('user_id', $userId)
+                ->where('view_type', 'Upskill-View')
+                ->exists();
+
+            if (!$checkView) {
+                // Record the upskill view
+                JobView::create([
+                    'job_id' => $id,
+                    'user_id' => $userId,
+                    'view_type' => 'Upskill-View',
+                ]);
+                $postUpskill->increment('no_of_views');
+            }
+
+            // Get unread messages for the user
+            $messages = UserMessage::where('to_user_id', $userId)
+                ->where('message_status', 'Unread')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            $unreadMessagesCount = $messages->count();
+
+            return view('dashboard.view-upskill', compact(
+                'postJobs', 'jobLocation', 'categories', 'postUpskill',
+                'messages', 'unreadMessagesCount'
+            ));
+        }
+
+        // Increment views for guests
+        $postUpskill->increment('no_of_views');
+
+        return view('dashboard.view-upskill', compact('postJobs', 'jobLocation', 'categories', 'postUpskill'));
     }
 
     public function jobLocation($id)
@@ -141,14 +188,13 @@ class PageController extends Controller
         $user = auth()->user();
         if ($user){
             $categories = UserCategory::all();        
-        $postUpskill = PostUpskill::all();
+        $postUpskill = PostUpskill::where('verify_upskill' , 1);
         $jobLocation = PostJobs::groupBy('job_location')
                 ->selectRaw('job_location, COUNT(*) as location_count')
                 ->WHERE('job_status', 'Open')
+                ->where('verify_job' , 1)
                 ->paginate(10); 
-        $postJobs = PostJobs::where('job_location', $id)
-        ->where('job_status', 'Open')
-        ->paginate(5);
+        $postJobs = PostJobs::where('job_location', $id)->paginate(5);
         $user_id = auth()->user()->id;
         $messages = UserMessage::where('to_user_id', '=', $user_id)   
         ->where('message_status', 'Unread')
@@ -162,14 +208,13 @@ class PageController extends Controller
         }
 
         $categories = UserCategory::all();        
-        $postUpskill = PostUpskill::all();
+        $postUpskill = PostUpskill::where('verify_upskill' , 1);
         $jobLocation = PostJobs::groupBy('job_location')
                 ->selectRaw('job_location, COUNT(*) as location_count')
                 ->WHERE('job_status', 'Open')
+                ->where('verify_job' , 1)
                 ->paginate(10); 
-        $postJobs = PostJobs::where('job_location', $id)
-        ->where('job_status', 'Open')
-        ->paginate(5);              
+        $postJobs = PostJobs::where('job_location', $id)->paginate(5);            
 
         return view('dashboard.view-job-location', compact('jobLocation','categories','postUpskill'
         ,'postJobs', 'id'));
