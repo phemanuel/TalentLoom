@@ -250,6 +250,9 @@ use App\Http\Controllers\MessageController;
             ->name('freelancer'); 
     Route::get('job-category/{category}', [PageController::class, 'jobCategory'])
             ->name('job-category');  
+    Route::get('/job/{id}/viewers', [PageController::class, 'getJobViewers'])
+            ->name('job.viewers');  
+            
     Route::get('contact-us', [PageController::class, 'contactUs'])
             ->name('contact-us');  
 
