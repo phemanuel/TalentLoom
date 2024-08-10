@@ -654,8 +654,8 @@ th {
 
 
 </html>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="{{asset('dashback/assets/js/jquery-3.6.0.min')}}"></script>
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
 <script>
 $(function(){
 	/** add active class and stay opened when selected */
@@ -747,9 +747,10 @@ function loadJobViewers(jobId) {
             tableHtml += '<thead><tr><th>#</th><th>Profile Picture</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((viewer, index) => {
+                let profilePictureUrl = `/storage/${viewer.profile_picture}`;
                 tableHtml += '<tr>';
                 tableHtml += `<td>${index + 1}</td>`;
-                tableHtml += `<td><img src="${viewer.profile_picture}" alt="${viewer.name}" width="50" /></td>`;
+                tableHtml += `<td><img src="${profilePictureUrl}" alt="${viewer.name}" width="50" /></td>`;
                 tableHtml += `<td>${viewer.name}</td>`;
                 tableHtml += `<td>${viewer.user_roles_major}</td>`;                
                 tableHtml += '</tr>';
@@ -796,9 +797,10 @@ function loadJobApplications(jobId) {
             tableHtml += '<thead><tr><th>#</th><th>Profile Picture</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((application, index) => {
+                let profilePictureUrl = `/storage/${application.profile_picture}`;
                 tableHtml += '<tr>';
                 tableHtml += `<td>${index + 1}</td>`;
-                tableHtml += `<td><img src="${application.profile_picture}" alt="${application.name}" width="50" /></td>`;
+                tableHtml += `<td><img src="${profilePictureUrl}" alt="${application.name}" width="50" /></td>`;
                 tableHtml += `<td>${application.name}</td>`;
                 tableHtml += `<td>${application.user_roles_major}</td>`;                
                 tableHtml += '</tr>';

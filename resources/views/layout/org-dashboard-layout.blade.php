@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
 <title>@yield('pageTitle')</title>
     <meta charset="utf-8" />
