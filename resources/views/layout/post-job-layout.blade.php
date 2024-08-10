@@ -486,6 +486,7 @@ th {
                 <div id="job-viewers-content"></div>
             </div>
             <div class="modal-footer">
+            <button id="exportCsvBtn" class="btn btn-success" disabled>Export to CSV</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         
                                     </div>
@@ -724,7 +725,7 @@ $(function(){
                 }
             });
         });
-    });
+    });    
 </script>
 <script>
 function loadJobViewers(jobId) {
@@ -743,20 +744,25 @@ function loadJobViewers(jobId) {
             $('#loading-spinner').hide();
             
             // Update the modal with the new content (tabulated data)
-            let tableHtml = '<table class="table table-bordered">';
-            tableHtml += '<thead><tr><th>#</th><th>Profile Picture</th><th>Name</th><th>User Role</th></tr></thead>';
+            let tableHtml = '<table id="viewersTable" class="table table-bordered">';
+            tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((viewer, index) => {
                 let profilePictureUrl = `/storage/${viewer.profile_picture}`;
                 tableHtml += '<tr>';
-                tableHtml += `<td>${index + 1}</td>`;
-                tableHtml += `<td><img src="${profilePictureUrl}" alt="${viewer.name}" width="50" /></td>`;
-                tableHtml += `<td>${viewer.name}</td>`;
-                tableHtml += `<td>${viewer.user_roles_major}</td>`;                
+                tableHtml += `<td style="color: black;">${index + 1}</td>`;
+                tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${viewer.name}" width="50" /></td>`;
+                tableHtml += `<td style="color: black;">${viewer.name}</td>`;
+                tableHtml += `<td style="color: black;">${viewer.user_roles_major}</td>`;                
                 tableHtml += '</tr>';
             });
             tableHtml += '</tbody></table>';
             $('#job-viewers-content').html(tableHtml);
+
+            // Enable export button if data is available
+            if (response.length > 0) {
+                $('#exportCsvBtn').prop('disabled', false);
+            }
         },
         error: function() {
             // Hide the loading spinner
@@ -775,7 +781,34 @@ $('#viewersModal').on('hidden.bs.modal', function () {
     $('#loading-spinner').show();
 });
 
+// Export to CSV
+$('#exportCsvBtn').click(function() {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "No,Avatar,Name,User Role\n"; // CSV header
+
+    $('#viewersTable tbody tr').each(function() {
+        let row = [];
+        $(this).find('td').each(function(index) {
+            let text = $(this).text().trim();
+            if (index === 1) { // If this is the Avatar column
+                text = $(this).find('img').attr('src'); // get image src
+            }
+            row.push(text);
+        });
+        csvContent += row.join(",") + "\n";
+    });
+
+    // Create a link to download the CSV file
+    let encodedUri = encodeURI(csvContent);
+    let link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "job_viewers.csv");
+    document.body.appendChild(link); // Required for Firefox
+    link.click();
+    document.body.removeChild(link); // Cleanup
+});
 </script>
+
 <script>
 function loadJobApplications(jobId) {
     // Clear previous content
@@ -784,7 +817,7 @@ function loadJobApplications(jobId) {
     // Show the loading spinner
     $('#loading-spinner1').show();
 
-    // Perform AJAX request to fetch job viewers
+    // Perform AJAX request to fetch job applications
     $.ajax({
         url: '/job/' + jobId + '/applications',
         type: 'GET',
@@ -793,20 +826,25 @@ function loadJobApplications(jobId) {
             $('#loading-spinner1').hide();
             
             // Update the modal with the new content (tabulated data)
-            let tableHtml = '<table class="table table-bordered">';
-            tableHtml += '<thead><tr><th>#</th><th>Profile Picture</th><th>Name</th><th>User Role</th></tr></thead>';
+            let tableHtml = '<table id="applicationsTable" class="table table-bordered">';
+            tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((application, index) => {
                 let profilePictureUrl = `/storage/${application.profile_picture}`;
                 tableHtml += '<tr>';
-                tableHtml += `<td>${index + 1}</td>`;
-                tableHtml += `<td><img src="${profilePictureUrl}" alt="${application.name}" width="50" /></td>`;
-                tableHtml += `<td>${application.name}</td>`;
-                tableHtml += `<td>${application.user_roles_major}</td>`;                
+                tableHtml += `<td style="color: black;">${index + 1}</td>`;
+                tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${application.name}" width="50" /></td>`;
+                tableHtml += `<td style="color: black;">${application.name}</td>`;
+                tableHtml += `<td style="color: black;">${application.user_roles_major}</td>`;                
                 tableHtml += '</tr>';
             });
             tableHtml += '</tbody></table>';
             $('#job-applications-content').html(tableHtml);
+
+            // Enable export button if data is available
+            if (response.length > 0) {
+                $('#exportApplicationsCsvBtn').prop('disabled', false);
+            }
         },
         error: function() {
             // Hide the loading spinner
@@ -825,6 +863,33 @@ $('#applicationsModal').on('hidden.bs.modal', function () {
     $('#loading-spinner1').show();
 });
 
+// Export to CSV
+$('#exportApplicationsCsvBtn').click(function() {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "No,Avatar,Name,User Role\n"; // CSV header
+
+    $('#applicationsTable tbody tr').each(function() {
+        let row = [];
+        $(this).find('td').each(function(index) {
+            let text = $(this).text().trim();
+            if (index === 1) { // If this is the Avatar column
+                text = $(this).find('img').attr('src'); // get image src
+            }
+            row.push(text);
+        });
+        csvContent += row.join(",") + "\n";
+    });
+
+    // Create a link to download the CSV file
+    let encodedUri = encodeURI(csvContent);
+    let link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "job_applications.csv");
+    document.body.appendChild(link); // Required for Firefox
+    link.click();
+    document.body.removeChild(link); // Cleanup
+});
 </script>
+
 
 

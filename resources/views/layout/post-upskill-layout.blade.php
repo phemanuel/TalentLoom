@@ -721,15 +721,15 @@ function loadUpskillViewers(jobId) {
             
             // Update the modal with the new content (tabulated data)
             let tableHtml = '<table class="table table-bordered">';
-            tableHtml += '<thead><tr><th>#</th><th>Profile Picture</th><th>Name</th><th>User Role</th></tr></thead>';
+            tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((viewer, index) => {
                 let profilePictureUrl = `/storage/${viewer.profile_picture}`;
-                tableHtml += '<tr>';
-                tableHtml += `<td>${index + 1}</td>`;
-                tableHtml += `<td><img src="${profilePictureUrl}" alt="${viewer.name}" width="50" /></td>`;
-                tableHtml += `<td>${viewer.name}</td>`;
-                tableHtml += `<td>${viewer.user_roles_major}</td>`;                
+                tableHtml += '<tr style="color: black;">';
+                tableHtml += `<td style="color: black;">${index + 1}</td>`;
+                tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${viewer.name}" width="50" /></td>`;
+                tableHtml += `<td style="color: black;">${viewer.name}</td>`;
+                tableHtml += `<td style="color: black;">${viewer.user_roles_major}</td>`;                
                 tableHtml += '</tr>';
             });
             tableHtml += '</tbody></table>';
@@ -771,15 +771,15 @@ function loadUpskillApplications(jobId) {
             
             // Update the modal with the new content (tabulated data)
             let tableHtml = '<table class="table table-bordered">';
-            tableHtml += '<thead><tr><th>#</th><th>Profile Picture</th><th>Name</th><th>User Role</th></tr></thead>';
+            tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((application, index) => {
                 let profilePictureUrl = `/storage/${application.profile_picture}`;
-                tableHtml += '<tr>';
-                tableHtml += `<td>${index + 1}</td>`;
-                tableHtml += `<td><img src="${profilePictureUrl}" alt="${application.name}" width="50" /></td>`;
-                tableHtml += `<td>${application.name}</td>`;
-                tableHtml += `<td>${application.user_roles_major}</td>`;                
+                tableHtml += '<tr style="color: black;">';
+                tableHtml += `<td style="color: black;">${index + 1}</td>`;
+                tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${application.name}" width="50" /></td>`;
+                tableHtml += `<td style="color: black;">${application.name}</td>`;
+                tableHtml += `<td style="color: black;">${application.user_roles_major}</td>`;                
                 tableHtml += '</tr>';
             });
             tableHtml += '</tbody></table>';
