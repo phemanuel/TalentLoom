@@ -415,22 +415,26 @@ th {
                                                                             <td><span class="style1">{{ $rs->created_at }}</span></td>
                                                                             <td>
     <span class="style1">
-        <label class="btn btn-icon btn-xs btn-info" for="">{{ $rs->no_of_views }}</label>
-        @if($rs->no_of_views != 0 && auth()->user()->user_type_status == 'Superadmin')
-            <u><a data-toggle="modal" data-target="#viewersModal" href="#" data-placement="top" title="View"
-   onclick="loadJobViewers({{ $rs->id }})">
-    <img src="{{ asset('dashback/assets/img/view.jpg') }}" alt="">
-</a></u>
-        @endif
+        <label class="btn btn-icon btn-xs btn-info" for="">{{ $rs->no_of_views }}</label>        
+        @if($rs->no_of_views != 0 && (auth()->user()->id == $rs->user_id || auth()->user()->user_type_status == 'Superadmin'))
+    <u><a data-toggle="modal" data-target="#viewersModal" href="#" data-placement="top" title="View"
+       onclick="loadJobViewers({{ $rs->id }})">
+        <img src="{{ asset('dashback/assets/img/view.jpg') }}" alt="">
+    </a></u>
+@endif
     </span>
 </td>
 <td>
     <span class="style1">
         <label class="btn btn-icon btn-xs btn-primary" for="">{{ $rs->job_apply }}</label>
-        @if($rs->job_apply != 0 && auth()->user()->user_type_status == 'Superadmin')
-            <u><a data-toggle="modal" data-target="#verticalCenter1" href="#" data-placement="top" title="View">
-            <img src="{{asset('dashback/assets/img/view.jpg')}}" alt=""></a></u>
-        @endif
+        @if($rs->job_apply != 0 && (auth()->user()->id == $rs->user_id || auth()->user()->user_type_status == 'Superadmin'))
+    <u>
+        <a data-toggle="modal" data-target="#applicationsModal" href="#" data-placement="top" title="View"
+           onclick="loadJobApplications({{ $rs->id }})">
+            <img src="{{ asset('dashback/assets/img/view.jpg') }}" alt="">
+        </a>
+    </u>
+@endif
     </span>
 </td>
                                                                       
@@ -463,7 +467,8 @@ th {
                                                 </div>
                                                 
                                                <!-- Vertical Center Modal -->
-                                               <div class="modal fade" id="viewersModal" tabindex="-1" role="dialog" aria-labelledby="viewersModalLabel" aria-hidden="true">
+                                               <!-- Job Viewers -->
+<div class="modal fade" id="viewersModal" tabindex="-1" role="dialog" aria-labelledby="viewersModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -473,45 +478,48 @@ th {
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Content will be populated by AJAX -->
+                <!-- Loading Spinner -->
+                <div id="loading-spinner" style="text-align: center;">
+                    <img src="{{ asset('dashback/assets/img/spinner.gif') }}" alt="Loading..." />
+                </div>
+                <!-- Data Content -->
+                <div id="job-viewers-content"></div>
             </div>
+            <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        
+                                    </div>
         </div>
     </div>
 </div>
 
-
-
                         <!-- Vertical Center Modal -->
-                        <div class="modal fade" id="verticalCenter1" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="verticalCenterTitle">Job Applications</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-                                            in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at
-                                            eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-                                            sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia
-                                            bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque
-                                            nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor
-                                            fringilla. Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                                            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-                                            ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur
-                                            et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean
-                                            lacinia bibendum nulla sed consectetur.
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
+                        <!-- Job Applications -->
+<div class="modal fade" id="applicationsModal" tabindex="-1" role="dialog" aria-labelledby="viewersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewersModalLabel">Job Applications</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Loading Spinner -->
+                <div id="loading-spinner1" style="text-align: center;">
+                    <img src="{{ asset('dashback/assets/img/spinner.gif') }}" alt="Loading..." />
+                </div>
+                <!-- Data Content -->
+                <div id="job-applications-content"></div>
+            </div>
+            <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-success">Save changes</button>
+                                        
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+        </div>
+    </div>
+</div>
+
                                                 
                                                 <div class="tab-pane fade pt-20" id="HTML5" role="tabpanel">
                                                     <div class="accordion" id="accordionsimple2">
@@ -720,19 +728,101 @@ $(function(){
 </script>
 <script>
 function loadJobViewers(jobId) {
+    // Clear previous content
+    $('#job-viewers-content').html('');
+    
+    // Show the loading spinner
+    $('#loading-spinner').show();
+
+    // Perform AJAX request to fetch job viewers
     $.ajax({
         url: '/job/' + jobId + '/viewers',
-        method: 'GET',
-        success: function (response) {
-            // Populate the modal body with the response content
-            $('#viewersModal .modal-body').html(response);
-            $('#viewersModal').modal('show');
+        type: 'GET',
+        success: function(response) {
+            // Hide the loading spinner
+            $('#loading-spinner').hide();
+            
+            // Update the modal with the new content (tabulated data)
+            let tableHtml = '<table class="table table-bordered">';
+            tableHtml += '<thead><tr><th>#</th><th>Profile Picture</th><th>Name</th><th>User Role</th></tr></thead>';
+            tableHtml += '<tbody>';
+            response.forEach((viewer, index) => {
+                tableHtml += '<tr>';
+                tableHtml += `<td>${index + 1}</td>`;
+                tableHtml += `<td><img src="${viewer.profile_picture}" alt="${viewer.name}" width="50" /></td>`;
+                tableHtml += `<td>${viewer.name}</td>`;
+                tableHtml += `<td>${viewer.user_roles_major}</td>`;                
+                tableHtml += '</tr>';
+            });
+            tableHtml += '</tbody></table>';
+            $('#job-viewers-content').html(tableHtml);
         },
-        error: function (xhr, status, error) {
-            console.error("AJAX Error: ", status, error);
+        error: function() {
+            // Hide the loading spinner
+            $('#loading-spinner').hide();
+
+            // Show an error message
+            $('#job-viewers-content').html('<p>Error loading data.</p>');
         }
     });
 }
+
+// Reset modal content when it is closed
+$('#viewersModal').on('hidden.bs.modal', function () {
+    // Clear modal content and show the spinner again
+    $('#job-viewers-content').html('');
+    $('#loading-spinner').show();
+});
+
+</script>
+<script>
+function loadJobApplications(jobId) {
+    // Clear previous content
+    $('#job-applications-content').html('');
+    
+    // Show the loading spinner
+    $('#loading-spinner1').show();
+
+    // Perform AJAX request to fetch job viewers
+    $.ajax({
+        url: '/job/' + jobId + '/applications',
+        type: 'GET',
+        success: function(response) {
+            // Hide the loading spinner
+            $('#loading-spinner1').hide();
+            
+            // Update the modal with the new content (tabulated data)
+            let tableHtml = '<table class="table table-bordered">';
+            tableHtml += '<thead><tr><th>#</th><th>Profile Picture</th><th>Name</th><th>User Role</th></tr></thead>';
+            tableHtml += '<tbody>';
+            response.forEach((application, index) => {
+                tableHtml += '<tr>';
+                tableHtml += `<td>${index + 1}</td>`;
+                tableHtml += `<td><img src="${application.profile_picture}" alt="${application.name}" width="50" /></td>`;
+                tableHtml += `<td>${application.name}</td>`;
+                tableHtml += `<td>${application.user_roles_major}</td>`;                
+                tableHtml += '</tr>';
+            });
+            tableHtml += '</tbody></table>';
+            $('#job-applications-content').html(tableHtml);
+        },
+        error: function() {
+            // Hide the loading spinner
+            $('#loading-spinner1').hide();
+
+            // Show an error message
+            $('#job-applications-content').html('<p>Error loading data.</p>');
+        }
+    });
+}
+
+// Reset modal content when it is closed
+$('#applicationsModal').on('hidden.bs.modal', function () {
+    // Clear modal content and show the spinner again
+    $('#job-applications-content').html('');
+    $('#loading-spinner1').show();
+});
+
 </script>
 
 

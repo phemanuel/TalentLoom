@@ -484,42 +484,55 @@ class PageController extends Controller
 
     public function getJobViewers($id)
     {
+        // Get the viewers from the JobApply model
         $viewers = JobView::where('job_id', $id)
-                    ->where('view_type', 'Job-View')
-                    ->join('users', 'users.id', '=', 'job_views.user_id')
-                    ->select('users.name', 'users.user_roles_major', 'users.profile_picture')
-                    ->get();
+            ->where('view_type', 'Job-View')
+            ->join('users', 'job_views.user_id', '=', 'users.id')
+            ->select('users.name', 'users.user_roles_major', 'users.profile_picture')
+            ->get();
 
-        $output = '';
-        if($viewers->isEmpty()) {
-            $output = '<p>No viewers for this job yet.</p>';
-        } else {
-            $output .= '<table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Profile Picture</th>
-                                <th>Name</th>
-                                <th>Role</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
-        $serial = 1;
-        foreach($viewers as $viewer) {
-            $output .= '<tr>
-                            <td>' . $serial++ . '</td>
-                            <td><img src="' . asset("storage/app/public/".$viewer->profile_picture) . '" alt="' . $viewer->name . '" width="50"></td>
-                            <td>' . $viewer->name . '</td>
-                            <td>' . $viewer->user_roles_major . '</td>
-                        </tr>';
-        }
-        $output .= '    </tbody>
-                    </table>';
-        }
-
-        return response()->json($output);
+        // Return as JSON response
+        return response()->json($viewers);
     }
 
+    public function getJobApplications($id)
+    {
+        // Get the viewers from the JobApply model
+        $applications = JobApply::where('job_id', $id)
+            ->where('apply_type', 'Job-Application')
+            ->join('users', 'job_applies.user_id', '=', 'users.id')
+            ->select('users.name', 'users.user_roles_major', 'users.profile_picture')
+            ->get();
+
+        // Return as JSON response
+        return response()->json($applications);
+    }
+
+    public function getUpskillViewers($id)
+    {
+        // Get the viewers from the JobView model
+        $viewers = JobView::where('job_id', $id)
+            ->where('view_type', 'Upskill-View')
+            ->join('users', 'job_views.user_id', '=', 'users.id')
+            ->select('users.name', 'users.user_roles_major', 'users.profile_picture')
+            ->get();
+
+        // Return as JSON response
+        return response()->json($viewers);
+    }
+
+    public function getUpskillApplications($id)
+    {
+        // Get the Applications from the JobApply model
+        $applications = JobApply::where('job_id', $id)
+            ->where('apply_type', 'Upskill-Application')
+            ->join('users', 'job_applies.user_id', '=', 'users.id')
+            ->select('users.name', 'users.user_roles_major', 'users.profile_picture')
+            ->get();
+
+        // Return as JSON response
+        return response()->json($applications);
+    }
 
     
 }

@@ -251,7 +251,13 @@ use App\Http\Controllers\MessageController;
     Route::get('job-category/{category}', [PageController::class, 'jobCategory'])
             ->name('job-category');  
     Route::get('/job/{id}/viewers', [PageController::class, 'getJobViewers'])
-            ->name('job.viewers');  
+            ->name('job.viewers'); 
+    Route::get('/job/{id}/applications', [PageController::class, 'getJobApplications'])
+            ->name('job.applications');
+    Route::get('/upskill/{id}/viewers', [PageController::class, 'getUpskillViewers'])
+            ->name('upskill.viewers'); 
+    Route::get('/upskill/{id}/applications', [PageController::class, 'getUpskillApplications'])
+            ->name('upskill.applications');
             
     Route::get('contact-us', [PageController::class, 'contactUs'])
             ->name('contact-us');  
