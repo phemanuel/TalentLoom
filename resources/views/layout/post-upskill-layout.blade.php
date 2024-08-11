@@ -293,7 +293,14 @@ th {
                                                                         <option value="{{ $category->category }}">{{ $category->category }}</option>
                                                                     @endforeach
                                                                     </select>
-                                                                </div>                                                                                                                               
+                                                                </div> 
+                                                                <div class="form-group col-md-12">
+                                                                 <label for="name1"><span class="style1">Application Type</span></label>
+                                                                    <select name="application_type" class="form-control" required>
+                                                                        <option selected value="Application Link">Application Link</option>
+                                                                        <option value="Send to Mail">Send to Mail</option>
+                                                                    </select>
+                                                                </div>                                                                                                                              
                                                                 <div class="form-group col-md-12">
                                                                     <label for="name1"><span class="style1">Upskill Link to apply(Optional)</span></label>
                                                                     <input type="text" class="form-control" name="upskill_link" placeholder="https://kingsconsult.com.ng/apply"  style="color: black;">
@@ -792,7 +799,7 @@ $('#exportCsvBtn').click(function() {
     link.setAttribute("href", encodedUri);
     let jobTitle = jobViewersResponse.length > 0 ? jobViewersResponse[0].upskill_name : 'job';
     let currentDate = new Date().toISOString().slice(0, 10);    
-    link.setAttribute("download", `${jobTitle}_viewers_${currentDate}.csv`);
+    link.setAttribute("download", `UPSKILL_${jobTitle}_viewers_${currentDate}.csv`);
     document.body.appendChild(link); // Required for Firefox
     link.click();
     document.body.removeChild(link); // Cleanup
@@ -886,7 +893,7 @@ $('#exportApplicationsCsvBtn').click(function() {
     link.setAttribute("href", encodedUri);    
     let jobTitle = jobApplicationsResponse.length > 0 ? jobApplicationsResponse[0].upskill_name : 'job';
     let currentDate = new Date().toISOString().slice(0, 10);    
-    link.setAttribute("download", `${jobTitle}_applications_${currentDate}.csv`);
+    link.setAttribute("download", `UPSKILL_${jobTitle}_applications_${currentDate}.csv`);
     document.body.appendChild(link); // Required for Firefox
     link.click();
     document.body.removeChild(link); // Cleanup

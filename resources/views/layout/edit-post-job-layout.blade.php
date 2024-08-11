@@ -285,6 +285,14 @@
                                                                     <input type="text" class="form-control" name="job_location" placeholder="New York" value="{{$postJobs->job_location}}"  style="color: black;">
                                                                 </div>
                                                                 <div class="form-group col-md-12">
+                                                                 <label for="name1"><span class="style1">Application Type</span></label>
+                                                                    <select name="application_type" class="form-control" required>
+                                                                        <option value="{{$postJobs->application_type}}">{{$postJobs->application_type}}</option>
+                                                                        <option value="Application Link">Application Link</option>
+                                                                        <option value="Send to Mail">Send to Mail</option>
+                                                                    </select>
+                                                                </div>  
+                                                                <div class="form-group col-md-12">
                                                                     <label for="name1"><span class="style1">Job Link for application(Optional)</span></label>
                                                                     <input type="text" class="form-control" name="job_link" placeholder="https://kingsconsult.com.ng/apply" value="{{$postJobs->job_link}}"  style="color: black;">
                                                                 </div>

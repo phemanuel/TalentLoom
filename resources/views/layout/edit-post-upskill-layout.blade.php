@@ -266,7 +266,15 @@
                                                                         <option value="{{ $category->category }}">{{ $category->category }}</option>
                                                                     @endforeach
                                                                     </select>
-                                                                </div>                                                                                                                            
+                                                                </div>     
+                                                                <div class="form-group col-md-12">
+                                                                 <label for="name1"><span class="style1">Application Type</span></label>
+                                                                    <select name="application_type" class="form-control" required>
+                                                                        <option value="{{$postJobs->application_type}}">{{$postJobs->application_type}}</option>
+                                                                        <option value="Application Link">Application Link</option>
+                                                                        <option value="Send to Mail">Send to Mail</option>
+                                                                    </select>
+                                                                </div>                                                                                                                       
                                                                 <div class="form-group col-md-12">
                                                                     <label for="name1"><span class="style1">Upskill Link for application(Optional)</span></label>
                                                                     <input type="text" class="form-control" name="upskill_link" placeholder="https://kingsconsult.com.ng/apply" value="{{$postUpskill->upskill_link}}"  style="color: black;">

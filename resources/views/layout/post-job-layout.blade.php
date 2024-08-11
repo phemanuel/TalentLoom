@@ -309,6 +309,13 @@ th {
                                                                     <input type="text" class="form-control" name="job_location" placeholder="New York"  style="color: black;">
                                                                 </div>
                                                                 <div class="form-group col-md-12">
+                                                                 <label for="name1"><span class="style1">Application Type</span></label>
+                                                                    <select name="application_type" class="form-control">
+                                                                        <option selected value="Application Link">Application Link</option>
+                                                                        <option value="Send to Mail">Send to Mail</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
                                                                     <label for="name1"><span class="style1">Job Link for application(Optional)</span></label>
                                                                     <input type="text" class="form-control" name="job_link" placeholder="https://kingsconsult.com.ng/apply"  style="color: black;">
                                                                 </div>
@@ -815,7 +822,7 @@ $('#exportCsvBtn').click(function() {
     link.setAttribute("href", encodedUri);
     let jobTitle = jobViewersResponse.length > 0 ? jobViewersResponse[0].job_name : 'job';
     let currentDate = new Date().toISOString().slice(0, 10);    
-    link.setAttribute("download", `${jobTitle}_viewers_${currentDate}.csv`);
+    link.setAttribute("download", `JOB_${jobTitle}_viewers_${currentDate}.csv`);
     document.body.appendChild(link); // Required for Firefox
     link.click();
     document.body.removeChild(link); // Cleanup
@@ -909,7 +916,7 @@ $('#exportApplicationsCsvBtn').click(function() {
     link.setAttribute("href", encodedUri);    
     let jobTitle = jobApplicationsResponse.length > 0 ? jobApplicationsResponse[0].job_name : 'job';
     let currentDate = new Date().toISOString().slice(0, 10);    
-    link.setAttribute("download", `${jobTitle}_applications_${currentDate}.csv`);
+    link.setAttribute("download", `JOB_${jobTitle}_applications_${currentDate}.csv`);
     document.body.appendChild(link); // Required for Firefox
     link.click();
     document.body.removeChild(link); // Cleanup

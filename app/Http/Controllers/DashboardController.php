@@ -896,7 +896,8 @@ class DashboardController extends Controller
                 'job_payment' => 'required|string',
                 'job_location' => 'required|string',
                 'job_status' => 'required|string',
-                'job_link' => 'nullable|url',                
+                'job_link' => 'nullable|url',  
+                'application_type' => 'required|string',              
                 
             ]);            
 
@@ -927,6 +928,7 @@ class DashboardController extends Controller
                 'job_link' => $validatedData['job_link'],
                 'no_of_views' => 0,
                 'job_apply' => 0,
+                'application_type' => $validatedData['application_type'],
             ]); 
 
             //-----CHECK IF LOCATION IS AVAILABLE IN JOB LOCATION TABLE-----
@@ -965,8 +967,15 @@ class DashboardController extends Controller
             $user_id = auth()->user()->id;
             $postJobs = PostJobs::findOrFail($id);
             $categories = UserCategory::all();
+
+            $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
             
-            return view('dashboard.edit-post-job', compact('postJobs','categories'));
+            $unreadMessagesCount = $messages->count();
+            
+            return view('dashboard.edit-post-job', compact('postJobs','categories','messages','unreadMessagesCount'));
         } catch (QueryException $e) {
             $errorMessage = 'Error-edit job: ' . $e->getMessage();
             Log::error($errorMessage);
@@ -989,6 +998,7 @@ class DashboardController extends Controller
                 'job_location' => 'required|string',
                 'job_status' => 'required|string',
                 'job_link' => 'nullable|url',
+                'application_type' => 'required|string',
                 
             ]);            
             // Retrieve the user education based on the $id
@@ -1022,6 +1032,7 @@ class DashboardController extends Controller
                 'job_location' => $validatedData['job_location'],
                 'job_status' => $validatedData['job_status'],
                 'job_link' => $validatedData['job_link'],
+                'application_type' => $validatedData['application_type'],
             ]); 
             //-----CHECK IF LOCATION IS AVAILABLE IN JOB LOCATION TABLE-----
             $job_location = $validatedData['job_location'];
@@ -1030,14 +1041,14 @@ class DashboardController extends Controller
             if ($existingLocation) {
                 // Use the existing location
                 $existingLocation->increment('location_count');
-                return redirect()->route('post-job')->with('success', 'Job added successfully.');
+                return redirect()->route('post-job')->with('success', 'Job updated successfully.');
             } else {
                 // Create a new location if it doesn't exist
                 $jobLocation = JobLocation::create([
                     'job_location' => $validatedData['job_location'],
                     'location_count' => 1, // Set the initial count to 1 for the new location
                 ]);
-                return redirect()->route('post-job')->with('success', 'Job added successfully.');
+                return redirect()->route('post-job')->with('success', 'Job updated successfully.');
             }
             
         } catch (ValidationException $e) {
@@ -1168,7 +1179,8 @@ class DashboardController extends Controller
                 'upskill_description' => 'required|string',
                 'upskill_category' => 'required|string',
                 'upskill_status' => 'required|string',
-                'upskill_link' => 'nullable|url',                
+                'upskill_link' => 'nullable|url',  
+                'application_type' => 'required|string',              
                 
             ]);            
 
@@ -1196,6 +1208,7 @@ class DashboardController extends Controller
                 'upskill_link' => $validatedData['upskill_link'],
                 'no_of_views' => 0,
                 'upskill_apply' => 0,
+                'application_type' => $validatedData['application_type'],
             ]); 
 
             return redirect()->route('post-upskill')->with('success', 'Upskill added successfully.');
@@ -1220,7 +1233,14 @@ class DashboardController extends Controller
             $postUpskill = PostUpskill::findOrFail($id);
             $categories = UserCategory::all();
             
-            return view('dashboard.edit-post-upskill', compact('postUpskill','categories'));
+            $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
+            $unreadMessagesCount = $messages->count();
+
+            return view('dashboard.edit-post-upskill', compact('postUpskill','categories','unreadMessagesCount','messages'));
         } catch (QueryException $e) {
             $errorMessage = 'Error-edit upskill: ' . $e->getMessage();
             Log::error($errorMessage);
@@ -1239,7 +1259,8 @@ class DashboardController extends Controller
                 'upskill_description' => 'required|string',
                 'upskill_category' => 'required|string',
                 'upskill_status' => 'required|string',
-                'upskill_link' => 'nullable|url',                
+                'upskill_link' => 'nullable|url',     
+                'application_type' => 'required|string',           
                 
             ]);                     
             // Retrieve the user education based on the $id
@@ -1270,6 +1291,7 @@ class DashboardController extends Controller
                 'upskill_category' => $validatedData['upskill_category'],
                 'upskill_status' => $validatedData['upskill_status'],
                 'upskill_link' => $validatedData['upskill_link'],
+                'application_type' => $validatedData['application_type'],
             ]); 
             return redirect()->route('post-upskill')->with('success', 'Upskill updated successfully.');
             

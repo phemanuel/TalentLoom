@@ -21,5 +21,6 @@ class PostUpskill extends Model
         'no_of_views',
         'upskill_apply',
         'verify_upskill',
+        'application_type',
     ];
 }

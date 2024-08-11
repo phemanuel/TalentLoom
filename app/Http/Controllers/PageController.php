@@ -249,8 +249,13 @@ class PageController extends Controller
 
             $postJobs = PostJobs::where('id', $id)->first();
             $postJobs->increment('job_apply');
+            $postJobsLink = $postJobs->job_link;            
 
-            // return redirect('send-mail');
+            if (!empty($postJobsLink)) {
+                // Redirect to the job link in a new tab using JavaScript
+                echo "<script>window.open('$postJobsLink', '_blank');</script>";
+            }
+            // Redirect to the home route with a success message
             return redirect()->route('home')->with('success', 'Job application successful, keep checking your email for updates.');
         } else {
             return redirect()->route('login')->with('error', 'You need to login before you can apply for the job.');
@@ -287,6 +292,14 @@ class PageController extends Controller
 
             $postUpskill = PostUpskill::where('id', $id)->first();
             $postUpskill->increment('upskill_apply');
+            $postUpskillLink = $postUpskill->upskill_link; 
+
+            if (!empty($postUpskillLink)) {
+                // Redirect to the job link in a new tab using JavaScript
+                echo "<script>window.open('$postUpskillLink', '_blank');</script>";
+            }
+            // Redirect to the home route with a success message
+            return redirect()->route('home')->with('success', 'Job application successful, keep checking your email for updates.');
 
             return redirect()->route('home')->with('success', 'Upskill application successful, keep checking your email for updates.');
         } else {
@@ -501,7 +514,7 @@ class PageController extends Controller
         // Get the viewers and job title from the JobApply and post_jobs models
         $applications = JobApply::where('job_id', $id)
             ->where('apply_type', 'Job-Application')
-            ->join('users', 'job_Applies.user_id', '=', 'users.id')
+            ->join('users', 'job_applies.user_id', '=', 'users.id')
             ->join('post_jobs', 'job_applies.job_id', '=', 'post_jobs.id')
             ->select('users.name', 'users.user_roles_major', 'users.profile_picture', 'post_jobs.job_name')
             ->get();
@@ -529,7 +542,7 @@ class PageController extends Controller
         // Get the viewers and job title from the JobApply and post_jobs models
         $applications = JobApply::where('job_id', $id)
             ->where('apply_type', 'Upskill-Application')
-            ->join('users', 'job_Applies.user_id', '=', 'users.id')
+            ->join('users', 'job_applies.user_id', '=', 'users.id')
             ->join('post_upskills', 'job_applies.job_id', '=', 'post_upskills.id')
             ->select('users.name', 'users.user_roles_major', 'users.profile_picture', 'post_upskills.upskill_name')
             ->get();
