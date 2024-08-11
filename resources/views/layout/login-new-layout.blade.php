@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{asset('loginback/css/style.css')}}">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <style>
@@ -72,10 +73,16 @@
                 @error('email')
 									<span class="invalid-feedback">{{ $message }}</span>
 									@enderror
-              <div class="input-box">
-                <i class="fas fa-lock"></i>
-                <input type="password" name="password" placeholder="Enter your password" required>
-                </div>
+                  <div class="input-box" style="position: relative; display: flex; align-items: center;">
+                      <!-- Lock Icon on the left -->
+                      <i class="fas fa-lock" style="margin-right: 10px;"></i>
+                      
+                      <!-- Input Field -->
+                      <input type="password" name="password" id="passwordInput" placeholder="Enter your password" required style="flex: 1; padding-right: 30px;">
+                      
+                      <!-- Eye Icon on the right -->
+                      <i class="fas fa-eye" id="togglePassword" style="cursor: pointer; position: absolute; right: 10px;"></i>
+                  </div>
                 @error('password')
 									<span class="invalid-feedback">{{ $message }}</span>
 									@enderror
@@ -94,3 +101,16 @@
   </div>
 </body>
 </html>
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const passwordInput = document.querySelector('#passwordInput');
+
+    togglePassword.addEventListener('click', function (e) {
+        // Toggle the type attribute
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        // Toggle the icon between eye and eye-slash
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>

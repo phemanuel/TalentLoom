@@ -760,7 +760,8 @@ function loadJobViewers(jobId) {
             let headingHtml = `<h4 style="color: black; text-align: center;">${jobTitle} - Viewers</h4>`;
 
             // Update the modal with the new content (tabulated data)
-            let tableHtml = '<table id="viewersTable" class="table table-bordered">';
+            let tableHtml = '<div class="table-container">';
+            tableHtml += '<table id="viewersTable" class="table table-bordered">';
             tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((viewer, index) => {
@@ -772,7 +773,7 @@ function loadJobViewers(jobId) {
                 tableHtml += `<td style="color: black;">${viewer.user_roles_major}</td>`;                
                 tableHtml += '</tr>';
             });
-            tableHtml += '</tbody></table>';
+            tableHtml += '</tbody></table></div>';
             
             // Combine the heading and the table
             $('#job-viewers-content').html(headingHtml + tableHtml);
@@ -854,7 +855,8 @@ function loadJobApplications(jobId) {
             let headingHtml = `<h4 style="color: black; text-align: center;">${jobTitle} - Applications</h4>`;
             
             // Update the modal with the new content (tabulated data)
-            let tableHtml = '<table id="applicationsTable" class="table table-bordered">';
+            let tableHtml = '<div class="table-container">';
+            tableHtml += '<table id="applicationsTable" class="table table-bordered">';
             tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((application, index) => {
@@ -866,7 +868,7 @@ function loadJobApplications(jobId) {
                 tableHtml += `<td style="color: black;">${application.user_roles_major}</td>`;                
                 tableHtml += '</tr>';
             });
-            tableHtml += '</tbody></table>';
+            tableHtml += '</tbody></table></div>';
 
             // Combine the heading and the table
             $('#job-applications-content').html(headingHtml + tableHtml);

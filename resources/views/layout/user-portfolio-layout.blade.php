@@ -39,6 +39,33 @@
 	color: #FF0000;
 	font-weight: bold;
 }
+
+.table-container {
+    width: 100%;
+    max-width: 100%; /* Adjust as needed */
+    height: 100%; /* Adjust as needed */
+    overflow: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    position: sticky;
+    top: 0;
+}
     </style>
 
 </head>
@@ -290,6 +317,7 @@
                                                         @if ($userPortfolios->isEmpty())
                                                             <p class="style1">No projects have been uploaded yet.</p>
                                                         @else
+                                                        <div class="table-container">
                                                             <table class="table">                                                            
                                                                 <thead>
                                                                     <tr>
@@ -327,7 +355,7 @@
                                                         @endif
                                                         {{$userPortfolios->links()}}
                                                     </form>
-
+</div>
                                                     </div>
                                                 </div>
                                             </div>

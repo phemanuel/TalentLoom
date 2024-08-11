@@ -39,6 +39,33 @@
 	font-size: 15px;
 }
     .style5 {color: #000000; font-weight: bold; }
+    
+.table-container {
+    width: 100%;
+    max-width: 100%; /* Adjust as needed */
+    height: 100%; /* Adjust as needed */
+    overflow: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    position: sticky;
+    top: 0;
+}
     </style>
 </head>
 
@@ -248,12 +275,12 @@
     @endif
                                                                 </div>
                                                                 <div class="form-group col-md-12">
-                                                                    <label for="name1"><span class="style1">Proficiency(%)</span></label>
-                                                                    <input type="text" class="form-control" name="user_skill_level" placeholder="60"  style="color: black;">
-                                                                    @if($errors->has('user_skill_level'))
+    <label for="name1"><span class="style1">Proficiency(%) | Note: (Only Figure are allowed without the % sign)</span></label>
+    <input type="text" class="form-control" name="user_skill_level" placeholder="60" style="color: black;">
+    @if($errors->has('user_skill_level'))
         <span class="text-danger">{{ $errors->first('user_skill_level') }}</span>
     @endif
-                                                                </div>
+</div>
                                                           </div>      
                                                           <input type="hidden" name="user_id" value="{{auth()->user()->id}}">                                                                                                  
                                                             <button type="submit" class="btn btn-primary">Add Skill</button>
@@ -281,6 +308,7 @@
                                                         <p class="style1">No skills have been uploaded yet.</p>
                                                         @else
                                                         <div class="card-body">
+                                                            <div class="table-container">
                                                             <table class="table">
                                                                 <thead>
                                                                     <tr>
@@ -305,6 +333,7 @@
                                                                 </tbody>
                                                             </table>
                                                             {{ $userSkills->links()}}
+                                                            </div>
                                                       </div>
                                                         @endif
                                                     </form>
