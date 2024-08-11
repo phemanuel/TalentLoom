@@ -138,7 +138,9 @@ class DashboardController extends Controller
             $validatedData = $request->validate([
                 'user_id' => 'required|integer',
                 'user_skill' => 'required|string',
-                'user_skill_level' => 'required|string',
+                'user_skill_level' => ['required', 'regex:/^100$/'],
+            ], [
+                'user_skill_level.regex' => 'The skill level must be exactly 100 without the % sign.',
             ]);            
 
             $user = UserSkill::create([

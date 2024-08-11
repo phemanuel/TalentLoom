@@ -484,11 +484,12 @@ class PageController extends Controller
 
     public function getJobViewers($id)
     {
-        // Get the viewers from the JobApply model
+        // Get the viewers and job title from the JobView and post_jobs models
         $viewers = JobView::where('job_id', $id)
             ->where('view_type', 'Job-View')
             ->join('users', 'job_views.user_id', '=', 'users.id')
-            ->select('users.name', 'users.user_roles_major', 'users.profile_picture')
+            ->join('post_jobs', 'job_views.job_id', '=', 'post_jobs.id')
+            ->select('users.name', 'users.user_roles_major', 'users.profile_picture', 'post_jobs.job_name')
             ->get();
 
         // Return as JSON response
@@ -497,11 +498,12 @@ class PageController extends Controller
 
     public function getJobApplications($id)
     {
-        // Get the viewers from the JobApply model
+        // Get the viewers and job title from the JobApply and post_jobs models
         $applications = JobApply::where('job_id', $id)
             ->where('apply_type', 'Job-Application')
-            ->join('users', 'job_applies.user_id', '=', 'users.id')
-            ->select('users.name', 'users.user_roles_major', 'users.profile_picture')
+            ->join('users', 'job_Applies.user_id', '=', 'users.id')
+            ->join('post_jobs', 'job_applies.job_id', '=', 'post_jobs.id')
+            ->select('users.name', 'users.user_roles_major', 'users.profile_picture', 'post_jobs.job_name')
             ->get();
 
         // Return as JSON response
@@ -510,11 +512,12 @@ class PageController extends Controller
 
     public function getUpskillViewers($id)
     {
-        // Get the viewers from the JobView model
+        // Get the viewers and job title from the JobView and post_jobs models
         $viewers = JobView::where('job_id', $id)
             ->where('view_type', 'Upskill-View')
             ->join('users', 'job_views.user_id', '=', 'users.id')
-            ->select('users.name', 'users.user_roles_major', 'users.profile_picture')
+            ->join('post_upskills', 'job_views.job_id', '=', 'post_upskills.id')
+            ->select('users.name', 'users.user_roles_major', 'users.profile_picture', 'post_upskills.upskill_name')
             ->get();
 
         // Return as JSON response
@@ -523,16 +526,18 @@ class PageController extends Controller
 
     public function getUpskillApplications($id)
     {
-        // Get the Applications from the JobApply model
+        // Get the viewers and job title from the JobApply and post_jobs models
         $applications = JobApply::where('job_id', $id)
             ->where('apply_type', 'Upskill-Application')
-            ->join('users', 'job_applies.user_id', '=', 'users.id')
-            ->select('users.name', 'users.user_roles_major', 'users.profile_picture')
+            ->join('users', 'job_Applies.user_id', '=', 'users.id')
+            ->join('post_upskills', 'job_applies.job_id', '=', 'post_upskills.id')
+            ->select('users.name', 'users.user_roles_major', 'users.profile_picture', 'post_upskills.upskill_name')
             ->get();
 
         // Return as JSON response
         return response()->json($applications);
     }
+
 
     
 }

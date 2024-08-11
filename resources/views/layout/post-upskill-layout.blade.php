@@ -464,6 +464,7 @@ th {
                 <div id="job-viewers-content"></div>
             </div>
             <div class="modal-footer">
+            <button id="exportCsvBtn" class="btn btn-success" disabled>Export to CSV</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         
                                     </div>
@@ -491,6 +492,7 @@ th {
                 <div id="job-applications-content"></div>
             </div>
             <div class="modal-footer">
+            <button id="exportApplicationsCsvBtn" class="btn btn-success" disabled>Export to CSV</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         
                                     </div>
@@ -704,6 +706,8 @@ $(function(){
     });
 </script>
 <script>
+let jobViewersResponse = []; // Declare a global variable to store the response data
+
 function loadUpskillViewers(jobId) {
     // Clear previous content
     $('#job-viewers-content').html('');
@@ -716,16 +720,22 @@ function loadUpskillViewers(jobId) {
         url: '/upskill/' + jobId + '/viewers',
         type: 'GET',
         success: function(response) {
+            jobViewersResponse = response; // Store the response in the global variable
+            
             // Hide the loading spinner
             $('#loading-spinner').hide();
             
+            // Add the job title as a heading
+            let jobTitle = response.length > 0 ? response[0].upskill_name : 'Job';
+            let headingHtml = `<h4 style="color: black; text-align: center;">${jobTitle} - Viewers</h4>`;
+
             // Update the modal with the new content (tabulated data)
-            let tableHtml = '<table class="table table-bordered">';
+            let tableHtml = '<table id="viewersTable" class="table table-bordered">';
             tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((viewer, index) => {
                 let profilePictureUrl = `/storage/${viewer.profile_picture}`;
-                tableHtml += '<tr style="color: black;">';
+                tableHtml += '<tr>';
                 tableHtml += `<td style="color: black;">${index + 1}</td>`;
                 tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${viewer.name}" width="50" /></td>`;
                 tableHtml += `<td style="color: black;">${viewer.name}</td>`;
@@ -733,7 +743,14 @@ function loadUpskillViewers(jobId) {
                 tableHtml += '</tr>';
             });
             tableHtml += '</tbody></table>';
-            $('#job-viewers-content').html(tableHtml);
+            
+            // Combine the heading and the table
+            $('#job-viewers-content').html(headingHtml + tableHtml);
+
+            // Enable export button if data is available
+            if (response.length > 0) {
+                $('#exportCsvBtn').prop('disabled', false);
+            }
         },
         error: function() {
             // Hide the loading spinner
@@ -752,8 +769,39 @@ $('#viewersModal').on('hidden.bs.modal', function () {
     $('#loading-spinner').show();
 });
 
+// Export to CSV
+$('#exportCsvBtn').click(function() {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "No,Avatar,Name,User Role\n"; // CSV header
+
+    $('#viewersTable tbody tr').each(function() {
+        let row = [];
+        $(this).find('td').each(function(index) {
+            let text = $(this).text().trim();
+            if (index === 1) { // If this is the Avatar column
+                text = $(this).find('img').attr('src'); // get image src
+            }
+            row.push(text);
+        });
+        csvContent += row.join(",") + "\n";
+    });
+
+    // Create a link to download the CSV file
+    let encodedUri = encodeURI(csvContent);
+    let link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    let jobTitle = jobViewersResponse.length > 0 ? jobViewersResponse[0].upskill_name : 'job';
+    let currentDate = new Date().toISOString().slice(0, 10);    
+    link.setAttribute("download", `${jobTitle}_viewers_${currentDate}.csv`);
+    document.body.appendChild(link); // Required for Firefox
+    link.click();
+    document.body.removeChild(link); // Cleanup
+});
 </script>
+
 <script>
+let jobApplicationsResponse = []; // Declare a global variable to store the response data
+
 function loadUpskillApplications(jobId) {
     // Clear previous content
     $('#job-applications-content').html('');
@@ -761,21 +809,27 @@ function loadUpskillApplications(jobId) {
     // Show the loading spinner
     $('#loading-spinner1').show();
 
-    // Perform AJAX request to fetch job viewers
+    // Perform AJAX request to fetch job applications
     $.ajax({
         url: '/upskill/' + jobId + '/applications',
         type: 'GET',
         success: function(response) {
+            jobApplicationsResponse = response; // Store the response in the global variable
+            
             // Hide the loading spinner
             $('#loading-spinner1').hide();
+
+            // Add the job title as a heading
+            let jobTitle = response.length > 0 ? response[0].upskill_name : 'Job';
+            let headingHtml = `<h4 style="color: black; text-align: center;">${jobTitle} - Applications</h4>`;
             
             // Update the modal with the new content (tabulated data)
-            let tableHtml = '<table class="table table-bordered">';
+            let tableHtml = '<table id="applicationsTable" class="table table-bordered">';
             tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((application, index) => {
                 let profilePictureUrl = `/storage/${application.profile_picture}`;
-                tableHtml += '<tr style="color: black;">';
+                tableHtml += '<tr>';
                 tableHtml += `<td style="color: black;">${index + 1}</td>`;
                 tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${application.name}" width="50" /></td>`;
                 tableHtml += `<td style="color: black;">${application.name}</td>`;
@@ -783,7 +837,14 @@ function loadUpskillApplications(jobId) {
                 tableHtml += '</tr>';
             });
             tableHtml += '</tbody></table>';
-            $('#job-applications-content').html(tableHtml);
+
+            // Combine the heading and the table
+            $('#job-applications-content').html(headingHtml + tableHtml);
+
+            // Enable export button if data is available
+            if (response.length > 0) {
+                $('#exportApplicationsCsvBtn').prop('disabled', false);
+            }
         },
         error: function() {
             // Hide the loading spinner
@@ -802,6 +863,33 @@ $('#applicationsModal').on('hidden.bs.modal', function () {
     $('#loading-spinner1').show();
 });
 
-</script>
+// Export to CSV
+$('#exportApplicationsCsvBtn').click(function() {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "No,Avatar,Name,User Role\n"; // CSV header
 
+    $('#applicationsTable tbody tr').each(function() {
+        let row = [];
+        $(this).find('td').each(function(index) {
+            let text = $(this).text().trim();
+            if (index === 1) { // If this is the Avatar column
+                text = $(this).find('img').attr('src'); // get image src
+            }
+            row.push(text);
+        });
+        csvContent += row.join(",") + "\n";
+    });
+
+    // Create a link to download the CSV file
+    let encodedUri = encodeURI(csvContent);
+    let link = document.createElement("a");
+    link.setAttribute("href", encodedUri);    
+    let jobTitle = jobApplicationsResponse.length > 0 ? jobApplicationsResponse[0].upskill_name : 'job';
+    let currentDate = new Date().toISOString().slice(0, 10);    
+    link.setAttribute("download", `${jobTitle}_applications_${currentDate}.csv`);
+    document.body.appendChild(link); // Required for Firefox
+    link.click();
+    document.body.removeChild(link); // Cleanup
+});
+</script>
 

@@ -78,7 +78,13 @@
 									<h6>Hello Everybody, i am</h6>
 									<h1>{{$user->full_name}}</h1>
 <hr>
-									<h4>
+<h4>
+<strong>
+				<p class="style2">{{$user->user_roles_major}}</p>
+			</strong>
+</h4>
+<hr>
+									<h6>
 									
                                                                <strong><p class="style2">
                                                                 @php
@@ -98,7 +104,7 @@
                                                             @endif
 
                                                          </p></strong> 
-									</h4>
+									</h6>
 									<hr>									
 									<ul class="list basic_info">
 										@if($user->user_phone)										

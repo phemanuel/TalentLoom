@@ -243,10 +243,16 @@
                                                                 <div class="form-group col-md-12">
                                                                     <label for="name1"><span class="style1">Skill</span></label>
                                                                     <input type="text" class="form-control" name="user_skill" placeholder="HTML"  style="color: black;">
+                                                                    @if($errors->has('user_skill'))
+        <span class="text-danger">{{ $errors->first('user_skill') }}</span>
+    @endif
                                                                 </div>
                                                                 <div class="form-group col-md-12">
                                                                     <label for="name1"><span class="style1">Proficiency(%)</span></label>
                                                                     <input type="text" class="form-control" name="user_skill_level" placeholder="60"  style="color: black;">
+                                                                    @if($errors->has('user_skill_level'))
+        <span class="text-danger">{{ $errors->first('user_skill_level') }}</span>
+    @endif
                                                                 </div>
                                                           </div>      
                                                           <input type="hidden" name="user_id" value="{{auth()->user()->id}}">                                                                                                  

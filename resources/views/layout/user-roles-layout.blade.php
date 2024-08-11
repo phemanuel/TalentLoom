@@ -256,20 +256,22 @@
                                             </div>
                                             <div class="card-body">
                                             <div class="form-group mb-0">
-                                                                    <label for="name1"><span class="style1">Major Role</span></label>
-                                                                    <select name="user_roles_major"  class="form-control">
-                                                                    @if(auth()->user()->user_roles_major)
-                                                                    <option value="" selected>{{auth()->user()->user_roles_major}}</option>
-                                                                    @foreach ($allRoles as $allRole)
-                                                                        <option value="{{ $allRole->user_roles }}">{{ $allRole->user_roles }}</option>
-                                                                    @endforeach
-                                                                    @else
-                                                                    @foreach ($allRoles as $allRole)
-                                                                    <option value="{{ $allRole->user_roles }}">{{ $allRole->user_roles }}</option>
-                                                                    @endforeach
-                                                                    @endif
-                                                                    </select>
-                                                                </div> 
+    <label for="name1"><span class="style1">Major Role</span></label>
+    <select name="user_roles_major" class="form-control" required>
+        <!-- Display the currently selected major role first if it exists -->
+        @if(auth()->user()->user_roles_major)
+            <option value="{{ auth()->user()->user_roles_major }}" selected>{{ auth()->user()->user_roles_major }}</option>
+        @endif
+        <!-- Display all available roles -->
+        @foreach ($allRoles as $allRole)
+            <!-- Avoid duplicating the currently selected role -->
+            @if(auth()->user()->user_roles_major !== $allRole->user_roles)
+                <option value="{{ $allRole->user_roles }}">{{ $allRole->user_roles }}</option>
+            @endif
+        @endforeach
+    </select>
+</div>
+
                                                                 <hr>
                                                 <div class="form-group mb-0">
                                                 <label for="name1"><span class="style1">Other Roles</span></label>

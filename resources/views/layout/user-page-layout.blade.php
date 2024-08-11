@@ -66,6 +66,12 @@
 									<h3>{{$user->full_name}}</h3>
 									<hr>
 									<h4>
+<strong>
+				<p class="style2">{{$user->user_roles_major}}</p>
+			</strong>
+</h4>
+<hr>
+									<h4>
 									
                                                                <strong><p class="style2">
                                                                 @php
