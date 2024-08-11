@@ -263,6 +263,7 @@ th {
                                                         {{ session('error') }}
                                                     </div>
                                                     @endif 
+                                                   
                                                     </div>
                                                     <div class="p-4">
                                                         <form name="asic-form" action="{{ route('post-job-save') }}" method="POST" enctype="multipart/form-data">
@@ -298,6 +299,7 @@ th {
                                                                         <option selected value="Full Time">Full Time</option>
                                                                         <option value="Part Time">Part Time</option>
                                                                         <option value="Intern">Intern</option>
+                                                                        <option value="Not Specified">Not Specified</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="form-group col-md-12">
@@ -316,9 +318,22 @@ th {
                                                                     </select>
                                                                 </div>
                                                                 <div class="form-group col-md-12">
-                                                                    <label for="name1"><span class="style1">Job Link for application(Optional)</span></label>
-                                                                    <input type="text" class="form-control" name="job_link" placeholder="https://kingsconsult.com.ng/apply"  style="color: black;">
+                                                                    <label for="name1"><span class="style1">Job Link for application or Email to send to(Optional)</span></label>
+                                                                    <input type="text" class="form-control" name="job_link" placeholder=""  style="color: black;">
+                                                                    @if($errors->has('job_link'))
+        <span class="text-danger">{{ $errors->first('job_link') }}</span>
+    @endif
                                                                 </div>
+                                                                <div class="form-group col-md-12">
+                                                                <label for="name1"><span class="style1">Job application deadline</span></label>
+                                                                <div class='input-group date' id='datepicker-top-left'>                                                                
+                                                                    <input class="form-control" name="application_deadline" type='text' placeholder="12-12-2024" />
+                                                                    
+                                                                    <span class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </span>
+                                                                </div>
+                                                                    </div>
                                                                 <div class="form-group col-md-12">
                                                                  <label for="name1"><span class="style1">Job Status</span></label>
                                                                     <select name="job_status" class="form-control">

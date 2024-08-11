@@ -302,9 +302,22 @@ th {
                                                                     </select>
                                                                 </div>                                                                                                                              
                                                                 <div class="form-group col-md-12">
-                                                                    <label for="name1"><span class="style1">Upskill Link to apply(Optional)</span></label>
-                                                                    <input type="text" class="form-control" name="upskill_link" placeholder="https://kingsconsult.com.ng/apply"  style="color: black;">
+                                                                    <label for="name1"><span class="style1">Upskill Link for application or Email to send to(Optional)</span></label>
+                                                                    <input type="text" class="form-control" name="upskill_link" placeholder=""  style="color: black;">
+                                                                    @if($errors->has('upskill_link'))
+        <span class="text-danger">{{ $errors->first('upskill_link') }}</span>
+    @endif
                                                                 </div>
+                                                                <div class="form-group col-md-12">
+                                                                <label for="name1"><span class="style1">Job application deadline</span></label>
+                                                                <div class='input-group date' id='datepicker-top-left'>                                                                
+                                                                    <input class="form-control" name="application_deadline" type='text' placeholder="12-12-2024" />
+                                                                    
+                                                                    <span class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </span>
+                                                                </div>
+                                                                    </div>
                                                                 <div class="form-group col-md-12">
                                                                  <label for="name1"><span class="style1">Upskill Status</span></label>
                                                                     <select name="upskill_status" class="form-control">
@@ -314,7 +327,7 @@ th {
                                                                 </div>
                                                           </div>      
                                                           <input type="hidden" name="user_id" value="{{auth()->user()->id}}">                                                                                                  
-                                                            <button type="submit" class="btn btn-primary">Post Job</button>
+                                                            <button type="submit" class="btn btn-primary">Post Upskill</button>
                                                         </form>
                                                     </div>
                                                 </div>

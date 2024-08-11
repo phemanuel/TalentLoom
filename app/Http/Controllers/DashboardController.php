@@ -883,22 +883,26 @@ class DashboardController extends Controller
     public function postJobSave(Request $request)
     {
         //$user = auth()->user();
-
+        
         try {
             $validatedData = $request->validate([
-                'user_id' => 'required|integer',
-                'company_name' => 'required|string|max:255',
-                'company_logo' => 'nullable|image|mimes:jpg,jpeg,png',
-                'job_name' => 'required|string',
-                'job_description' => 'required|string',
-                'job_category' => 'required|string',
-                'job_type' => 'required|string',
-                'job_payment' => 'required|string',
-                'job_location' => 'required|string',
-                'job_status' => 'required|string',
-                'job_link' => 'nullable|url',  
-                'application_type' => 'required|string',              
-                
+            'user_id' => 'required|integer',
+            'company_name' => 'required|string|max:255',
+            'company_logo' => 'nullable|image|mimes:jpg,jpeg,png',
+            'job_name' => 'required|string',
+            'job_description' => 'required|string',
+            'job_category' => 'required|string',
+            'job_type' => 'required|string',
+            'job_payment' => 'required|string',
+            'job_location' => 'required|string',
+            'job_status' => 'required|string',            
+            'job_link' => ['required', function ($attribute, $value, $fail) {
+            if (!filter_var($value, FILTER_VALIDATE_EMAIL) && !filter_var($value, FILTER_VALIDATE_URL)) {
+                $fail("The $attribute must be a valid email address or URL.");
+            }
+        }],
+            'application_type' => 'required|string',
+            'application_deadline' => 'required|string',  
             ]);            
 
             if ($request->hasFile('company_logo')) {
@@ -928,7 +932,9 @@ class DashboardController extends Controller
                 'job_link' => $validatedData['job_link'],
                 'no_of_views' => 0,
                 'job_apply' => 0,
+                'verify_job' => 0,
                 'application_type' => $validatedData['application_type'],
+                'application_deadline' => date("Y-m-d", strtotime($validatedData['application_deadline'])),
             ]); 
 
             //-----CHECK IF LOCATION IS AVAILABLE IN JOB LOCATION TABLE-----
@@ -997,8 +1003,13 @@ class DashboardController extends Controller
                 'job_payment' => 'required|string',
                 'job_location' => 'required|string',
                 'job_status' => 'required|string',
-                'job_link' => 'nullable|url',
+                'job_link' => ['required', function ($attribute, $value, $fail) {
+            if (!filter_var($value, FILTER_VALIDATE_EMAIL) && !filter_var($value, FILTER_VALIDATE_URL)) {
+                $fail("The $attribute must be a valid email address or URL.");
+            }
+        }],
                 'application_type' => 'required|string',
+                'application_deadline' => 'required',
                 
             ]);            
             // Retrieve the user education based on the $id
@@ -1033,6 +1044,7 @@ class DashboardController extends Controller
                 'job_status' => $validatedData['job_status'],
                 'job_link' => $validatedData['job_link'],
                 'application_type' => $validatedData['application_type'],
+                'application_deadline' => date("Y-m-d", strtotime($validatedData['application_deadline'])),
             ]); 
             //-----CHECK IF LOCATION IS AVAILABLE IN JOB LOCATION TABLE-----
             $job_location = $validatedData['job_location'];
@@ -1179,8 +1191,13 @@ class DashboardController extends Controller
                 'upskill_description' => 'required|string',
                 'upskill_category' => 'required|string',
                 'upskill_status' => 'required|string',
-                'upskill_link' => 'nullable|url',  
-                'application_type' => 'required|string',              
+                'upskill_link' => ['required', function ($attribute, $value, $fail) {
+            if (!filter_var($value, FILTER_VALIDATE_EMAIL) && !filter_var($value, FILTER_VALIDATE_URL)) {
+                $fail("The $attribute must be a valid email address or URL.");
+            }
+        }], 
+                'application_type' => 'required|string',  
+                'application_deadline' => 'required',            
                 
             ]);            
 
@@ -1208,7 +1225,9 @@ class DashboardController extends Controller
                 'upskill_link' => $validatedData['upskill_link'],
                 'no_of_views' => 0,
                 'upskill_apply' => 0,
+                'verify_upskill' => 0,
                 'application_type' => $validatedData['application_type'],
+                'application_deadline' => date("Y-m-d", strtotime($validatedData['application_deadline'])),
             ]); 
 
             return redirect()->route('post-upskill')->with('success', 'Upskill added successfully.');
@@ -1259,8 +1278,13 @@ class DashboardController extends Controller
                 'upskill_description' => 'required|string',
                 'upskill_category' => 'required|string',
                 'upskill_status' => 'required|string',
-                'upskill_link' => 'nullable|url',     
-                'application_type' => 'required|string',           
+                'upskill_link' => ['required', function ($attribute, $value, $fail) {
+            if (!filter_var($value, FILTER_VALIDATE_EMAIL) && !filter_var($value, FILTER_VALIDATE_URL)) {
+                $fail("The $attribute must be a valid email address or URL.");
+            }
+        }],    
+                'application_type' => 'required|string', 
+                'application_deadline' => 'required',          
                 
             ]);                     
             // Retrieve the user education based on the $id
@@ -1292,6 +1316,7 @@ class DashboardController extends Controller
                 'upskill_status' => $validatedData['upskill_status'],
                 'upskill_link' => $validatedData['upskill_link'],
                 'application_type' => $validatedData['application_type'],
+                'application_deadline' => date("Y-m-d", strtotime($validatedData['application_deadline'])),
             ]); 
             return redirect()->route('post-upskill')->with('success', 'Upskill updated successfully.');
             
