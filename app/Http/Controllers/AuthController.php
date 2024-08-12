@@ -67,7 +67,7 @@ class AuthController extends Controller
                 $jobLocation = PostJobs::where('verify_job', 1)
                 ->groupBy('job_location')
                 ->selectRaw('job_location, COUNT(*) as location_count')
-                ->paginate(5);
+                ->paginate(10);
                 $postJobAll = PostJobs::where('job_status', 'Open')
                 ->where('verify_job', 1)
                 ->orderBy('created_at', 'desc')

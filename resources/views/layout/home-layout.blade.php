@@ -546,10 +546,10 @@
 								@else
                                 @foreach($jobLocation as $jobLocations)
                                 <li><a class="justify-content-between d-flex" href="{{route('job-location', ['id' => $jobLocations->job_location])}}"><p>{{$jobLocations->job_location}}</p><span>{{$jobLocations->location_count}}</span></a></li>
-                                @endforeach
-                                {{ $jobLocation->links() }}
+                                @endforeach                                
                                 @endif
 								</ul>
+								{{ $jobLocation->links() }}
 							</div>
 						</div>
 					</div>

@@ -271,9 +271,12 @@
                                                                  <label for="name1"><span class="style1">Job Type</span></label>
                                                                     <select name="job_type" class="form-control">
                                                                     <option value="{{$postJobs->job_type}}">{{$postJobs->job_type}}</option>
-                                                                        <option selected value="Full Time">Full Time</option>
+                                                                    <option selected value="Full Time">Full Time</option>
                                                                         <option value="Part Time">Part Time</option>
                                                                         <option value="Intern">Intern</option>
+                                                                        <option value="Remote">Remote</option>
+                                                                        <option value="Hybrid">Hybrid</option>
+                                                                        <option value="Not Specified">Not Specified</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="form-group col-md-12">

@@ -249,11 +249,11 @@ class PageController extends Controller
 
             $postJobs = PostJobs::where('id', $id)->first();
             $postJobs->increment('job_apply');
-            $postJobsLink = $postJobs->job_link;            
-
+            $postJobsLink = $postJobs->job_link; 
+            
             if (!empty($postJobsLink)) {
-                // Redirect to the job link in a new tab using JavaScript
-                echo "<script>window.open('$postJobsLink', '_blank');</script>";
+                // Redirect to the job link page
+            return view('layout.job-link', ['postJobsLink' => $postJobsLink]);
             }
             // Redirect to the home route with a success message
             return redirect()->route('home')->with('success', 'Job application successful, keep checking your email for updates.');
