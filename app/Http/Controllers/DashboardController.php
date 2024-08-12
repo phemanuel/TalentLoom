@@ -40,6 +40,9 @@ class DashboardController extends Controller
                     ->get();
             
         $unreadMessagesCount = $messages->count();
+        // Store the intended URL in the session
+        session(['url.intended' => "dashboard-freelancer"]);
+
         return view('dashboard.dashboard', compact('countries','categories','messages','unreadMessagesCount'));        
     }
     
@@ -57,6 +60,9 @@ class DashboardController extends Controller
                     ->get();
             
         $unreadMessagesCount = $messages->count();
+        // Store the intended URL in the session
+        session(['url.intended' => "user-role"]);
+
         return view('dashboard.user-roles')->with([
             'allRoles' => $allRoles,
             'userRoles' => $userRoles,
@@ -121,6 +127,8 @@ class DashboardController extends Controller
                     ->get();
             
         $unreadMessagesCount = $messages->count();
+        // Store the intended URL in the session
+        session(['url.intended' => "user-skill"]);
     
             return view('dashboard.user-skills', compact('userSkills','messages','unreadMessagesCount'));
         } catch (QueryException $e) {
@@ -233,6 +241,8 @@ class DashboardController extends Controller
                     ->get();
             
             $unreadMessagesCount = $messages->count();
+            // Store the intended URL in the session
+            session(['url.intended' => "user-education"]);
     
             return view('dashboard.user-education', compact('userEducations','messages', 'unreadMessagesCount'));
         } catch (QueryException $e) {
@@ -396,6 +406,8 @@ class DashboardController extends Controller
                     ->get();
             
             $unreadMessagesCount = $messages->count();
+            // Store the intended URL in the session
+             session(['url.intended' => "user-experience"]);
     
             return view('dashboard.user-experience', compact('userExperiences','messages','unreadMessagesCount'));
         } catch (QueryException $e) {
@@ -524,6 +536,8 @@ class DashboardController extends Controller
                     ->get();
             
             $unreadMessagesCount = $messages->count();
+            // Store the intended URL in the session
+            session(['url.intended' => "user-service"]);
     
             return view('dashboard.user-service', compact('userServices','messages','unreadMessagesCount'));
         } catch (QueryException $e) {
@@ -641,6 +655,8 @@ class DashboardController extends Controller
                     ->get();
             
              $unreadMessagesCount = $messages->count();
+             // Store the intended URL in the session
+             session(['url.intended' => "user-portfolio"]);
     
             return view('dashboard.user-portfolio', compact('userPortfolios','messages','unreadMessagesCount'));
         } catch (QueryException $e) {
@@ -799,6 +815,9 @@ class DashboardController extends Controller
                     ->get();
             
         $unreadMessagesCount = $messages->count();
+        // Store the intended URL in the session
+        session(['url.intended' => "dashboard-organization"]);
+
         return view('dashboard.org-dashboard', compact('countries','categories','messages',
         'unreadMessagesCount'));        
     }
@@ -815,6 +834,8 @@ class DashboardController extends Controller
                     ->get();
              
         $unreadMessagesCount = $messages->count();
+        // Store the intended URL in the session
+        session(['url.intended' => "user-role-organization"]);
         return view('dashboard.user-roles-org')->with([
             'allRoles' => $allRoles,
             'userRoles' => $userRoles,
@@ -875,7 +896,9 @@ class DashboardController extends Controller
                     ->where('seen', '=', 0)
                     ->orderBy('created_at', 'desc')
                     ->get();
-            
+        // Store the intended URL in the session
+        session(['url.intended' => "post-job"]);
+
         $unreadMessagesCount = $messages->count();        
         return view('dashboard.post-job', compact('categories','records','messages','unreadMessagesCount'));        
     }
@@ -1110,7 +1133,9 @@ class DashboardController extends Controller
         }
 
         $records = $query->paginate(10);
-    
+        // Store the intended URL in the session
+        session(['url.intended' => "search-jobs"]);
+
         return view('post-job', compact('records'))->render(); 
     }
 
@@ -1174,7 +1199,10 @@ class DashboardController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->get();
             
-        $unreadMessagesCount = $messages->count();      
+        $unreadMessagesCount = $messages->count();  
+        // Store the intended URL in the session
+        session(['url.intended' => "post-upskill"]);
+
         return view('dashboard.post-upskill', compact('categories','records','messages','unreadMessagesCount'));        
     }
 

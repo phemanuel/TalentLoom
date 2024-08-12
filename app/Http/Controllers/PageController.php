@@ -25,6 +25,9 @@ class PageController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
 
+        // Store the intended URL in the session
+        session(['url.intended' => "give-review"]);
+
         $unreadMessagesCount = $messages->count();
         return view('dashboard.give-review', compact('unreadMessagesCount', 'messages'));
     }
@@ -36,6 +39,9 @@ class PageController extends Controller
         ->where('message_status', 'Unread')
         ->orderBy('created_at', 'desc')
         ->get();
+
+        // Store the intended URL in the session
+        session(['url.intended' => "payment-setup"]);
 
         $unreadMessagesCount = $messages->count();
         return view('dashboard.payment', compact('unreadMessagesCount', 'messages'));
@@ -56,6 +62,10 @@ class PageController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(3);
         $user = auth()->user();
+
+        // Store the intended URL in the session
+        session(['url.intended' => "job-category/{$category}"]);
+
         if ($user){
             $user_id = auth()->user()->id;
         $messages = UserMessage::where('to_user_id', '=', $user_id)   
@@ -203,6 +213,9 @@ class PageController extends Controller
 
         $unreadMessagesCount = $messages->count();
 
+        // Store the intended URL in the session
+        session(['url.intended' => "job-location/{$id}"]);
+
         return view('dashboard.view-job-location', compact('jobLocation','categories','postUpskill'
         ,'postJobs', 'id','messages','unreadMessagesCount'));
         }
@@ -295,8 +308,7 @@ class PageController extends Controller
             $postUpskillLink = $postUpskill->upskill_link; 
 
             if (!empty($postUpskillLink)) {
-                // Redirect to the job link in a new tab using JavaScript
-                echo "<script>window.open('$postUpskillLink', '_blank');</script>";
+                return view('layout.job-link', ['postJobsLink' => $postUpskillLink]);
             }
             // Redirect to the home route with a success message
             return redirect()->route('home')->with('success', 'Job application successful, keep checking your email for updates.');
@@ -326,6 +338,9 @@ class PageController extends Controller
         ->get();
 
         $unreadMessagesCount = $messages->count();
+
+        // Store the intended URL in the session
+        session(['url.intended' => "find-upskill"]);
        
         return view('dashboard.find-upskill' , compact('categories', 'postJobs','jobLocation','postUpskill',
     'messages', 'unreadMessagesCount'));
@@ -356,6 +371,9 @@ class PageController extends Controller
         ->get();
         $unreadMessagesCount = $messages->count();
 
+        // Store the intended URL in the session
+        session(['url.intended' => "find-freelancer"]);
+
         return view('dashboard.find-freelancer', compact('allFreelancer','userRoles','categories',
         'messages','unreadMessagesCount'));
         }  
@@ -363,7 +381,9 @@ class PageController extends Controller
             $allFreelancer = User::where('user_type', 'Freelancer')->paginate(20); 
         $userRoles = UserRoles::all();
         $categories = UserCategory::all();
-
+        
+        // Store the intended URL in the session
+        session(['url.intended' => "find-freelancer"]);
         // $user_id = auth()->user()->id;
         // $messages = UserMessage::where('to_user_id', '=', $user_id)   
         // ->where('message_status', 'Unread')
@@ -412,6 +432,9 @@ class PageController extends Controller
                     ->get();
             
             $unreadMessagesCount = $messages->count();
+
+            // Store the intended URL in the session
+            session(['url.intended' => "search-jobs"]);
 
             return view('dashboard.job-search', compact('Jobs', 'categories', 'jobLocation', 'postUpskill',
         'messages', 'unreadMessagesCount'));

@@ -119,22 +119,34 @@ class AuthController extends Controller
 
     public function login()
     {
+        // Store the intended URL in the session
+        session(['url.intended' => "login"]);
+
         return view('auth.user-login-new');
     }
 
     public function signup()
     {
         $categories = UserCategory::all();
+        // Store the intended URL in the session
+        session(['url.intended' => "signup"]);
+
         return view('auth.user-signup', compact('categories'));
     }
 
     public function signupFreelancer()
     {
+        // Store the intended URL in the session
+        session(['url.intended' => "signup-freelancer"]);
+
         return view('auth.user-signup-freelancer-new');
     }
 
     public function signupOrganization()
     {
+        // Store the intended URL in the session
+        session(['url.intended' => "signup-organization"]);
+
         return view('auth.user-signup-organization-new');
     }
 
@@ -173,7 +185,7 @@ class AuthController extends Controller
                 'email_verified_status' => 0,
                 'remember_token' => $email_token,
                 'user_picture' => 'profile_pictures/blank.jpg',
-                'profile_picture' => 'profile_pictures/blank.jpg',                
+                'profile_picture' => 'profile_pictures/blank.jpg',              
                 'avatar' => 'blank.jpg',
                 'user_url' => 'https://talentloom.kingsconsult.com.ng/'. $uniqueUsername,
                 'user_name_link' =>  $uniqueUsername,
@@ -236,7 +248,7 @@ class AuthController extends Controller
                 'email_verified_status' => 0,
                 'remember_token' => $email_token,
                 'user_picture' => 'profile_pictures/blank.jpg',
-                'profile_picture' => 'profile_pictures/blank.jpg',                
+                'profile_picture' => 'profile_pictures/blank.jpg',              
                 'avatar' => 'blank.jpg',
                 'user_url' => 'https://talentloom.kingsconsult.com.ng/'. $uniqueUsername,
                 'user_name_link' =>  $uniqueUsername,
@@ -482,6 +494,9 @@ class AuthController extends Controller
                     ->get();
             
         $unreadMessagesCount = $messages->count();
+        // Store the intended URL in the session
+        session(['url.intended' => "profile-picture"]);
+
         return view('dashboard.user-profile-picture', compact('unreadMessagesCount', 'messages','userMessages'));
 
     }
