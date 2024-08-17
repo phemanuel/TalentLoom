@@ -120,7 +120,7 @@ class AuthController extends Controller
     public function login()
     {
         // Store the intended URL in the session
-        session(['url.intended' => "login"]);
+        // session(['url.intended' => "login"]);
 
         return view('auth.user-login-new');
     }
@@ -129,7 +129,7 @@ class AuthController extends Controller
     {
         $categories = UserCategory::all();
         // Store the intended URL in the session
-        session(['url.intended' => "signup"]);
+        // session(['url.intended' => "signup"]);
 
         return view('auth.user-signup', compact('categories'));
     }
@@ -137,7 +137,7 @@ class AuthController extends Controller
     public function signupFreelancer()
     {
         // Store the intended URL in the session
-        session(['url.intended' => "signup-freelancer"]);
+        // session(['url.intended' => "signup-freelancer"]);
 
         return view('auth.user-signup-freelancer-new');
     }
@@ -145,7 +145,7 @@ class AuthController extends Controller
     public function signupOrganization()
     {
         // Store the intended URL in the session
-        session(['url.intended' => "signup-organization"]);
+        // session(['url.intended' => "signup-organization"]);
 
         return view('auth.user-signup-organization-new');
     }
@@ -312,9 +312,9 @@ class AuthController extends Controller
             if ($user->email_verified_status == 1) {
                 // Email is verified, proceed with login 
                 $request->session()->regenerate(); 
-                $intendedUrl = session('url.intended', '/');
-                return redirect()->intended($intendedUrl);
-                // return redirect()->route('home');
+                // $intendedUrl = session('url.intended', '/');
+                // return redirect()->intended($intendedUrl);
+                return redirect()->route('home');
             } else {                    
                 // Email is not verified, return a flash message
                 //Auth::logout(); // Log the user out since the email is not verified                    
@@ -495,7 +495,7 @@ class AuthController extends Controller
             
         $unreadMessagesCount = $messages->count();
         // Store the intended URL in the session
-        session(['url.intended' => "profile-picture"]);
+        // session(['url.intended' => "profile-picture"]);
 
         return view('dashboard.user-profile-picture', compact('unreadMessagesCount', 'messages','userMessages'));
 

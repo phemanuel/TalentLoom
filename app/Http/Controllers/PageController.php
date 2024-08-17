@@ -12,6 +12,7 @@ use App\Models\UserRoles;
 use App\Models\UserMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\Chat ;
 
 class PageController extends Controller
 {
@@ -20,66 +21,73 @@ class PageController extends Controller
     public function giveReview()
     {
         $user_id = auth()->user()->id;
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
+        $unreadMessagesCount = $messages->count();
 
         // Store the intended URL in the session
-        session(['url.intended' => "give-review"]);
-
-        $unreadMessagesCount = $messages->count();
+        // session(['url.intended' => "give-review"]);
+        
         return view('dashboard.give-review', compact('unreadMessagesCount', 'messages'));
     }
 
     public function paymentSetup()
     {
         $user_id = auth()->user()->id;
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
+        $unreadMessagesCount = $messages->count();
 
         // Store the intended URL in the session
-        session(['url.intended' => "payment-setup"]);
+        // session(['url.intended' => "payment-setup"]);
 
-        $unreadMessagesCount = $messages->count();
         return view('dashboard.payment', compact('unreadMessagesCount', 'messages'));
     }
 
     public function jobCategory($category)
     {
         $categories = UserCategory::all();
-        $postUpskill = PostUpskill::where('verify_upskill' , 1)->get();
+        $postUpskill = PostUpskill::where('verify_upskill', 1)->get();
         $jobLocation = PostJobs::groupBy('job_location')
-                ->selectRaw('job_location, COUNT(*) as location_count')
-                ->WHERE('job_status', 'Open')
-                ->WHERE('verify_job', 1)
-                ->paginate(10);
+                    ->selectRaw('job_location, COUNT(*) as location_count')
+                    ->where('job_status', 'Open')
+                    ->where('verify_job', 1)
+                    ->paginate(10);
+
+        // Retrieve jobs that match the category name passed in the URL
         $postJobs = PostJobs::where('job_category', $category)
-                ->WHERE('job_status', 'Open')
-                ->WHERE('verify_job', 1)
-                ->orderBy('created_at', 'desc')
-                ->paginate(3);
+                    ->where('job_status', 'Open')
+                    ->where('verify_job', 1)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(5);
+
+        $categoryName = $category;
         $user = auth()->user();
 
-        // Store the intended URL in the session
-        session(['url.intended' => "job-category/{$category}"]);
+        if ($user) {
+            $user_id = $user->id;
+            $messages = Chat::where('to_id', '=', $user_id)
+                            ->where('seen', '=', 0)
+                            ->orderBy('created_at', 'desc')
+                            ->get();
+                            
+            $unreadMessagesCount = $messages->count();
+            return view('dashboard.job-category', compact(
+                'categories', 'postJobs', 'jobLocation', 'postUpskill',
+                'categoryName', 'messages', 'unreadMessagesCount'
+            ));
+        }
 
-        if ($user){
-            $user_id = auth()->user()->id;
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-                ->where('message_status', 'Unread')
-                ->orderBy('created_at', 'desc')
-                ->get();
-                $unreadMessagesCount = $messages->count();
-                return view('dashboard.job-category' , compact('categories', 'postJobs','jobLocation','postUpskill',
-                'category','messages', 'unreadMessagesCount'));
-        }    
-        //$postJobs = PostJobs::paginate(5); 
-        return view('dashboard.job-category' , compact('categories', 'postJobs','jobLocation','postUpskill',
-        'category','messages', 'unreadMessagesCount'));
-
+        return view('dashboard.job-category', compact(
+            'categories', 'postJobs', 'jobLocation', 'postUpskill',
+            'categoryName'
+        ));
     }
 
     public function viewJob($id)
@@ -97,7 +105,7 @@ class PageController extends Controller
                 ->paginate(10);
         
         // Store the intended URL in the session
-        session(['url.intended' => "view-job/{$id}"]);
+        // session(['url.intended' => "view-job/{$id}"]);
         
         $user = auth()->user();
         if (!$user) {
@@ -124,11 +132,11 @@ class PageController extends Controller
         }
 
         // Get unread messages
-        $messages = UserMessage::where('to_user_id', $userId)   
-            ->where('message_status', 'Unread')
-            ->orderBy('created_at', 'desc')
-            ->get();
-        
+        $messages = Chat::where('to_id', '=', $userId)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
         $unreadMessagesCount = $messages->count();
 
         return view('dashboard.view-job', compact(
@@ -153,7 +161,7 @@ class PageController extends Controller
         ->paginate(10);
 
         // Store the intended URL in the session
-        session(['url.intended' => "view-upskill/{$id}"]);
+        // session(['url.intended' => "view-upskill/{$id}"]);
 
         if ($user) {
             $userId = $user->id;
@@ -175,10 +183,11 @@ class PageController extends Controller
             }
 
             // Get unread messages for the user
-            $messages = UserMessage::where('to_user_id', $userId)
-                ->where('message_status', 'Unread')
-                ->orderBy('created_at', 'desc')
-                ->get();
+            $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
             $unreadMessagesCount = $messages->count();
 
             return view('dashboard.view-upskill', compact(
@@ -206,15 +215,15 @@ class PageController extends Controller
                 ->paginate(10); 
         $postJobs = PostJobs::where('job_location', $id)->paginate(5);
         $user_id = auth()->user()->id;
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
-
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
         $unreadMessagesCount = $messages->count();
 
         // Store the intended URL in the session
-        session(['url.intended' => "job-location/{$id}"]);
+        // session(['url.intended' => "job-location/{$id}"]);
 
         return view('dashboard.view-job-location', compact('jobLocation','categories','postUpskill'
         ,'postJobs', 'id','messages','unreadMessagesCount'));
@@ -263,10 +272,11 @@ class PageController extends Controller
             $postJobs = PostJobs::where('id', $id)->first();
             $postJobs->increment('job_apply');
             $postJobsLink = $postJobs->job_link; 
+            $applicationType = $postJobs->application_type; 
             
             if (!empty($postJobsLink)) {
                 // Redirect to the job link page
-            return view('layout.job-link', ['postJobsLink' => $postJobsLink]);
+            return view('layout.job-link', compact('postJobsLink', 'applicationType'));
             }
             // Redirect to the home route with a success message
             return redirect()->route('home')->with('success', 'Job application successful, keep checking your email for updates.');
@@ -332,15 +342,15 @@ class PageController extends Controller
         $postJobs = PostJobs::all(); 
         
         $user_id = auth()->user()->id;
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
-
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
         $unreadMessagesCount = $messages->count();
 
         // Store the intended URL in the session
-        session(['url.intended' => "find-upskill"]);
+        // session(['url.intended' => "find-upskill"]);
        
         return view('dashboard.find-upskill' , compact('categories', 'postJobs','jobLocation','postUpskill',
     'messages', 'unreadMessagesCount'));
@@ -365,14 +375,15 @@ class PageController extends Controller
             $allFreelancer = User::where('user_type', 'Freelancer')->paginate(20); 
         $userRoles = UserRoles::all();
         $categories = UserCategory::all();
-        $messages = UserMessage::where('to_user_id', '=', $user_id)   
-        ->where('message_status', 'Unread')
-        ->orderBy('created_at', 'desc')
-        ->get();
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
         $unreadMessagesCount = $messages->count();
 
         // Store the intended URL in the session
-        session(['url.intended' => "find-freelancer"]);
+        // session(['url.intended' => "find-freelancer"]);
 
         return view('dashboard.find-freelancer', compact('allFreelancer','userRoles','categories',
         'messages','unreadMessagesCount'));
@@ -383,7 +394,7 @@ class PageController extends Controller
         $categories = UserCategory::all();
         
         // Store the intended URL in the session
-        session(['url.intended' => "find-freelancer"]);
+        // session(['url.intended' => "find-freelancer"]);
         // $user_id = auth()->user()->id;
         // $messages = UserMessage::where('to_user_id', '=', $user_id)   
         // ->where('message_status', 'Unread')
@@ -426,15 +437,15 @@ class PageController extends Controller
                     ->where('job_status', 'Open')
                     ->paginate(10);
             $user_id = auth()->user()->id;
-            $messages = UserMessage::where('to_user_id', '=', $user_id)   
-                    ->where('message_status', 'Unread')
+            $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
                     ->orderBy('created_at', 'desc')
                     ->get();
             
             $unreadMessagesCount = $messages->count();
 
             // Store the intended URL in the session
-            session(['url.intended' => "search-jobs"]);
+            // session(['url.intended' => "search-jobs"]);
 
             return view('dashboard.job-search', compact('Jobs', 'categories', 'jobLocation', 'postUpskill',
         'messages', 'unreadMessagesCount'));

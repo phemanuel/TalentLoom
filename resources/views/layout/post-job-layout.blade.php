@@ -396,7 +396,10 @@ th {
                                                                                       <th><span class="style3">Job Location</span></th>
                                                                                       <th><span class="style3">Status</span></th>	
                                                                                       <th><span class="style3">Verified</span></th>
+                                                                                      @if(auth()->user()->user_type_status == 'Superadmin')
+                                                                                      <th><span class="style1"><strong>Posted By</strong></span></th>@else  @endif
                                                                                       <th><span class="style1"><strong>Posted On</strong></span></th>
+                                                                                      <th><span class="style1"><strong>Application Type</strong></span></th>
                                                                                       <th><span class="style1"><strong>Views</strong></span></th>
                                                                                       <th><span class="style1"><strong>Applied</strong></span></th>
                                                                                       <th><span class="style3">Actions</span></th>						
@@ -436,7 +439,10 @@ th {
                                                                                 @else  @endif
                                                                             @endif
                                                                             </td>
+                                                                            @if(auth()->user()->user_type_status == 'Superadmin')
+                                                                            <td><span class="style1">{{ $rs->user_name }}</span></td> @else  @endif
                                                                             <td><span class="style1">{{ $rs->created_at }}</span></td>
+                                                                            <td><span class="style1">{{ $rs->application_type }}</span></td>
                                                                             <td>
     <span class="style1">
         <label class="btn btn-icon btn-xs btn-info" for="">{{ $rs->no_of_views }}</label>        

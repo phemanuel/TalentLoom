@@ -233,12 +233,16 @@
 													<td>{{$postJobs->no_of_views}} view/s</td>		
 																							
 												</tr>
-												@if($postJobs->application_type == 'Application Link')
 												<tr>
 													<td><img src="{{asset('homeback/img/applications.png')}}" alt="" width="15" height="15"></td>
 													<td>{{$postJobs->job_apply}} application/s</td>	
 												</tr>
-												@endif
+												<!-- @if($postJobs->application_type == 'Application Link')
+												<tr>
+													<td><img src="{{asset('homeback/img/applications.png')}}" alt="" width="15" height="15"></td>
+													<td>{{$postJobs->job_apply}} application/s</td>	
+												</tr>
+												@endif -->
 												
 											</table>
 											<a href="#"></a>
@@ -249,11 +253,14 @@
 								<p>
 									{!!$postJobs->job_description!!}
 								</p>
-								@if($postJobs->application_type == 'Application Link')
 								<ul class="btns">											
 											<li><a href="{{route('job-apply', ['id' => $postJobs->id])}}" target="_blank">Apply</a></li>
 										</ul>
-										@endif
+								<!-- @if($postJobs->application_type == 'Application Link')
+								<ul class="btns">											
+											<li><a href="{{route('job-apply', ['id' => $postJobs->id])}}" target="_blank">Apply</a></li>
+										</ul>
+								@endif -->
 							</div>							
 							@else
                             <p>No job found.</p>
