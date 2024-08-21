@@ -385,7 +385,7 @@ th {
                                         </div>
                                     </div>
                                     <div class="table-container">
-                                    <table id="datatable-buttons" class="table">
+                                    <table id="jobTable" class="table">
                                                                   <thead>
                                                                                     <tr>
                                                                                     <th><span class="style3">Actions</span></th>
@@ -956,6 +956,30 @@ $('#exportApplicationsCsvBtn').click(function() {
     link.click();
     document.body.removeChild(link); // Cleanup
 });
+</script>
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById('searchInput');
+    filter = input.value.toUpperCase();
+    table = document.getElementById('jobTable');
+    tr = table.getElementsByTagName('tr');
+
+    for (i = 1; i < tr.length; i++) { // Start from 1 to skip the table header
+        tr[i].style.display = 'none';
+        td = tr[i].getElementsByTagName('td');
+        for (var j = 0; j < td.length; j++) {
+            if (td[j]) {
+                txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = '';
+                    break;
+                }
+            }
+        }
+    }
+});
+
 </script>
 
 

@@ -340,145 +340,120 @@ th {
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane fade show pt-20 active" id="design" role="tabpanel">
-                                                    <div class="accordion" id="accordionsimpleborder">
-                                                        <div class="mb-2 acd-group">
-                                                            <div class="card-header rounded-0 bg-primary">
-                                                                <h5 class="mb-0">
-                                                                    <a href="#collapse01" class="btn-block text-left text-white acd-heading" data-toggle="collapse"></a>
-                                                                </h5>
-                                                            </div>
-                                                            @if(session('success'))
-						<div class="alert alert-success">
-							{{ session('success') }}
-						</div>
-          @elseif(session('error'))
-						<div class="alert alert-error">
-							{{ session('error') }}
-						</div>
-						@endif
-                                                            <div id="collapse01" class="collapse show" data-parent="#accordionsimpleborder">
-                                                                <div class="card-body">                                                            
-                                                                  <p>
-                                                                  <div class="card-header d-sm-flex justify-content-between align-items-center py-3">
-                                        <div class="card-heading mb-3 mb-sm-0">
-                                            <h4 class="card-title">List of Upskill Opportunities posted</h4>
-                                        </div>
-                                        <div class="dropdown">
-                                            <input type="text" class="form-control form-control-sm" placeholder="Search...." id="searchInput"/>
-                                        </div>
-                                    </div>
-                                    <div class="table-container">
-                                    <table id="datatable-buttons" class="table">
-                                                                  <thead>
-                                                                                    <tr>
-                                                                                        <th class="table-plus">#</th>
-                                                                                        <th class="table-plus"><span class="style1"><strong>Company Name</strong></span></th>
-                                                                                      <th><span class="style3">Upskill Name</span></th>
-                                                                                      <th><span class="style3">Upskill Category</span></th>
-                                                                                      <th><span class="style3">Status</span></th>
-                                                                                      <th><span class="style3">Verified</span></th>	
-                                                                                       @if(auth()->user()->user_type_status == 'Superadmin')
-                                                                                      <th><span class="style1"><strong>Posted By</strong></span></th>@else  @endif
-                                                                                      <th><span class="style1"><strong>Posted On</strong></span></th>	
-                                                                                      <th><span class="style1"><strong>Application Type</strong></span></th>
-                                                                                      <th><span class="style1"><strong>Upskill Url</strong></span></th>
-                                                                                      <th><span class="style1"><strong>Views</strong></span></th>
-                                                                                      <th><span class="style1"><strong>Applied</strong></span></th>
-                                                                                      <th><span class="style3">Actions</span></th>						
-                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                @if ($records->count() > 0)
-                                                                    @foreach ($records as $rs)
-                                                                        <tr>
-                                                                            <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
-                                                                            <td><span class="style1">{{ $rs->company_name }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->upskill_name }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->upskill_category }}</span></td>
-                                                                          <td>
-                                                                            @if($rs->upskill_status == 'Open')
-                                                                            <label class="badge mb-0 badge-success-inverse style1"> 
-                                                                                {{ $rs->upskill_status }}</label>
-                                                                            @elseif($rs->upskill_status == 'Closed')
-                                                                            <label class="badge mb-0 badge-primary-inverse style1"> 
-                                                                                {{ $rs->upskill_status }}</label>
-                                                                            @endif
-                                                            </td>
-                                                            <td>
-                                                                            @if($rs->verify_upskill == 0)
-                                                                            <label class="btn btn-icon btn-xs btn-danger"> 
-                                                                                No</label>
-                                                                                @if(auth()->user()->user_type_status == 'Superadmin')
-                                                                                <a class="badge mb-0 badge-success style2" href="{{ route('verify-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Verify">Verify</a>
-                                                                                @else  @endif
-                                                                            @elseif($rs->verify_upskill == 1)
-                                                                            <label class="btn btn-icon btn-xs btn-success"> 
-                                                                               Yes</label>
-                                                                               @if(auth()->user()->user_type_status == 'Superadmin')
-                                                                                <a class="badge mb-0 badge-danger style2" href="{{ route('decline-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Decline">Decline</a>
-                                                                                @else  @endif
-                                                                            @endif
-                                                                            </td>
-                                                                             @if(auth()->user()->user_type_status == 'Superadmin')
-                                                                            <td><span class="style1">{{ $rs->user_name }}</span></td> @else  @endif
-                                                                            <td><span class="style1">{{ $rs->created_at }}</span></td>
-                                                                            <td><span class="style1">{{ $rs->application_type }}</span></td>
-                                                                            <td>
-    <span class="style1">
-        <a href="https://talentloom.kingsconsult.com.ng/upskill/{{$rs->upskill_url}}">
-            https://talentloom.kingsconsult.com.ng/upskill/{{$rs->upskill_url}}
-        </a>
-    </span>
-</td>
-                                                                            <td><span class="style1">{{ $rs->created_at }}</span></td>
-                                                                            <td>
-    <span class="style1">
-        <label class="btn btn-icon btn-xs btn-info" for="">{{ $rs->no_of_views }}</label>        
-        @if($rs->no_of_views != 0 && (auth()->user()->id == $rs->user_id || auth()->user()->user_type_status == 'Superadmin'))
-    <u><a data-toggle="modal" data-target="#viewersModal" href="#" data-placement="top" title="View"
-       onclick="loadUpskillViewers({{ $rs->id }})">
-        <img src="{{ asset('dashback/assets/img/view.jpg') }}" alt="">
-    </a></u>
-@endif
-    </span>
-</td>
-<td>
-    <span class="style1">
-        <label class="btn btn-icon btn-xs btn-primary" for="">{{ $rs->upskill_apply }}</label>
-        @if($rs->upskill_apply != 0 && (auth()->user()->id == $rs->user_id || auth()->user()->user_type_status == 'Superadmin'))
-    <u>
-        <a data-toggle="modal" data-target="#applicationsModal" href="#" data-placement="top" title="View"
-           onclick="loadUpskillApplications({{ $rs->id }})">
-            <img src="{{ asset('dashback/assets/img/view.jpg') }}" alt="">
-        </a>
-    </u>
-@endif
-    </span>
-</td>
-                                                                          <td>
-                                                                            <a class="mr-3" href="{{ route('edit-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-edit"></i></a>
-                                                                            <a href="{{ route('delete-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-trash-2"></i></a></td>                                                                            				
-                                                                        </tr>
-                                                                    @endforeach
-                                                                @else
-                                                                <tr>
-                                                                    <td colspan="8">Job has not been posted yet.</td>
-                                                                </tr>
-                                                                @endif
+    <div class="accordion" id="accordionsimpleborder">
+        <div class="mb-2 acd-group">
+            <div class="card-header rounded-0 bg-primary">
+                <h5 class="mb-0">
+                    <a href="#collapse01" class="btn-block text-left text-white acd-heading" data-toggle="collapse"></a>
+                </h5>
+            </div>
 
-                                                                                </tbody>
-                                                                    </table>
-                                                                    {{ $records->links()}}
-                                                                    </div>
-                                                                  
-                                                                  </p>
-                                               
-                                                                </div>
-                                                            </div>
-                                                        </div>                                                       
-                                                        
-                                                    </div>
-                                                </div>
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @elseif(session('error'))
+                <div class="alert alert-error">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <div id="collapse01" class="collapse show" data-parent="#accordionsimpleborder">
+                <div class="card-body">
+                    <p>
+                        <div class="card-header d-sm-flex justify-content-between align-items-center py-3">
+                            <div class="card-heading mb-3 mb-sm-0">
+                                <h4 class="card-title">List of Upskill Opportunities posted</h4>
+                            </div>
+                            <div class="dropdown">
+                                <input type="text" class="form-control form-control-sm" placeholder="Search...." id="searchInput"/>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table id="upskillTable" class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="table-plus">#</th>
+                                        <th class="table-plus"><span class="style1"><strong>Company Name</strong></span></th>
+                                        <th><span class="style3">Upskill Name</span></th>
+                                        <th><span class="style3">Upskill Category</span></th>
+                                        <th><span class="style3">Status</span></th>
+                                        <th><span class="style3">Verified</span></th>
+                                        @if(auth()->user()->user_type_status == 'Superadmin')
+                                            <th><span class="style1"><strong>Posted By</strong></span></th>
+                                        @endif
+                                        <th><span class="style1"><strong>Posted On</strong></span></th>
+                                        <th><span class="style1"><strong>Application Type</strong></span></th>
+                                        <th><span class="style1"><strong>Upskill Url</strong></span></th>
+                                        <th><span class="style1"><strong>Views</strong></span></th>
+                                        <th><span class="style1"><strong>Applied</strong></span></th>
+                                        <th><span class="style3">Actions</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($records->count() > 0)
+                                        @foreach ($records as $rs)
+                                            <tr>
+                                                <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>
+                                                <td><span class="style1">{{ $rs->company_name }}</span></td>
+                                                <td><span class="style1">{{ $rs->upskill_name }}</span></td>
+                                                <td><span class="style1">{{ $rs->upskill_category }}</span></td>
+                                                <td>
+                                                    @if($rs->upskill_status == 'Open')
+                                                        <label class="badge mb-0 badge-success-inverse style1">{{ $rs->upskill_status }}</label>
+                                                    @elseif($rs->upskill_status == 'Closed')
+                                                        <label class="badge mb-0 badge-primary-inverse style1">{{ $rs->upskill_status }}</label>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($rs->verify_upskill == 0)
+                                                        <label class="btn btn-icon btn-xs btn-danger">No</label>
+                                                        @if(auth()->user()->user_type_status == 'Superadmin')
+                                                            <a class="badge mb-0 badge-success style2" href="{{ route('verify-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Verify">Verify</a>
+                                                        @endif
+                                                    @elseif($rs->verify_upskill == 1)
+                                                        <label class="btn btn-icon btn-xs btn-success">Yes</label>
+                                                        @if(auth()->user()->user_type_status == 'Superadmin')
+                                                            <a class="badge mb-0 badge-danger style2" href="{{ route('decline-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Decline">Decline</a>
+                                                        @endif
+                                                    @endif
+                                                </td>
+                                                @if(auth()->user()->user_type_status == 'Superadmin')
+                                                    <td><span class="style1">{{ $rs->user_name }}</span></td>
+                                                @endif
+                                                <td><span class="style1">{{ $rs->created_at }}</span></td>
+                                                <td><span class="style1">{{ $rs->application_type }}</span></td>
+                                                <td>
+                                                    <span class="style1">
+                                                        <a href="https://talentloom.kingsconsult.com.ng/upskill/{{ $rs->upskill_url }}">
+                                                            https://talentloom.kingsconsult.com.ng/upskill/{{ $rs->upskill_url }}
+                                                        </a>
+                                                    </span>
+                                                </td>
+                                                <td><span class="style1">{{ $rs->no_of_views }}</span></td>
+                                                <td><span class="style1">{{ $rs->upskill_apply }}</span></td>
+                                                <td>
+                                                    <a class="mr-3" href="{{ route('edit-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-edit"></i></a>
+                                                    <a href="{{ route('delete-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="8">No upskill opportunities have been posted yet.</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                            {{ $records->links() }}
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                                                 
                                                <!-- Vertical Center Modal -->
                                                <!-- Job Viewers -->
@@ -929,5 +904,29 @@ $('#exportApplicationsCsvBtn').click(function() {
     link.click();
     document.body.removeChild(link); // Cleanup
 });
+</script>
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById('searchInput');
+    filter = input.value.toUpperCase();
+    table = document.getElementById('upskillTable');
+    tr = table.getElementsByTagName('tr');
+
+    for (i = 1; i < tr.length; i++) { // Start from 1 to skip the table header
+        tr[i].style.display = 'none';
+        td = tr[i].getElementsByTagName('td');
+        for (var j = 0; j < td.length; j++) {
+            if (td[j]) {
+                txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = '';
+                    break;
+                }
+            }
+        }
+    }
+});
+
 </script>
 
