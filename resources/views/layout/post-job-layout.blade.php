@@ -388,7 +388,8 @@ th {
                                     <table id="datatable-buttons" class="table">
                                                                   <thead>
                                                                                     <tr>
-                                                                                        <th class="table-plus">#</th>
+                                                                                    <th><span class="style3">Actions</span></th>
+                                                                                        <th class="table-plus">#</th>                                                                                        
                                                                                         <th class="table-plus"><span class="style1"><strong>Recruiter Name</strong></span></th>
                                                                                       <th><span class="style3">Job Title</span></th>                                                                                      
                                                                                       <th><span class="style1"><strong>Job Type</strong></span></th>
@@ -400,15 +401,21 @@ th {
                                                                                       <th><span class="style1"><strong>Posted By</strong></span></th>@else  @endif
                                                                                       <th><span class="style1"><strong>Posted On</strong></span></th>
                                                                                       <th><span class="style1"><strong>Application Type</strong></span></th>
+                                                                                      <th><span class="style1"><strong>Job Url</strong></span></th>
                                                                                       <th><span class="style1"><strong>Views</strong></span></th>
                                                                                       <th><span class="style1"><strong>Applied</strong></span></th>
-                                                                                      <th><span class="style3">Actions</span></th>						
+                                                                                      						
                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
                                                                 @if ($records->count() > 0)
                                                                     @foreach ($records as $rs)
                                                                         <tr>
+                                                                        <td>
+                                                                            <a class="mr-3" href="{{ route('edit-job', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-edit"></i></a>
+                                                                            <a href="{{ route('delete-job', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
+                                                                            
+                                                                        </td> 
                                                                             <td><img src="{{ asset('storage/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
                                                                             <td><span class="style1">{{ $rs->company_name }}</span></td>
                                                                           <td><span class="style1">{{ $rs->job_name }}</span></td>
@@ -445,6 +452,13 @@ th {
                                                                             <td><span class="style1">{{ $rs->application_type }}</span></td>
                                                                             <td>
     <span class="style1">
+        <a href="https://talentloom.kingsconsult.com.ng/job/{{$rs->job_url}}">
+            https://talentloom.kingsconsult.com.ng/job/{{$rs->job_url}}
+        </a>
+    </span>
+</td>
+                                                                            <td>
+    <span class="style1">
         <label class="btn btn-icon btn-xs btn-info" for="">{{ $rs->no_of_views }}</label>        
         @if($rs->no_of_views != 0 && (auth()->user()->id == $rs->user_id || auth()->user()->user_type_status == 'Superadmin'))
     <u><a data-toggle="modal" data-target="#viewersModal" href="#" data-placement="top" title="View"
@@ -468,11 +482,7 @@ th {
     </span>
 </td>
                                                                       
-                                                                        <td>
-                                                                            <a class="mr-3" href="{{ route('edit-job', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-edit"></i></a>
-                                                                            <a href="{{ route('delete-job', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
-                                                                            
-                                                                        </td> 
+                                                                        
                                                                                                                                                    				
                                                                         </tr>
                                                                     @endforeach

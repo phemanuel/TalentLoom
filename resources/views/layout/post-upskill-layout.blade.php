@@ -311,7 +311,8 @@ th {
                                                                 <div class="form-group col-md-12">
                                                                 <label for="name1"><span class="style1">Job application deadline</span></label>
                                                                 <div class='input-group date' id='datepicker-top-left'>                                                                
-                                                                    <input class="form-control" name="application_deadline" type='text' placeholder="12-12-2024" />
+                                                                    <input class="form-control" name="application_deadline" type='text' value="{{ date('m/d/Y') }}" />
+
                                                                     
                                                                     <span class="input-group-addon">
                                                                             <i class="fa fa-calendar"></i>
@@ -376,7 +377,11 @@ th {
                                                                                       <th><span class="style3">Upskill Category</span></th>
                                                                                       <th><span class="style3">Status</span></th>
                                                                                       <th><span class="style3">Verified</span></th>	
+                                                                                       @if(auth()->user()->user_type_status == 'Superadmin')
+                                                                                      <th><span class="style1"><strong>Posted By</strong></span></th>@else  @endif
                                                                                       <th><span class="style1"><strong>Posted On</strong></span></th>	
+                                                                                      <th><span class="style1"><strong>Application Type</strong></span></th>
+                                                                                      <th><span class="style1"><strong>Upskill Url</strong></span></th>
                                                                                       <th><span class="style1"><strong>Views</strong></span></th>
                                                                                       <th><span class="style1"><strong>Applied</strong></span></th>
                                                                                       <th><span class="style3">Actions</span></th>						
@@ -386,7 +391,7 @@ th {
                                                                 @if ($records->count() > 0)
                                                                     @foreach ($records as $rs)
                                                                         <tr>
-                                                                            <td><img src="{{ asset('storage/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
+                                                                            <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
                                                                             <td><span class="style1">{{ $rs->company_name }}</span></td>
                                                                           <td><span class="style1">{{ $rs->upskill_name }}</span></td>
                                                                           <td><span class="style1">{{ $rs->upskill_category }}</span></td>
@@ -414,6 +419,17 @@ th {
                                                                                 @else  @endif
                                                                             @endif
                                                                             </td>
+                                                                             @if(auth()->user()->user_type_status == 'Superadmin')
+                                                                            <td><span class="style1">{{ $rs->user_name }}</span></td> @else  @endif
+                                                                            <td><span class="style1">{{ $rs->created_at }}</span></td>
+                                                                            <td><span class="style1">{{ $rs->application_type }}</span></td>
+                                                                            <td>
+    <span class="style1">
+        <a href="https://talentloom.kingsconsult.com.ng/upskill/{{$rs->upskill_url}}">
+            https://talentloom.kingsconsult.com.ng/upskill/{{$rs->upskill_url}}
+        </a>
+    </span>
+</td>
                                                                             <td><span class="style1">{{ $rs->created_at }}</span></td>
                                                                             <td>
     <span class="style1">
@@ -755,7 +771,7 @@ function loadUpskillViewers(jobId) {
             tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((viewer, index) => {
-                let profilePictureUrl = `/storage/${viewer.profile_picture}`;
+                let profilePictureUrl = `/storage/app/public/${viewer.profile_picture}`;
                 tableHtml += '<tr>';
                 tableHtml += `<td style="color: black;">${index + 1}</td>`;
                 tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${viewer.name}" width="50" /></td>`;
@@ -845,12 +861,12 @@ function loadUpskillApplications(jobId) {
             let headingHtml = `<h4 style="color: black; text-align: center;">${jobTitle} - Applications</h4>`;
             
             // Update the modal with the new content (tabulated data)
-            let tableHtml = '<div class="table-container">';
+           let tableHtml = '<div class="table-container">';
             tableHtml += '<table id="applicationsTable" class="table table-bordered">';
             tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((application, index) => {
-                let profilePictureUrl = `/storage/${application.profile_picture}`;
+                let profilePictureUrl = `/storage/app/public/${application.profile_picture}`;
                 tableHtml += '<tr>';
                 tableHtml += `<td style="color: black;">${index + 1}</td>`;
                 tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${application.name}" width="50" /></td>`;

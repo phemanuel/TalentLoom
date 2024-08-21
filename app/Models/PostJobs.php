@@ -28,5 +28,6 @@ class PostJobs extends Model
         'verify_job',
         'application_type',
         'application_deadline',
+        'job_url',
     ];
 }

@@ -264,7 +264,11 @@ use App\Http\Controllers\MessageController;
 
     Route::get('user-locked', [AuthController::class, 'userLocked'])
         ->name('user-locked');     
-        
+
+    Route::get('/job/{job_url}', [PageController::class, 'jobUrl'])
+    ->name('job-url');
+    Route::get('/upskill/{upskill_url}', [PageController::class, 'upskillUrl'])
+    ->name('upskill-url');
         
     
     Route::get('/{username}', [PortfolioController::class, 'userPortfolio'])

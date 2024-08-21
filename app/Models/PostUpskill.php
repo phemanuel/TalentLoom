@@ -23,5 +23,6 @@ class PostUpskill extends Model
         'verify_upskill',
         'application_type',
         'application_deadline',
+        'upskill_url',
     ];
 }

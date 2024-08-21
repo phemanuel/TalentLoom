@@ -126,15 +126,24 @@
                             @endif
 				            </ul>
 				          </li>				          
+						  @if($unreadMessagesCount > 0)
 						  <li>
-							<a href="{{ route('user-message') }}" class="message-icon-wrapper">
+							<a href="{{ route('user-message') }}" class="message-icon-wrapper" target="_blank" onclick="window.open(this.href); return false;">
 								<img src="{{ asset('homeback/img/message.png') }}" alt="message_icon" class="message-icon">
 								<span class="badge {{ $unreadMessagesCount > 1 ? 'blink' : '' }}">{{ $unreadMessagesCount }}</span>
 							</a>
 							</li>
+						  @else
+						  <li>
+							<a href="{{ route('user-message') }}" class="message-icon-wrapper" target="_blank" onclick="window.open(this.href); return false;">
+								<img src="{{ asset('homeback/img/message.png') }}" alt="message_icon" class="message-icon">
+								
+							</a>
+							</li>
+						  @endif
 						  <li class="menu-has-children">
 							<div class="profile-frame">
-								<img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="Profile Picture">
+								<img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="Profile Picture">
 							</div>	
 							<ul>
 							<li><a href="{{ route('dashboard-organization') }}">Profile</a></li>
@@ -157,15 +166,24 @@
                             @endif
 				            </ul>
 				          </li>	
+						  @if($unreadMessagesCount > 0)
 						  <li>
-							<a href="{{ route('user-message') }}" class="message-icon-wrapper">
+							<a href="{{ route('user-message') }}" class="message-icon-wrapper" target="_blank">
 								<img src="{{ asset('homeback/img/message.png') }}" alt="message_icon" class="message-icon">
 								<span class="badge {{ $unreadMessagesCount > 1 ? 'blink' : '' }}">{{ $unreadMessagesCount }}</span>
 							</a>
-							</li>			          
+							</li>
+						  @else
+						  <li>
+							<a href="{{ route('user-message') }}" class="message-icon-wrapper">
+								<img src="{{ asset('homeback/img/message.png') }}" alt="message_icon" class="message-icon">
+								
+							</a>
+							</li>
+						  @endif			          
 						  <li class="menu-has-children">
 							<div class="profile-frame">
-								<img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="Profile Picture">
+								<img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="Profile Picture">
 							</div>	
 							<ul>
 							<li><a href="{{ route('dashboard') }}">Profile</a></li>
@@ -335,13 +353,13 @@
 						@foreach($postJobAll as $job)	
 							<div class="single-popular-post d-flex flex-row">
 								<div class="thumb">
-									<img class="img-fluid" src="{{ asset('storage/' . $job->company_logo) }}" alt="" style="width: 80px; height: 80px;">
+									<img class="img-fluid" src="{{ asset('storage/app/public/' . $job->company_logo) }}" alt="" style="width: 80px; height: 80px;">
 									<a class="btns text-uppercase" href="{{route('view-job', ['id' => $job->id])}}">view job post</a>
 								</div>
 								<div class="details">
 									<a href="#"><h4>{{$job->job_name}}</h4></a>
-									<h6>{{$job->job_location}}</h6>
-									<p>{{$job->job_type}}</p>
+									<h6>Location: {{$job->job_location}}</h6>
+									<p>Job Type: {{$job->job_type}}</p>
 									<p>{{$job->job_payment}}</p>
 								</div>
 							</div>	
@@ -468,7 +486,7 @@
 							@if($postJob->isEmpty())
                             <div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="{{ asset('storage/' . 'company_logo/blank.jpg') }}" alt="" width="60" height="60">
+									<img src="{{ asset('storage/app/public/' . 'company_logo/blank.jpg') }}" alt="" width="60" height="60">
 									<ul class="tags">
 										<li>
 											<a href="#"></a>
@@ -478,7 +496,7 @@
 								<div class="details">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">											
-											<strong><h4>No jobs posted yet for {{$category->category}} category, check back later</h4></strong>					
+											<strong><h4>No jobs posted yet, check back later</h4></strong>					
 										</div>
 										<ul class="btns">
 											
@@ -495,7 +513,7 @@
                             @foreach($postJob as $job)
                             <div class="single-post d-flex flex-row">
 								<div class="thumb">
-                                <img src="{{ asset('storage/' . $job->company_logo) }}" alt="Company Logo" width="60" height="60">
+                                <img src="{{ asset('storage/app/public/' . $job->company_logo) }}" alt="Company Logo" width="60" height="60">
 									
 								</div>
 								<div class="details">
@@ -507,7 +525,7 @@
                                         
 									</div> 
                                         <hr>
-								  <h5>Job Nature: {{$job->job_type}}</h5>
+								  <h5>Job Type: {{$job->job_type}}</h5>
 									<p class="address"><span class="lnr lnr-map"></span> {{$job->job_location}}</p>
 									<p class="address"><span class="lnr lnr-database"></span> {{$job->job_payment}}</p>
 									<ul class="btns">                             
@@ -527,9 +545,10 @@
 								<div class="active-relatedjob-carusel">									
 									@foreach ($postUpskill as $postUpskills)
 									<div class="single-rated">
-										<img class="img-fluid" src="{{ asset('storage/' . $postUpskills->company_logo) }}" alt="" width="100" height="50">
-										<a href="#"><h4>{{$postUpskills->upskill_name}}</h4></a>
-										<h6>Created by : {{$postUpskills->company_name}}</h6>										
+										<!--<img class="img-fluid" src="{{ asset('storage/app/public/' . $postUpskills->company_logo) }}" alt="" width="100" height="50">-->
+										<a href="#"><h2>{{$postUpskills->upskill_name}}</h2></a>
+										<h6>Created by : Admin</h6>
+										<!--<h6>Created by : {{$postUpskills->company_name}}</h6>-->
 										<a href="{{route('view-upskill', ['id' => $postUpskills->id])}}" class="btns text-uppercase">View Details</a>
 									</div>	
 									@endforeach																								
@@ -546,7 +565,7 @@
 								@else
                                 @foreach($jobLocation as $jobLocations)
                                 <li><a class="justify-content-between d-flex" href="{{route('job-location', ['id' => $jobLocations->job_location])}}"><p>{{$jobLocations->job_location}}</p><span>{{$jobLocations->location_count}}</span></a></li>
-                                @endforeach                                
+                                @endforeach
                                 @endif
 								</ul>
 								{{ $jobLocation->links() }}

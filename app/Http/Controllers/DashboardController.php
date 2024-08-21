@@ -18,6 +18,7 @@ use App\Models\UserMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Chat ;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -908,42 +909,39 @@ class DashboardController extends Controller
 
     public function postJobSave(Request $request)
     {
-        //$user = auth()->user();
-        
         try {
             $validatedData = $request->validate([
-            'user_id' => 'required|integer',
-            'company_name' => 'required|string|max:255',
-            'company_logo' => 'nullable|image|mimes:jpg,jpeg,png',
-            'job_name' => 'required|string',
-            'job_description' => 'required|string',
-            'job_category' => 'required|string',
-            'job_type' => 'required|string',
-            'job_payment' => 'required|string',
-            'job_location' => 'required|string',
-            'job_status' => 'required|string',            
-            'job_link' => ['required', function ($attribute, $value, $fail) {
-            if (!filter_var($value, FILTER_VALIDATE_EMAIL) && !filter_var($value, FILTER_VALIDATE_URL)) {
-                $fail("The $attribute must be a valid email address or URL.");
-            }
-        }],
-            'application_type' => 'required|string',
-            'application_deadline' => 'required|string',  
+                'user_id' => 'required|integer',
+                'company_name' => 'required|string|max:255',
+                'company_logo' => 'nullable|image|mimes:jpg,jpeg,png',
+                'job_name' => 'required|string',
+                'job_description' => 'required|string',
+                'job_category' => 'required|string',
+                'job_type' => 'required|string',
+                'job_payment' => 'required|string',
+                'job_location' => 'required|string',
+                'job_status' => 'required|string',            
+                'job_link' => ['required', function ($attribute, $value, $fail) {
+                    if (!filter_var($value, FILTER_VALIDATE_EMAIL) && !filter_var($value, FILTER_VALIDATE_URL)) {
+                        $fail("The $attribute must be a valid email address or URL.");
+                    }
+                }],
+                'application_type' => 'required|string',
+                'application_deadline' => 'required|string',  
             ]);            
 
             if ($request->hasFile('company_logo')) {
                 $companyLogoFile = $request->file('company_logo');
-            
                 $username = $validatedData['company_name'];        
-            
                 $companyLogoFilename = $username . '_'. uniqid(5) . '.' . $companyLogoFile->getClientOriginalExtension();
-                
-                // Store file
                 $companyLogoPath = $companyLogoFile->storeAs('company_logo', $companyLogoFilename, 'public');
             } else {
-                $companyLogoPath = 'company_logo/blank.jpg'; // If no file was uploaded
+                $companyLogoPath = 'company_logo/blank.jpg';
             }
-              
+            
+            // Generate a unique identifier for the job
+            $jobUrl = Str::random(32);  // This will generate a random 32-character string
+
             $PostJob = PostJobs::create([
                 'user_id' => $validatedData['user_id'],
                 'company_name' => $validatedData['company_name'],
@@ -956,6 +954,7 @@ class DashboardController extends Controller
                 'job_location' => $validatedData['job_location'],
                 'job_status' => $validatedData['job_status'],
                 'job_link' => $validatedData['job_link'],
+                'job_url' => $jobUrl,  
                 'no_of_views' => 0,
                 'job_apply' => 0,
                 'verify_job' => 0,
@@ -963,35 +962,29 @@ class DashboardController extends Controller
                 'application_deadline' => date("Y-m-d", strtotime($validatedData['application_deadline'])),
             ]); 
 
-            //-----CHECK IF LOCATION IS AVAILABLE IN JOB LOCATION TABLE-----
             $job_location = $validatedData['job_location'];
             $existingLocation = JobLocation::where('job_location', $job_location)->first();
 
             if ($existingLocation) {
-                // Use the existing location
                 $existingLocation->increment('location_count');
                 return redirect()->route('post-job')->with('success', 'Job added successfully.');
             } else {
-                // Create a new location if it doesn't exist
                 $jobLocation = JobLocation::create([
                     'job_location' => $validatedData['job_location'],
-                    'location_count' => 1, // Set the initial count to 1 for the new location
+                    'location_count' => 1,
                 ]);
                 return redirect()->route('post-job')->with('success', 'Job added successfully.');
             }
 
         } catch (ValidationException $e) {
-            // Validation failed. Redirect back with validation errors.
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (Exception $e) {
-            // Log the error
             $errorMessage = 'Error-save post job: ' . $e->getMessage();
             Log::error($errorMessage);
-
             return redirect()->back()->with('error', 'An error occurred during adding job. Please try again.');
         }
+    }
 
-    }  
 
     public function editJob($id)
     {
@@ -1211,43 +1204,47 @@ class DashboardController extends Controller
 
     public function postUpskillSave(Request $request)
     {
-        //$user = auth()->user();
-
         try {
             $validatedData = $request->validate([
                 'user_id' => 'required|integer',
-                'company_name' => 'required|string|max:255',
+                'company_name' => 'nullable|string|max:255',
                 'company_logo' => 'nullable|image|mimes:jpg,jpeg,png',
                 'upskill_name' => 'required|string',
                 'upskill_description' => 'required|string',
                 'upskill_category' => 'required|string',
                 'upskill_status' => 'required|string',
                 'upskill_link' => ['required', function ($attribute, $value, $fail) {
-            if (!filter_var($value, FILTER_VALIDATE_EMAIL) && !filter_var($value, FILTER_VALIDATE_URL)) {
-                $fail("The $attribute must be a valid email address or URL.");
-            }
-        }], 
+                    if (!filter_var($value, FILTER_VALIDATE_EMAIL) && !filter_var($value, FILTER_VALIDATE_URL)) {
+                        $fail("The $attribute must be a valid email address or URL.");
+                    }
+                }], 
                 'application_type' => 'required|string',  
-                'application_deadline' => 'required',            
-                
-            ]);            
+                'application_deadline' => 'required',
+            ]);  
+            
+            $companyName = $validatedData['company_name'];
+            if(empty($companyName)) {
+                $companyNameNew = "N/a";
+            }
+            else{
+                $companyNameNew = $validatedData['company_name'];
+            }
 
             if ($request->hasFile('company_logo')) {
                 $companyLogoFile = $request->file('company_logo');
-            
                 $username = $validatedData['company_name'];        
-            
                 $companyLogoFilename = $username . '_'. uniqid(5) . '.' . $companyLogoFile->getClientOriginalExtension();
-                
-                // Store file
                 $companyLogoPath = $companyLogoFile->storeAs('company_logo', $companyLogoFilename, 'public');
             } else {
-                $companyLogoPath = 'company_logo/blank.jpg'; // If no file was uploaded
+                $companyLogoPath = 'company_logo/blank.jpg';
             }
-              
+            
+            // Generate a unique identifier for the upskill post
+            $upskillUrl = Str::random(32);  // Generates a random 32-character string
+
             $PostUpskill = PostUpskill::create([
                 'user_id' => $validatedData['user_id'],
-                'company_name' => $validatedData['company_name'],
+                'company_name' => $companyNameNew,
                 'company_logo' => $companyLogoPath,
                 'upskill_name' => $validatedData['upskill_name'],
                 'upskill_description' => $validatedData['upskill_description'],
@@ -1259,22 +1256,20 @@ class DashboardController extends Controller
                 'verify_upskill' => 0,
                 'application_type' => $validatedData['application_type'],
                 'application_deadline' => date("Y-m-d", strtotime($validatedData['application_deadline'])),
-            ]); 
+                'upskill_url' => $upskillUrl,  // Save the generated upskill URL
+            ]);
 
             return redirect()->route('post-upskill')->with('success', 'Upskill added successfully.');
 
         } catch (ValidationException $e) {
-            // Validation failed. Redirect back with validation errors.
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (Exception $e) {
-            // Log the error
             $errorMessage = 'Error-save post upskill: ' . $e->getMessage();
             Log::error($errorMessage);
-
             return redirect()->back()->with('error', 'An error occurred during adding upskill. Please try again.');
         }
+    }
 
-    }  
 
     public function editUpskill($id)
     {

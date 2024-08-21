@@ -220,7 +220,8 @@
 								<div class="details">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">
-											<a href="#"><h4>{{$postJobs->company_name}}</h4></a>
+											<!--<a href="#"><h4>{{$postJobs->company_name}}</h4></a>-->
+											<a href="#"><h4>{{$postJobs->job_name}}</h4></a>
 											<h6>{{$postJobs->job_category}} || <i>Posted {{ $postJobs->created_at->diffForHumans() }}</i></h6>					
 										</div>										
 									</div>									
@@ -237,12 +238,12 @@
 													<td><img src="{{asset('homeback/img/applications.png')}}" alt="" width="15" height="15"></td>
 													<td>{{$postJobs->job_apply}} application/s</td>	
 												</tr>
-												<!-- @if($postJobs->application_type == 'Application Link')
-												<tr>
-													<td><img src="{{asset('homeback/img/applications.png')}}" alt="" width="15" height="15"></td>
-													<td>{{$postJobs->job_apply}} application/s</td>	
-												</tr>
-												@endif -->
+												<!--@if($postJobs->application_type == 'Application Link')-->
+												<!--<tr>-->
+												<!--	<td><img src="{{asset('homeback/img/applications.png')}}" alt="" width="15" height="15"></td>-->
+												<!--	<td>{{$postJobs->job_apply}} application/s</td>	-->
+												<!--</tr>-->
+												<!--@endif-->
 												
 											</table>
 											<a href="#"></a>
@@ -256,11 +257,11 @@
 								<ul class="btns">											
 											<li><a href="{{route('job-apply', ['id' => $postJobs->id])}}" target="_blank">Apply</a></li>
 										</ul>
-								<!-- @if($postJobs->application_type == 'Application Link')
-								<ul class="btns">											
-											<li><a href="{{route('job-apply', ['id' => $postJobs->id])}}" target="_blank">Apply</a></li>
-										</ul>
-								@endif -->
+								<!--@if($postJobs->application_type == 'Application Link')-->
+								<!--<ul class="btns">											-->
+								<!--			<li><a href="{{route('job-apply', ['id' => $postJobs->id])}}" target="_blank">Apply</a></li>-->
+								<!--		</ul>-->
+								<!--		@endif-->
 							</div>							
 							@else
                             <p>No job found.</p>
@@ -275,9 +276,9 @@
 								<div class="active-relatedjob-carusel">									
 									@foreach ($postUpskill as $postUpskills)
 									<div class="single-rated">
-										<img class="img-fluid" src="{{ asset('storage/app/public/' . $postUpskills->company_logo) }}" alt="" width="100" height="50">
-										<a href="#"><h4>{{$postUpskills->upskill_name}}</h4></a>
-										<h6>Created by : {{$postUpskills->company_name}}</h6>										
+										<!--<img class="img-fluid" src="{{ asset('storage/app/public/' . $postUpskills->company_logo) }}" alt="" width="100" height="50">-->
+										<a href="#"><h2>{{$postUpskills->upskill_name}}</h2></a>
+										<h6>Created by : Admin</h6>										
 										<a href="{{route('view-upskill', ['id' => $postUpskills->id])}}" class="btns text-uppercase">View Details</a>
 									</div>	
 									@endforeach																								
