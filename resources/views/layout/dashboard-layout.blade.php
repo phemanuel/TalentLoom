@@ -261,12 +261,12 @@ li {
                                                     <table class="table" align="center">
                                                         @if(auth()->user()->user_type == 'Freelancer')
                                                         <tr>
-                                                            <td><div><a href="{{route('user-page')}}" class="btn btn-primary" target="_blank">View Profile</a></div></td>
-                                                            <td><div><a href="{{route('profile-picture')}}" class="btn btn-light text-primary mb-2">Update Picture</a></div></td>
+                                                            <td></td>
+                                                            <td><div><a href="{{route('profile-picture')}}" class="btn btn-info">Update Picture</a></div></td>
                                                         </tr>
                                                         @else
                                                         <tr>                                                            
-                                                            <td colspan="2"><div><a href="{{route('profile-picture')}}" class="btn btn-light text-primary mb-2">Update Picture</a></div></td>
+                                                            <td colspan="2"><div><a href="{{route('profile-picture')}}" class="btn btn-info">Update Picture</a></div></td>
                                                         </tr>
                                                         @endif
                                                     </table>
@@ -355,8 +355,15 @@ li {
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="add2"><span class="style1">User Url</span></label>
-                                                                <p class="style1"> {{auth()->user()->user_url}} </p>
-                                                            </div>  
+                                                                <p class="style1"><a href="{{auth()->user()->user_url}}" target="_blank">{{auth()->user()->user_url}}</a>  </p>
+                                                            </div> 
+                                                            <table>
+                                                                <tr>
+                                                                    <td><div><a href="{{route('user-page')}}" class="btn btn-primary" target="_blank">Preview Portfolio</a></div></td>
+                                                                    <td><div><a href="{{route('change-theme',['id' => auth()->user()->id])}}" class="btn btn-success" target="_blank">Change Theme</a></div></td>
+                                                                </tr>
+                                                
+                                                            </table>
                                                             @else
 
                                                             @endif

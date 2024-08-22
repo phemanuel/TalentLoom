@@ -8,6 +8,8 @@ use App\Models\UserExperience;
 use App\Models\UserService;
 use App\Models\UserPortfolio;
 use Illuminate\Http\Request;
+use App\Models\USerTemplate;
+use App\Models\Chat ;
 
 class PortfolioController extends Controller
 {
@@ -96,6 +98,48 @@ class PortfolioController extends Controller
             return view('portfolio.user-page', 
             compact('userSkills', 'userEducation', 'userExperience', 'user','userService'
             ,'userPortfolioImage','userPortfolioDocument'));
+        }
+
+        public function changeTheme($id){
+
+            $userTemplates = UserTemplate::where('user_id', $id)->first();
+
+            if(!$userTemplates){
+                $templateType = "TalentLoom-Default";
+                $createTemplate = UserTemplate::create([
+                    'user_id' => $id,
+                    'template_type' => $templateType,
+                ]);
+
+                // Get unread messages
+            $messages = Chat::where('to_id', '=', $id)   
+            ->where('seen', '=', 0)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+            $unreadMessagesCount = $messages->count();
+
+            return view('layout.change-template', compact('templateType','messages','unreadMessagesCount'));
+            }
+
+            $templateType = $userTemplates->template_type;
+
+            // Get unread messages
+            $messages = Chat::where('to_id', '=', $id)   
+            ->where('seen', '=', 0)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+            $unreadMessagesCount = $messages->count();
+
+            return view('layout.change-template', compact('templateType','messages','unreadMessagesCount'));
+
+        
+        }
+    
+        public function type1(){
+    
+            return view('templates.type-1');
         }
 
     

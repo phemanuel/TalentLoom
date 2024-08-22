@@ -58,7 +58,7 @@
 					<div class="banner_content">
 						<div class="media">
 							<div class="d-flex">
-								<img src="{{ asset('storage/app/public/' . $user->profile_picture) }}" width="468" height="483" alt="">
+								<img src="{{ asset('storage/' . $user->profile_picture) }}" width="468" height="483" alt="">
 							</div>
 							<div class="media-body">
 								<div class="personal_text">

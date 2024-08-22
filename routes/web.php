@@ -269,7 +269,10 @@ use App\Http\Controllers\MessageController;
     ->name('job-url');
     Route::get('/upskill/{upskill_url}', [PageController::class, 'upskillUrl'])
     ->name('upskill-url');
-        
+    Route::get('/type-1', [PortfolioController::class, 'type1'])
+    ->name('type-1');
+    Route::get('/change-theme/{id}', [PortfolioController::class, 'changeTheme'])
+    ->name('change-theme');
     
     Route::get('/{username}', [PortfolioController::class, 'userPortfolio'])
             ->name('portfolio'); 
