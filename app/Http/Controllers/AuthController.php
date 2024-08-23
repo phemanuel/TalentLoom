@@ -568,6 +568,77 @@ class AuthController extends Controller
         }  
 
     }   
+
+    public function coverPicture()
+    {
+        $user_id = auth()->user()->id;
+        //---All Messages --------------------------------
+        $userMessages = UserMessage::where('to_user_id', $user_id)
+        ->paginate(5);
+        //---Unread Messages --------------------------------
+        $messages = Chat::where('to_id', '=', $user_id)   
+                    ->where('seen', '=', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            
+        $unreadMessagesCount = $messages->count();
+        // Store the intended URL in the session
+        // session(['url.intended' => "profile-picture"]);
+
+        return view('dashboard.user-cover-picture', compact('unreadMessagesCount', 'messages','userMessages'));
+
+    }
+
+    //update profile picture
+    public function coverPictureUpdate(Request $request)
+    {
+        $user = auth()->user();
+        $request->validate([
+            'cover_picture' => 'required|image|mimes:jpg,jpeg,png|max:2048', // 2048 KB = 2 MB
+        ]);
+        
+        try {
+            if ($request->hasFile('cover_picture')) {
+                $userPictureFile = $request->file('cover_picture');                
+        
+                $username = $user->user_name_link; // Get the user's username
+        
+                // Generate filenames for both pictures
+                $uniqueId = time();
+
+                // Generate filenames for both pictures with a unique identifier
+                $userPictureFilename = $username . '_cover_picture_' . $uniqueId . '.' . $userPictureFile->getClientOriginalExtension(); 
+
+                // Store both pictures with the customized filenames
+                $userPicturePath = $userPictureFile->storeAs('profile_pictures', $userPictureFilename, 'public');
+                        
+                // Resize and save the cover_picture
+                $userPicture = Image::make(public_path('storage/' . $userPicturePath));
+                $userPicture->fit(820, 320); // Adjust dimensions as needed
+                $userPicture->save();  
+        
+                // Update user's profile pictures in the database
+                $user->cover_picture = $userPicturePath;
+                $user->save();
+                
+                $user_type = $user->user_type;
+                if($user_type == 'Freelancer') {
+                    return redirect()->route('user-about')->with('success', 'cover picture update successful.');
+                }
+                elseif($user_type == 'Organization') {
+                    return redirect()->route('user-about-organization')->with('success', 'cover picture update successful.');
+                }
+            }
+        
+            return redirect()->route('cover-picture')->with('error', 'Both user and profile picture must be provided.');
+        } catch (\Exception $e) {
+            // Handle the exception, log the error, and return with an error message
+            \Log::error('Error updating cover pictures: ' . $e->getMessage());
+        
+            return redirect()->route('cover-picture')->with('error', 'An error occurred while updating profile pictures. Please try again.');
+        }  
+
+    }   
     
 
     public function changePassword(Request $request)

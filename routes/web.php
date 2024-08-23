@@ -67,6 +67,10 @@ use App\Http\Controllers\MessageController;
         ->name('profile-picture');
         Route::post('profile-picture-update', 'profilePictureUpdate')->middleware('auth')
         ->name('profile-picture-update');   
+        Route::get('cover-picture', 'coverPicture')->middleware('auth')
+        ->name('cover-picture');
+        Route::post('cover-picture-update', 'coverPictureUpdate')->middleware('auth')
+        ->name('cover-picture-update');  
         Route::get('user-message', [DashboardController::class, 'userMessage'])
         ->name('user-message');  
         Route::get('user-message-view/{id}', [DashboardController::class, 'userMessageView'])

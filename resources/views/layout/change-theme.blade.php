@@ -322,6 +322,11 @@ th {
                                             <td><span class="style3">{{$key + 1}}</span></td>
                                         <td>@if($rs->theme == $themes )
                                         <img src="{{asset('templates/classic/assets/img/check.png')}}" alt="">
+                                        <hr>
+                                        <p>
+                                            <a class="badge mb-0 badge-primary style2" href="{{ route('preview-theme', ['id' => auth()->user()->id, 'theme' => $rs->theme]) }}" 
+                                        data-placement="top" title="Preview" target="_blank">Preview</a>
+                                        </p>
                                         @else
                                         <p>
                                             <a class="badge mb-0 badge-success style2" href="{{ route('update-theme', ['id' => auth()->user()->id, 'theme' => $rs->theme]) }}" 
@@ -334,7 +339,7 @@ th {
                                         @endif
                                         </td>                                        
                                         <td><span class="style3">{{$rs->theme}}</span></td>
-                                        <td><img src="{{ asset($rs->theme_picture) }}" width="850" height="400" alt=""></td>
+                                        <td><img src="{{ asset($rs->theme_picture) }}" width="850" height="400" alt=""></td>                                        
                                         <!-- <td>@if($themes == 'TalentLoom-Default')
                                             <img src="{{asset('templates/classic/assets/img/check.png')}}" alt=""> @else  @endif
                                         </td> -->

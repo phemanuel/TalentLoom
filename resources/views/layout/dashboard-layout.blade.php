@@ -261,8 +261,8 @@ li {
                                                     <table class="table" align="center">
                                                         @if(auth()->user()->user_type == 'Freelancer')
                                                         <tr>
-                                                            <td></td>
-                                                            <td><div><a href="{{route('profile-picture')}}" class="btn btn-info">Update Picture</a></div></td>
+                                                            <td><div><a href="{{route('profile-picture')}}" class="btn btn-info"><i class="fa fa-edit"></i> Profile Picture</a></div></td>
+                                                            <td><div><a href="{{route('cover-picture')}}" class="btn btn-success"><i class="fa fa-edit"></i> Cover Picture</a></div></td>
                                                         </tr>
                                                         @else
                                                         <tr>                                                            

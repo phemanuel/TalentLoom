@@ -21,9 +21,17 @@ class PortfolioController extends Controller
             
             // Fetch the user based on the provided username
             $user = User::where('id', $user_id)->first();
-            $userTheme = UserTheme::where('user_id', $user_id)->first(); 
-
+            //----Check if the user has a cover_picture----
+            $userCoverPicture = $user->cover_picture;
+            if(empty($userCoverPicture)){
+                // return redirect()->route('cover-picture')->with('error', 'cover-picture has not been uploaded');
+                $coverPicture = $user->update([
+                    'cover_picture' => "profile_pictures/default_cover_picture.jpg",
+                ]);
+            }
             
+            //-----check if the user has a default theme----------------
+            $userTheme = UserTheme::where('user_id', $user_id)->first();             
             if(!$userTheme){
                 $themes = "TalentLoom-Urban";
                 $defaultTheme = Themes::where('theme', $themes)->first();
@@ -34,7 +42,7 @@ class PortfolioController extends Controller
                     'theme_path_edit' => $defaultTheme->theme_path_edit,
                 ]);
             }
-
+            //---Check if the user exists---
             if (!$user) {
                 // Handle the case where the user is not found                
                 return redirect()->back()->with
@@ -80,6 +88,19 @@ class PortfolioController extends Controller
         {
             // Fetch the user based on the provided username
             $user = User::where('user_name_link', $username)->first();
+            $user_id = $user->id;
+            $userTheme = UserTheme::where('user_id', $user_id)->first(); 
+            
+            if(!$userTheme){
+                $themes = "TalentLoom-Urban";
+                $defaultTheme = Themes::where('theme', $themes)->first();
+                $createTemplate = UserTheme::create([
+                    'user_id' => $user_id,
+                    'theme' => $themes,
+                    'theme_path' => $defaultTheme->theme_path,
+                    'theme_path_edit' => $defaultTheme->theme_path_edit,
+                ]);
+            }
 
             if (!$user) {            
 
@@ -112,7 +133,9 @@ class PortfolioController extends Controller
             ->orderBy('file_name', 'asc') 
             ->get();
 
-            return view('portfolio.urban', 
+            $theme_path = $userTheme->theme_path;
+
+            return view($theme_path, 
             compact('userSkills', 'userEducation', 'userExperience', 'user','userService'
             ,'userPortfolioImage','userPortfolioDocument'));
         }
@@ -201,9 +224,65 @@ class PortfolioController extends Controller
 
             $unreadMessagesCount = $messages->count();
 
-            return redirect()->back()->with('success', 'Theme activated successfully.');
+            return redirect()->back()->with('success', 'Theme activated successfully.');        
+        }
 
-        
+        public function previewTheme($id , $theme)
+        {                               
+            $user = User::where('id', $id)->first();
+            $userTheme = UserTheme::where('user_id', $id)->first();
+            $appTheme = Themes::where('theme', $theme)->first(); 
+            
+            if(!$userTheme){
+                $themes = "TalentLoom-Urban";
+                $defaultTheme = Themes::where('theme', $themes)->first();
+                $createTemplate = UserTheme::create([
+                    'user_id' => $user_id,
+                    'theme' => $themes,
+                    'theme_path' => $defaultTheme->theme_path,
+                    'theme_path_edit' => $defaultTheme->theme_path_edit,
+                ]);
+            }
+
+            if (!$user) {
+                // Handle the case where the user is not found                
+                return redirect()->back()->with
+                ('error', 'User not found.');
+            }
+            // Fetch user skills
+            $userSkills = UserSkill::where('user_id', $user->id)
+            ->paginate(5);
+            // Fetch user education
+            $userEducation = userEducation::where('user_id', $user->id)
+            ->orderBy('college_year', 'desc') 
+            ->get();
+            // Fetch user work experience
+            $userExperience = UserExperience::where('user_id', $user->id)
+            ->orderBy('company_year', 'desc') 
+            ->get();
+            // Fetch user services
+            $userService = UserService::where('user_id', $user->id)
+            ->orderBy('user_service', 'asc') 
+            ->get();
+            // Fetch user projects by image
+            $userPortfolioImage = UserPortfolio::where('user_id', $user->id)
+            ->where('file_type','Image')
+            ->orderBy('file_name', 'asc') 
+            ->get();
+            // Fetch user projects by document
+            $userPortfolioDocument = UserPortfolio::where('user_id', $user->id)
+            ->where('file_type','Document')
+            ->orderBy('file_name', 'asc') 
+            ->get();
+
+            $theme_path_edit = $appTheme->theme_path_edit;
+
+            $actionType = "Preview";
+
+            return view($theme_path_edit, 
+            compact('userSkills', 'userEducation', 'userExperience', 'user','userService'
+            ,'userPortfolioImage','userPortfolioDocument','actionType'));
+            
         }
 
         

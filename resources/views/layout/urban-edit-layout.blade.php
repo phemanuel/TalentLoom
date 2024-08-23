@@ -4,21 +4,24 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="icon" href="portfolioback/img/favicon_new.png" type="image/png">
-        <title>TalentLoom :: Portfolio</title>
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="portfolioback/css/bootstrap.css">
-        <link rel="stylesheet" href="portfolioback/vendors/linericon/style.css">
-        <link rel="stylesheet" href="portfolioback/css/font-awesome.min.css">
-        <link rel="stylesheet" href="portfolioback/vendors/owl-carousel/owl.carousel.min.css">
-        <link rel="stylesheet" href="portfolioback/vendors/lightbox/simpleLightbox.css">
-        <link rel="stylesheet" href="portfolioback/vendors/nice-select/css/nice-select.css">
-        <link rel="stylesheet" href="portfolioback/vendors/animate-css/animate.css">
-        <link rel="stylesheet" href="portfolioback/vendors/popup/magnific-popup.css">
-        <link rel="stylesheet" href="portfolioback/vendors/flaticon/flaticon.css">
-        <!-- main css -->
-        <link rel="stylesheet" href="portfolioback/css/style.css">
-        <link rel="stylesheet" href="portfolioback/css/responsive.css">
+			<link rel="icon" href="{{ asset('portfolioback/img/favicon_new.png') }}" type="image/png">
+	<title>TalentLoom :: Portfolio</title>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{{ asset('portfolioback/css/bootstrap.css') }}">
+	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/linericon/style.css') }}">
+	<link rel="stylesheet" href="{{ asset('portfolioback/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/owl-carousel/owl.carousel.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/lightbox/simpleLightbox.css') }}">
+	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/nice-select/css/nice-select.css') }}">
+	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/animate-css/animate.css') }}">
+	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/popup/magnific-popup.css') }}">
+	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/flaticon/flaticon.css') }}">
+
+	<!-- Main CSS -->
+	<link rel="stylesheet" href="{{ asset('portfolioback/css/style.css') }}">
+	<link rel="stylesheet" href="{{ asset('portfolioback/css/responsive.css') }}">
+
 		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
 		<style>
 			.font-text {
@@ -92,7 +95,7 @@
 											<td valign="top">
 												@if($actionType == 'Edit')
 												<a href="{{ route('user-about') }}" title="Edit Full name">
-												<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon">@else  @endif
+												<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon">>/a>@else  @endif
     </a></td>
 										</tr>
 									</table>
@@ -483,20 +486,21 @@
         
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="portfolioback/js/jquery-3.3.1.min.js"></script>
-        <script src="portfolioback/js/popper.js"></script>
-        <script src="portfolioback/js/bootstrap.min.js"></script>
-        <script src="portfolioback/js/stellar.js"></script>
-        <script src="portfolioback/vendors/lightbox/simpleLightbox.min.js"></script>
-        <script src="portfolioback/vendors/nice-select/js/jquery.nice-select.min.js"></script>
-        <script src="portfolioback/vendors/isotope/imagesloaded.pkgd.min.js"></script>
-        <script src="portfolioback/vendors/isotope/isotope.pkgd.min.js"></script>
-        <script src="portfolioback/vendors/owl-carousel/owl.carousel.min.js"></script>
-        <script src="portfolioback/vendors/popup/jquery.magnific-popup.min.js"></script>
-        <script src="portfolioback/js/jquery.ajaxchimp.min.js"></script>
-        <script src="portfolioback/vendors/counter-up/jquery.waypoints.min.js"></script>
-        <script src="portfolioback/vendors/counter-up/jquery.counterup.min.js"></script>
-        <script src="portfolioback/js/mail-script.js"></script>
-        <script src="portfolioback/js/theme.js"></script>
+        <script src="{{ asset('portfolioback/js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('portfolioback/js/popper.js') }}"></script>
+<script src="{{ asset('portfolioback/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('portfolioback/js/stellar.js') }}"></script>
+<script src="{{ asset('portfolioback/vendors/lightbox/simpleLightbox.min.js') }}"></script>
+<script src="{{ asset('portfolioback/vendors/nice-select/js/jquery.nice-select.min.js') }}"></script>
+<script src="{{ asset('portfolioback/vendors/isotope/imagesloaded.pkgd.min.js') }}"></script>
+<script src="{{ asset('portfolioback/vendors/isotope/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('portfolioback/vendors/owl-carousel/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('portfolioback/vendors/popup/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('portfolioback/js/jquery.ajaxchimp.min.js') }}"></script>
+<script src="{{ asset('portfolioback/vendors/counter-up/jquery.waypoints.min.js') }}"></script>
+<script src="{{ asset('portfolioback/vendors/counter-up/jquery.counterup.min.js') }}"></script>
+<script src="{{ asset('portfolioback/js/mail-script.js') }}"></script>
+<script src="{{ asset('portfolioback/js/theme.js') }}"></script>
+
     </body>
 </html>

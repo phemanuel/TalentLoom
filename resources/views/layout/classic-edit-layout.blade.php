@@ -41,7 +41,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-      <a href="#" class="logo d-flex align-items-center">
+      <a href="{{route('dashboard')}}" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename"><img src="{{asset('templates/classic/assets/img/loom_logo.png')}}" alt=""></h1>
@@ -49,7 +49,7 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#hero" class="active">Home<br></a></li>
+          <li><a href="#home" class="active">Home<br></a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#portfolio">Education/Experience</a></li>
@@ -66,13 +66,32 @@
   <main class="main">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
+    <section id="home" class="hero section dark-background">
 
-      <img src="{{asset('templates/classic/assets/img/femi_cover_photo.jpg')}}" alt="" data-aos="fade-in">
+      <img src="{{ asset('storage/' . auth()->user()->cover_picture) }}" alt="" data-aos="fade-in">
 
       <div class="container d-flex flex-column align-items-center justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
-        <h2>I am Femi Akinyooye</h2>
-        <p><span class="typed" data-typed-items="Designer, Developer, Freelancer, Photographer"></span></p>
+        <h2>I am Femi Akinyooye</h2>        
+        @php
+    // Retrieve user roles major
+    $userRolesMajor = $user->user_roles_major;
+
+    // Retrieve user roles and convert them into an array
+    $userRoles = $user->user_roles;
+    $rolesArray = explode(',', $userRoles);
+
+    // Prepare the data-typed-items string
+    $typedItems = $userRolesMajor; // Start with the major role
+    if (!empty($rolesArray)) {
+        $typedItems .= ',' . implode(',', array_map('trim', $rolesArray)); // Append additional roles
+    }
+@endphp
+
+<!-- Display the major role first, then each individual role -->
+<p><span class="typed" data-typed-items="{{ $typedItems }}"></span></p>
+
+
+        <!-- <p><span class="typed" data-typed-items="Designer, Developer, Freelancer, Photographer"></span></p> -->
       </div>
 
     </section><!-- /Hero Section -->
@@ -87,7 +106,7 @@
 
             <div class="row justify-content-between gy-4">
               <div class="col-lg-5">
-                <img src="{{asset('templates/classic/assets/img/profile-img.jpg')}}" class="img-fluid" alt="">
+                <img src="{{ asset('storage/' . auth()->user()->user_picture) }}" class="img-fluid" alt="">
               </div>
               <div class="col-lg-7 about-info">
                 <p><strong>Name: </strong> <span>Morgan Freeman</span></p>
