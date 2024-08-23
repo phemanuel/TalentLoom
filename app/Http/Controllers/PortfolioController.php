@@ -8,7 +8,8 @@ use App\Models\UserExperience;
 use App\Models\UserService;
 use App\Models\UserPortfolio;
 use Illuminate\Http\Request;
-use App\Models\USerTemplate;
+use App\Models\Themes;
+use App\Models\UserTheme;
 use App\Models\Chat ;
 
 class PortfolioController extends Controller
@@ -20,10 +21,22 @@ class PortfolioController extends Controller
             
             // Fetch the user based on the provided username
             $user = User::where('id', $user_id)->first();
+            $userTheme = UserTheme::where('user_id', $user_id)->first(); 
+
+            
+            if(!$userTheme){
+                $themes = "TalentLoom-Urban";
+                $defaultTheme = Themes::where('theme', $themes)->first();
+                $createTemplate = UserTheme::create([
+                    'user_id' => $user_id,
+                    'theme' => $themes,
+                    'theme_path' => $defaultTheme->theme_path,
+                    'theme_path_edit' => $defaultTheme->theme_path_edit,
+                ]);
+            }
 
             if (!$user) {
-                // Handle the case where the user is not found
-                // You can return a custom error message, redirect, or take other actions here
+                // Handle the case where the user is not found                
                 return redirect()->back()->with
                 ('error', 'User not found.');
             }
@@ -53,9 +66,13 @@ class PortfolioController extends Controller
             ->orderBy('file_name', 'asc') 
             ->get();
 
-            return view('portfolio.portfolio', 
+            $theme_path_edit = $userTheme->theme_path_edit;
+
+            $actionType = "Edit";
+
+            return view($theme_path_edit, 
             compact('userSkills', 'userEducation', 'userExperience', 'user','userService'
-            ,'userPortfolioImage','userPortfolioDocument'));
+            ,'userPortfolioImage','userPortfolioDocument','actionType'));
             
         }
         
@@ -95,20 +112,24 @@ class PortfolioController extends Controller
             ->orderBy('file_name', 'asc') 
             ->get();
 
-            return view('portfolio.user-page', 
+            return view('portfolio.urban', 
             compact('userSkills', 'userEducation', 'userExperience', 'user','userService'
             ,'userPortfolioImage','userPortfolioDocument'));
         }
 
-        public function changeTheme($id){
+        public function changeTheme(){
+            $id = auth()->user()->id;
+            $userTheme = UserTheme::where('user_id', $id)->first();
+            $appThemes = Themes::all();
 
-            $userTemplates = UserTemplate::where('user_id', $id)->first();
-
-            if(!$userTemplates){
-                $templateType = "TalentLoom-Default";
-                $createTemplate = UserTemplate::create([
+            if(!$userTheme){
+                $themes = "TalentLoom-Urban";
+                $defaultTheme = Themes::where('theme', $themes)->first();
+                $createTemplate = UserTheme::create([
                     'user_id' => $id,
-                    'template_type' => $templateType,
+                    'theme' => $themes,
+                    'theme_path' => $defaultTheme->theme_path,
+                    'theme_path_edit' => $defaultTheme->theme_path_edit,
                 ]);
 
                 // Get unread messages
@@ -119,10 +140,10 @@ class PortfolioController extends Controller
 
             $unreadMessagesCount = $messages->count();
 
-            return view('layout.change-template', compact('templateType','messages','unreadMessagesCount'));
+            return view('layout.change-theme', compact('themes','messages','unreadMessagesCount','appThemes'));
             }
 
-            $templateType = $userTemplates->template_type;
+            $themes = $userTheme->theme;
 
             // Get unread messages
             $messages = Chat::where('to_id', '=', $id)   
@@ -132,14 +153,63 @@ class PortfolioController extends Controller
 
             $unreadMessagesCount = $messages->count();
 
-            return view('layout.change-template', compact('templateType','messages','unreadMessagesCount'));
+            return view('layout.change-theme', compact('themes','messages','unreadMessagesCount','appThemes'));
 
         
         }
-    
+
+        public function updateTheme($id, $theme){
+            $id = auth()->user()->id;
+            $userTheme = UserTheme::where('user_id', $id)->first();
+            $appThemes = Themes::all();
+
+            if(!$userTheme){
+                $themes = $theme;
+                $defaultTheme = Themes::where('theme', $themes)->first();
+                $createTemplate = UserTheme::create([
+                    'user_id' => $id,
+                    'theme' => $themes,
+                    'theme_path' => $defaultTheme->theme_path,
+                    'theme_path_edit' => $defaultTheme->theme_path_edit,
+                ]);
+
+                // Get unread messages
+            $messages = Chat::where('to_id', '=', $id)   
+            ->where('seen', '=', 0)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+            $unreadMessagesCount = $messages->count();
+
+            return view('layout.change-theme', compact('themes','messages','unreadMessagesCount','appThemes'));
+            }
+
+            //-----update the theme-----
+            $defaultTheme = Themes::where('theme', $theme)->first();
+            $userTheme->update([
+                'theme' => $theme ,
+                'theme_path' => $defaultTheme->theme_path,
+                'theme_path_edit' => $defaultTheme->theme_path_edit,
+            ]);
+            $themes = $theme;
+
+            // Get unread messages
+            $messages = Chat::where('to_id', '=', $id)   
+            ->where('seen', '=', 0)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+            $unreadMessagesCount = $messages->count();
+
+            return redirect()->back()->with('success', 'Theme activated successfully.');
+
+        
+        }
+
+        
         public function type1(){
     
-            return view('templates.type-1');
+            return view('templates.classic');
         }
 
     

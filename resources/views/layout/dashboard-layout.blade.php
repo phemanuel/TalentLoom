@@ -360,7 +360,7 @@ li {
                                                             <table>
                                                                 <tr>
                                                                     <td><div><a href="{{route('user-page')}}" class="btn btn-primary" target="_blank">Preview Portfolio</a></div></td>
-                                                                    <td><div><a href="{{route('change-theme',['id' => auth()->user()->id])}}" class="btn btn-success" target="_blank">Change Theme</a></div></td>
+                                                                    <td><div><a href="{{route('change-theme')}}" class="btn btn-success">Change Portfolio Theme</a></div></td>
                                                                 </tr>
                                                 
                                                             </table>

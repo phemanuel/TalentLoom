@@ -9,8 +9,8 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="{{asset('templates/type-1/assets/img/favicon_new.png')}}" rel="icon">
-  <link href="{{asset('templates/type-1/assets/img/favicon_new.png')}}">
+  <link href="{{asset('templates/classic/assets/img/favicon_new.png')}}" rel="icon">
+  <link href="{{asset('templates/classic/assets/img/favicon_new.png')}}">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -18,14 +18,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="{{asset('templates/type-1/assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-  <link href="{{asset('templates/type-1/assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
-  <link href="{{asset('templates/type-1/assets/vendor/aos/aos.css')}}" rel="stylesheet">
-  <link href="{{asset('templates/type-1/assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
-  <link href="{{asset('templates/type-1/assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+  <link href="{{asset('templates/classic/assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{asset('templates/classic/assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{asset('templates/classic/assets/vendor/aos/aos.css')}}" rel="stylesheet">
+  <link href="{{asset('templates/classic/assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+  <link href="{{asset('templates/classic/assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
 
   <!-- Main CSS File -->
-  <link href="{{asset('templates/type-1/assets/css/main.css')}}" rel="stylesheet">
+  <link href="{{asset('templates/classic/assets/css/main.css')}}" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: DevFolio
@@ -44,32 +44,17 @@
       <a href="#" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1 class="sitename"><img src="{{asset('templates/type-1/assets/img/loom_logo.png')}}" alt=""></h1>
+        <h1 class="sitename"><img src="{{asset('templates/classic/assets/img/loom_logo.png')}}" alt=""></h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="#hero" class="active">Home<br></a></li>
           <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#portfolio">Education/Experience</a></li>
           <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
+          <li><a href="#portfolio">Project</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -83,7 +68,7 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <img src="{{asset('templates/type-1/assets/img/femi_cover_photo.jpg')}}" alt="" data-aos="fade-in">
+      <img src="{{asset('templates/classic/assets/img/femi_cover_photo.jpg')}}" alt="" data-aos="fade-in">
 
       <div class="container d-flex flex-column align-items-center justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
         <h2>I am Femi Akinyooye</h2>
@@ -102,7 +87,7 @@
 
             <div class="row justify-content-between gy-4">
               <div class="col-lg-5">
-                <img src="assets/img/profile-img.jpg" class="img-fluid" alt="">
+                <img src="{{asset('templates/classic/assets/img/profile-img.jpg')}}" class="img-fluid" alt="">
               </div>
               <div class="col-lg-7 about-info">
                 <p><strong>Name: </strong> <span>Morgan Freeman</span></p>
@@ -868,7 +853,7 @@
 
     <div class="container">
       <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">DevFolio</strong> <span>All Rights Reserved</span></p>
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">TalentLoom</strong> <span>All Rights Reserved</span></p>
       </div>
       <div class="social-links d-flex justify-content-center">
         <a href=""><i class="bi bi-twitter-x"></i></a>
@@ -894,19 +879,19 @@
   <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
-<script src="{{ asset('templates/type-1/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('templates/type-1/assets/vendor/php-email-form/validate.js') }}"></script>
-<script src="{{ asset('templates/type-1/assets/vendor/aos/aos.js') }}"></script>
-<script src="{{ asset('templates/type-1/assets/vendor/typed.js/typed.umd.js') }}"></script>
-<script src="{{ asset('templates/type-1/assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
-<script src="{{ asset('templates/type-1/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
-<script src="{{ asset('templates/type-1/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-<script src="{{ asset('templates/type-1/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
-<script src="{{ asset('templates/type-1/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
-<script src="{{ asset('templates/type-1/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('templates/classic/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('templates/classic/assets/vendor/php-email-form/validate.js') }}"></script>
+<script src="{{ asset('templates/classic/assets/vendor/aos/aos.js') }}"></script>
+<script src="{{ asset('templates/classic/assets/vendor/typed.js/typed.umd.js') }}"></script>
+<script src="{{ asset('templates/classic/assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
+<script src="{{ asset('templates/classic/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+<script src="{{ asset('templates/classic/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('templates/classic/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+<script src="{{ asset('templates/classic/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('templates/classic/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
 
 <!-- Main JS File -->
-<script src="{{ asset('templates/type-1/assets/js/main.js') }}"></script>
+<script src="{{ asset('templates/classic/assets/js/main.js') }}"></script>
 
 
 </body>
