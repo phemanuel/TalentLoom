@@ -33,6 +33,33 @@
         padding: 10px; /* Padding around the text */
         border-radius: 5px; /* Rounded corners */
     }
+
+    .table-container {
+    width: 100%;
+    max-width: 100%; /* Adjust as needed */
+    height: 100%; /* Adjust as needed */
+    overflow: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    position: sticky;
+    top: 0;
+}
 </style>
 </head>
 
@@ -249,8 +276,12 @@
                                                         <form name="basic-form" action="{{ route('cover-picture-update') }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="form-row">
-                                                                <div class="form-group col-md-12">
-                                                                    <strong><p>Jpeg Format</p></strong>
+                                                            <p style="color: black;">Current Cover Picture</p>
+                                                        <div class="table-container">
+                                                                    <p><img src="{{asset('storage/'. auth()->user()->cover_picture)}}" alt=""></p>
+</div>
+                                                                <div class="form-group col-md-12">                                                                
+                                                                    <strong><p style="color: black;">Jpeg Format</p></strong>
                                                                     <hr>
                                                                     <input type="file" name="cover_picture" />
                                                                 </div>   

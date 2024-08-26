@@ -325,7 +325,7 @@ li {
                                                                         <td valign="top">
                                                                             <select name="country_code" class="form-control" style="color: black;">
                                                                                 @if(auth()->user()->country_code)
-                                                                            <option value="" selected>{{auth()->user()->country_code}}</option>
+                                                                            <option value="{{auth()->user()->country_code}}" selected>{{auth()->user()->country_code}}</option>
                                                                             @foreach ($countries as $country)
                                                                                 <option value="{{ $country->dialing_code }}">{{ $country->country_code }}({{$country->dialing_code}})</option>
                                                                             @endforeach

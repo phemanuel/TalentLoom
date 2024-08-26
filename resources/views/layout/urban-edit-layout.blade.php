@@ -152,7 +152,7 @@
 											<td>
 											<ul class="list basic_info">
 											@if($user->user_phone)										
-										<li><a href="#"><i class="lnr lnr-phone-handset"></i> {{$user->country_code . '-' . $user->user_phone}}</a></li>
+										<li><a href="#"><i class="lnr lnr-phone-handset"></i> {{ ($user->country_code ?? 'N/A') . '-' . ($user->user_phone ?? 'N/A') }}</a></li>
 										@else
 										<p>Phone no has not been updated.</p>
 										@endif

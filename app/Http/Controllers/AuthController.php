@@ -623,19 +623,19 @@ class AuthController extends Controller
                 
                 $user_type = $user->user_type;
                 if($user_type == 'Freelancer') {
-                    return redirect()->route('user-about')->with('success', 'cover picture update successful.');
+                    return redirect()->route('user-about')->with('success', 'Cover picture update successful.');
                 }
                 elseif($user_type == 'Organization') {
-                    return redirect()->route('user-about-organization')->with('success', 'cover picture update successful.');
+                    return redirect()->route('user-about-organization')->with('success', 'Cover picture update successful.');
                 }
             }
         
-            return redirect()->route('cover-picture')->with('error', 'Both user and profile picture must be provided.');
+            return redirect()->route('cover-picture')->with('error', 'Cover picture must be provided.');
         } catch (\Exception $e) {
             // Handle the exception, log the error, and return with an error message
             \Log::error('Error updating cover pictures: ' . $e->getMessage());
         
-            return redirect()->route('cover-picture')->with('error', 'An error occurred while updating profile pictures. Please try again.');
+            return redirect()->route('cover-picture')->with('error', 'An error occurred while updating cover picture. Please try again.');
         }  
 
     }   
