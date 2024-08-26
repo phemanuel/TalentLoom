@@ -106,70 +106,90 @@
 
             <div class="row justify-content-between gy-4">
               <div class="col-lg-5">
-                <img src="{{ asset('storage/' . auth()->user()->user_picture) }}" class="img-fluid" alt="">
+                <table>
+                  <tr>
+                    <td><img src="{{ asset('storage/' . auth()->user()->user_picture) }}" class="img-fluid" alt=""></td>
+                  </tr>
+                  <tr>
+                    <td>@if($actionType == 'Edit')<a href="{{ route('profile-picture') }}" title="Edit Profile Picture">
+                    <img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon">@else  @endif</td>
+                  </tr>
+                </table>
+                
               </div>
               <div class="col-lg-7 about-info">
-                <p><strong>Name: </strong> <span>Morgan Freeman</span></p>
-                <p><strong>Profile: </strong> <span>full stack developer</span></p>
-                <p><strong>Email: </strong> <span>contact@example.com</span></p>
-                <p><strong>Phone: </strong> <span>(617) 557-0089</span></p>
+                <table>
+                  <tr>
+                    <td><p><strong>Name: </strong> <span>{{$user->full_name}}</span></p></td>
+                    <td>&nbsp;</td>
+                    <td valign="top">@if($actionType == 'Edit')
+												<a href="{{ route('user-about') }}" title="Edit Full name">
+												<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif</td>
+                  </tr>
+                  <tr>
+                    <td><p><strong>Role: </strong> <span>{{$user->user_roles_major}}</span></p></td>
+                    <td>&nbsp;</td>
+                    <td valign="top">@if($actionType == 'Edit')
+												<a href="{{ route('user-role') }}" title="Edit role">
+												<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif</td>
+                  </tr>
+                  <tr>
+                    <td><p><strong>Email: </strong> <span>{{$user->email}}</span></p></td>
+                    <td>&nbsp;</td>
+                    <td valign="top"></td>
+                  </tr>
+                  <tr>
+                    <td><p><strong>Phone: </strong> <span>{{$user->country_code . '-' . $user->user_phone}}</span></p></td>
+                    <td>&nbsp;</td>
+                    <td valign="top">@if($actionType == 'Edit')
+												<a href="{{ route('user-about') }}" title="Edit Full name">
+												<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif</td>
+                  </tr>
+                </table>  
+                
               </div>
             </div>
 
             <div class="skills-content skills-animation">
 
-              <h5>Skills</h5>
-
+            <table>
+									<tr>
+										<td><h5><strong><p class="style1 style1">Skills</p></strong> </h5></td>
+										<td>&nbsp;&nbsp;&nbsp;</td>
+										<td valign="top">@if($actionType == 'Edit')<a href="{{ route('user-about') }}" title="Edit about info">
+										<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif</td>
+									</tr>
+								</table>
+              @if(!empty($userSkills))
+							@foreach($userSkills as $userSkill)
               <div class="progress">
-                <span class="skill"><span>HTML</span> <i class="val">100%</i></span>
+                <span class="skill"><span>{{$userSkill->user_skill}}</span> <i class="val">{{$userSkill->user_skill_level}}%</i></span>
                 <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar" role="progressbar" aria-valuenow="{{$userSkill->user_skill_level}}" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div><!-- End Skills Item -->
-
-              <div class="progress">
-                <span class="skill"><span>CSS</span> <i class="val">90%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div><!-- End Skills Item -->
-
-              <div class="progress">
-                <span class="skill"><span>JavaScript</span> <i class="val">75%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div><!-- End Skills Item -->
-
-              <div class="progress">
-                <span class="skill"><span>Photoshop</span> <i class="val">55%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div><!-- End Skills Item -->
-
+									@endforeach	
+								@else
+								<p>Skills has not been updated.</p>
+								@endif
             </div>
           </div>
 
           <div class="col-md-6">
             <div class="about-me">
-              <h4>About me</h4>
-              <p>
-                Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Curabitur arcu erat, accumsan id
-                imperdiet et, porttitor
-                at sem. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Nulla
-                porttitor accumsan tincidunt.
-              </p>
-              <p>
-                Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vivamus suscipit tortor eget felis
-                porttitor volutpat. Vestibulum
-                ac diam sit amet quam vehicula elementum sed sit amet dui. porttitor at sem.
-              </p>
-              <p>
-                Nulla porttitor accumsan tincidunt. Quisque velit nisi, pretium ut lacinia in, elementum id enim.
-                Nulla porttitor accumsan
-                tincidunt. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-              </p>
+            <table>
+								<tr>
+									<td><h4 style="color: black;">ABOUT MYSELF</h4></td>
+									<td>&nbsp;&nbsp;&nbsp;</td>
+									<td valign="top">@if($actionType == 'Edit')<a href="{{ route('user-about') }}" title="Edit about info">
+										<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif</td>
+								</tr>
+							</table>
+              @if($user->user_about)
+        					<p>{!!$user->user_about!!}</p>  
+							@else
+							<p>About me has not been updated.</p>
+							@endif
             </div>
           </div>
         </div>
@@ -895,7 +915,7 @@
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
-  <div id="preloader"></div>
+  <!-- <div id="preloader"></div> -->
 
   <!-- Vendor JS Files -->
 <script src="{{ asset('templates/classic/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

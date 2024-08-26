@@ -95,7 +95,7 @@
 											<td valign="top">
 												@if($actionType == 'Edit')
 												<a href="{{ route('user-about') }}" title="Edit Full name">
-												<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon">>/a>@else  @endif
+												<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon">></a>@else  @endif
     </a></td>
 										</tr>
 									</table>
