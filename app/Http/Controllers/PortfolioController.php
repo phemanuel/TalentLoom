@@ -277,7 +277,7 @@ class PortfolioController extends Controller
 
             $theme_path_edit = $appTheme->theme_path_edit;
 
-            $actionType = "Edit";
+            $actionType = "Preview";
 
             return view($theme_path_edit, 
             compact('userSkills', 'userEducation', 'userExperience', 'user','userService'
