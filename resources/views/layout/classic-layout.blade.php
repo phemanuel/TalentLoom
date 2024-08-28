@@ -67,10 +67,10 @@
     <!-- Hero Section -->
     <section id="home" class="hero section dark-background">
 
-      <img src="{{ asset('storage/' . auth()->user()->cover_picture) }}" alt="" data-aos="fade-in">
+      <img src="{{ asset('storage/' . $user->cover_picture) }}" alt="" data-aos="fade-in">
 
       <div class="container d-flex flex-column align-items-center justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
-        <h2>I am Femi Akinyooye</h2>        
+      <h2>I am {{$user->full_name}}</h2>         
         @php
     // Retrieve user roles major
     $userRolesMajor = $user->user_roles_major;
@@ -107,7 +107,7 @@
               <div class="col-lg-5">
                 <table>
                   <tr>
-                    <td><img src="{{ asset('storage/' . auth()->user()->user_picture) }}" class="img-fluid" alt=""></td>
+                    <td><img src="{{ asset('storage/' . $user->user_picture) }}" class="img-fluid" alt=""></td>
                   </tr>
                   <tr>
                     <td>@if($actionType == 'Edit')<a href="{{ route('profile-picture') }}" title="Edit Profile Picture">
@@ -133,12 +133,12 @@
 												<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif</td>
                   </tr>
                   <tr>
-                    <td><p><strong>Email: </strong> <span>{{$user->email}}</span></p></td>
+                    <td><p><strong>Email: </strong> <span><a href="mailto:{{$user->email}}">{{$user->email}}</a></span></p></td>
                     <td>&nbsp;</td>
                     <td valign="top"></td>
                   </tr>
                   <tr>
-                    <td><p><strong>Phone: </strong> <span>{{$user->country_code . '-' . $user->user_phone}}</span></p></td>
+                    <td><p><strong>Phone: </strong> <span>{{$user->country_code . ' ' . $user->user_phone}}</span></p></td>
                     <td>&nbsp;</td>
                     <td valign="top">@if($actionType == 'Edit')
 												<a href="{{ route('user-about') }}" title="Edit Full name">
@@ -260,7 +260,7 @@
               <h4>{{$userEducations->college_qualification}}</h4>
               <h5>{{$userEducations->college_year}}</h5>
               <p><em>{{$userEducations->college_name}}</em></p>
-              <p><a href="{{ asset('storage/app/public/' . $userEducations->college_certificate) }}" target="_blank">View Certificate</a> </p></p>
+              <p><a href="{{ asset('storage/app/public/' . $userEducations->college_certificate) }}" target="_blank">View Certificate</a> </p>
             </div><!-- Edn Resume Item --> 
 								</li>								
 								@endforeach

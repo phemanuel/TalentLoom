@@ -111,7 +111,7 @@ li {
                                 </li>
                                 <li class="nav-item dropdown user-profile">
                                     <a href="javascript:void(0)" class="nav-link dropdown-toggle " id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="avtar-img">
+                                        <img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="avtar-img">
                                         <span class="bg-success user-status"></span>
                                     </a>
                                     <div class="dropdown-menu animated fadeIn" aria-labelledby="navbarDropdown">
@@ -229,7 +229,7 @@ li {
                                                     <div class="profile-img text-center rounded-circle">
                                                         <div class="pt-5">
                                                             <div class="bg-img m-auto">
-                                                                <img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" class="img-fluid" alt="users-avatar">
+                                                                <img src="{{ asset('storage/' . auth()->user()->user_picture) }}" class="img-fluid" alt="users-avatar">
                                                             </div>
                                                             <div class="profile pt-4">
                                                                 <h4 class="mb-1">{{ auth()->user()->full_name }}</h4>
@@ -258,11 +258,13 @@ li {
 
                                                     <hr>
                                                     <div class="profile-btn text-center">
-                                                    <table class="table" align="center">
+                                                    <table class="table" align="center" width="70%">
                                                         @if(auth()->user()->user_type == 'Freelancer')
                                                         <tr>
-                                                            <td><div><a href="{{route('profile-picture')}}" class="btn btn-info"><i class="fa fa-edit"></i> Profile Picture</a></div></td>
-                                                            <td><div><a href="{{route('cover-picture')}}" class="btn btn-success"><i class="fa fa-edit"></i> Cover Picture</a></div></td>
+                                                            <td><div><a href="{{route('profile-picture')}}" class="btn btn-info"><i class="fa fa-edit"></i> Profile Picture</a></div></td>                                                            
+                                                        </tr>
+                                                        <tr>
+                                                        <td><div><a href="{{route('cover-picture')}}" class="btn btn-success"><i class="fa fa-edit"></i> Cover Picture</a></div></td>
                                                         </tr>
                                                         @else
                                                         <tr>                                                            

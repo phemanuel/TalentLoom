@@ -129,7 +129,7 @@ th {
                                 </li>
                                 <li class="nav-item dropdown user-profile">
                                     <a href="javascript:void(0)" class="nav-link dropdown-toggle " id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="avtar-img">
+                                        <img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="avtar-img">
                                         <span class="bg-success user-status"></span>
                                     </a>
                                     <div class="dropdown-menu animated fadeIn" aria-labelledby="navbarDropdown">
@@ -234,7 +234,7 @@ th {
                                                     <div class="profile-img text-center rounded-circle">
                                                         <div class="pt-5">
                                                             <div class="bg-img m-auto">
-                                                                <img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" class="img-fluid" alt="users-avatar">
+                                                                <img src="{{ asset('storage/' . auth()->user()->user_picture) }}" class="img-fluid" alt="users-avatar">
                                                             </div>
                                                             <div class="profile pt-4">
                                                                 <h4 class="mb-1">{{ auth()->user()->full_name }}</h4>
@@ -327,7 +327,7 @@ th {
                                                                         <td width="5%">
                                                                         @if (!empty($userEducation->college_certificate))
                                                                             <span class="style2">                                              
-                                                                            <a href="{{ asset('storage/app/public/' . $userEducation->college_certificate) }}" target="_blank">View <i class="dripicons dripicons-document-new">
+                                                                            <a href="{{ asset('storage/' . $userEducation->college_certificate) }}" target="_blank">View <i class="dripicons dripicons-document-new">
                                                                     </i></a> </span> 
                                                                     @else{
                                                                         <span class="style2">                                              

@@ -111,12 +111,12 @@
 									<hr>									
 									<ul class="list basic_info">
 										@if($user->user_phone)										
-										<li><a href="#"><i class="lnr lnr-phone-handset"></i> {{$user->country_code . '-' . $user->user_phone}}</a></li>
+										<li><a href="#"><i class="lnr lnr-phone-handset"></i> {{$user->country_code . ' ' . $user->user_phone}}</a></li>
 										@else
 										<p>Phone no has not been updated.</p>
 										@endif
 										@if($user->email)
-										<li><a href="#"><i class="lnr lnr-envelope"></i> {{$user->email}}</a></li>	
+										<li><a href="mailto:{{$user->email}}"><i class="lnr lnr-envelope"></i> {{$user->email}}</a></li>	
 										@else
 										<p></p>
 										@endif									

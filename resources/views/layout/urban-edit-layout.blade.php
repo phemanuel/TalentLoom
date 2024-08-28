@@ -95,7 +95,7 @@
 											<td valign="top">
 												@if($actionType == 'Edit')
 												<a href="{{ route('user-about') }}" title="Edit Full name">
-												<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon">></a>@else  @endif
+												<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif
     </a></td>
 										</tr>
 									</table>
@@ -152,7 +152,7 @@
 											<td>
 											<ul class="list basic_info">
 											@if($user->user_phone)										
-										<li><a href="#"><i class="lnr lnr-phone-handset"></i> {{ ($user->country_code ?? 'N/A') . '-' . ($user->user_phone ?? 'N/A') }}</a></li>
+										<li><a href="#"><i class="lnr lnr-phone-handset"></i> {{ ($user->country_code ?? 'N/A') . ' ' . ($user->user_phone ?? 'N/A') }}</a></li>
 										@else
 										<p>Phone no has not been updated.</p>
 										@endif
@@ -165,7 +165,7 @@
 									</table>								
 									<ul class="list basic_info">										
 										@if($user->email)
-										<li><a href="#"><i class="lnr lnr-envelope"></i> {{$user->email}}</a></li>	
+										<li><a href="mailto:{{$user->email}}"><i class="lnr lnr-envelope"></i> {{$user->email}}</a></li>	
 										@else
 										<p></p>
 										@endif									
@@ -325,7 +325,7 @@
 										<div class="media-body">
 											<h4>{{$userEducations->college_name}}</h4>
 											<p><i class="fa fa-star"></i> <strong> {{$userEducations->college_qualification}}</strong> <br />
-											<a href="{{ asset('storage/app/public/' . $userEducations->college_certificate) }}" target="_blank">View Certificate</a> </p>
+											<a href="{{ asset('storage/' . $userEducations->college_certificate) }}" target="_blank">View Certificate</a> </p>
 										</div>
 									</div>
 								</li>
@@ -345,8 +345,10 @@
         <section class="feature_area p_120">
         	<div class="container" id="service">
         		<div class="main_title">					
-					<h3 style="color: black;">WHAT I DO</h3>@if($actionType == 'Edit')<a href="{{ route('user-service') }}" title="Edit services info">
+					<h3 style="color: black;">WHAT I DO
+					@if($actionType == 'Edit')<a href="{{ route('user-service') }}" title="Edit services info">
 					<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif
+					</h3>
         			<p>If you are looking for the best to grow and improve your business, you don't have to search for too long, i am available to work with you.</p>
         		</div>
         		<div class="feature_inner row">
@@ -372,9 +374,10 @@
         <section class="home_gallery_area p_120">
         	<div class="container" id="project">
         		<div class="main_title">
-        			<h3 style="color: black;">My Projects</h3>
+        			<h3 style="color: black;">My Projects
 					@if($actionType == 'Edit')<a href="{{ route('user-portfolio') }}" title="Edit projects info">
-							<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif
+					<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif
+					</h3>					
         			<p>Check out some of my projects.</p>
         		</div>
         		<div class="isotope_fillter">
@@ -393,8 +396,8 @@
         			<div class="col-lg-4 col-md-4 col-sm-6 brand design print">
         				<div class="h_gallery_item">
         					<div class="g_img_item">
-        						<img class="img-fluid" src="{{ asset('storage/app/public/' . $userPortfolioImages->file_url) }}" alt="">
-        						<a class="light" href="{{ asset('storage/app/public/' . $userPortfolioImages->file_url) }}"><img src="img/gallery/icon.png" alt=""></a>
+        						<img class="img-fluid" src="{{ asset('storage/' . $userPortfolioImages->file_url) }}" alt="">
+        						<a class="light" href="{{ asset('storage/' . $userPortfolioImages->file_url) }}"><img src="img/gallery/icon.png" alt=""></a>
         					</div>
         					<div class="g_item_text">
         						<h4>{{$userPortfolioImages->file_name}}</h4>
@@ -414,17 +417,17 @@
 								<div class="h_gallery_item">
 									<div class="g_img_item">
 										@if (Str::endsWith($userPortfolioDocuments->file_url, '.pdf'))
-											<object data="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" type="application/pdf" width="100%" height="250">
+											<object data="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" type="application/pdf" width="100%" height="250">
 												<p>Your browser does not support PDFs. <a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}">Download PDF</a> instead.</p>
 											</object>
 										@else
-											<img class="img-fluid" src="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" alt="">
-											<a class="light" href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}"><img src="img/gallery/icon.png" alt=""></a>
+											<img class="img-fluid" src="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" alt="">
+											<a class="light" href="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}"><img src="img/gallery/icon.png" alt=""></a>
 										@endif
 									</div>
 									<div class="g_item_text">
 										<h4>{{ $userPortfolioDocuments->file_name }}</h4>
-										<strong><p><a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>
+										<strong><p><a href="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>
 									</div>
 								</div>
 							</div>

@@ -49,8 +49,19 @@ class PortfolioController extends Controller
                 ('error', 'User not found.');
             }
             // Fetch user skills
-            $userSkills = UserSkill::where('user_id', $user->id)
-            ->paginate(5);
+            if($userTheme->theme == 'TalentLoom-Urban'){
+                $userSkills = UserSkill::where('user_id', $user->id)
+                ->paginate(5);
+            }
+            elseif($userTheme->theme == 'TalentLoom-Classic'){
+                $userSkills = UserSkill::where('user_id', $user->id)
+                ->paginate(5);
+            }
+            elseif($userTheme->theme == 'TalentLoom-Sleek'){
+                $userSkills = UserSkill::where('user_id', $user->id)
+                ->paginate(10);
+            }
+            
             // Fetch user education
             $userEducation = userEducation::where('user_id', $user->id)
             ->orderBy('college_year', 'desc') 
@@ -108,8 +119,18 @@ class PortfolioController extends Controller
             }
 
             // Fetch user skills
-            $userSkills = UserSkill::where('user_id', $user->id)
-            ->paginate(7);
+            if($userTheme->theme == 'TalentLoom-Urban'){
+                $userSkills = UserSkill::where('user_id', $user->id)
+                ->paginate(5);
+            }
+            elseif($userTheme->theme == 'TalentLoom-Classic'){
+                $userSkills = UserSkill::where('user_id', $user->id)
+                ->paginate(5);
+            }
+            elseif($userTheme->theme == 'TalentLoom-Sleek'){
+                $userSkills = UserSkill::where('user_id', $user->id)
+                ->paginate(10);
+            }
             // Fetch user education
             $userEducation = userEducation::where('user_id', $user->id)
             ->orderBy('college_year', 'desc') 
@@ -134,10 +155,11 @@ class PortfolioController extends Controller
             ->get();
 
             $theme_path = $userTheme->theme_path;
+            $actionType = "Preview";
 
             return view($theme_path, 
             compact('userSkills', 'userEducation', 'userExperience', 'user','userService'
-            ,'userPortfolioImage','userPortfolioDocument'));
+            ,'userPortfolioImage','userPortfolioDocument', 'actionType'));
         }
 
         public function changeTheme(){
@@ -250,8 +272,18 @@ class PortfolioController extends Controller
                 ('error', 'User not found.');
             }
             // Fetch user skills
-            $userSkills = UserSkill::where('user_id', $user->id)
-            ->paginate(5);
+            if($userTheme->theme == 'TalentLoom-Urban'){
+                $userSkills = UserSkill::where('user_id', $user->id)
+                ->paginate(5);
+            }
+            elseif($userTheme->theme == 'TalentLoom-Classic'){
+                $userSkills = UserSkill::where('user_id', $user->id)
+                ->paginate(5);
+            }
+            elseif($userTheme->theme == 'TalentLoom-Sleek'){
+                $userSkills = UserSkill::where('user_id', $user->id)
+                ->paginate(10);
+            }
             // Fetch user education
             $userEducation = userEducation::where('user_id', $user->id)
             ->orderBy('college_year', 'desc') 
