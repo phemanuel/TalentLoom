@@ -67,10 +67,10 @@
     <!-- Hero Section -->
     <section id="home" class="hero section dark-background">
 
-      <img src="{{ asset('storage/' . $user->cover_picture) }}" alt="" data-aos="fade-in">
+      <img src="{{ asset('storage/app/public/' . $user->cover_picture) }}" alt="" data-aos="fade-in">
 
       <div class="container d-flex flex-column align-items-center justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
-      <h2>I am {{$user->full_name}}</h2>         
+        <h2>I am {{$user->full_name}}</h2>        
         @php
     // Retrieve user roles major
     $userRolesMajor = $user->user_roles_major;
@@ -107,7 +107,7 @@
               <div class="col-lg-5">
                 <table>
                   <tr>
-                    <td><img src="{{ asset('storage/' . $user->user_picture) }}" class="img-fluid" alt=""></td>
+                    <td><img src="{{ asset('storage/app/public/' . $user->user_picture) }}" class="img-fluid" alt=""></td>
                   </tr>
                   <tr>
                     <td>@if($actionType == 'Edit')<a href="{{ route('profile-picture') }}" title="Edit Profile Picture">
@@ -369,11 +369,11 @@
 					@if(!empty($userPortfolioImage))
 					@foreach($userPortfolioImage as $userPortfolioImages)
           <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-              <img src="{{ asset('storage/' . $userPortfolioImages->file_url) }}" class="img-fluid" alt="">
+              <img src="{{ asset('storage/app/public/' . $userPortfolioImages->file_url) }}" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>{{$userPortfolioImages->file_name}}</h4>
                 <!-- <p>Lorem ipsum, dolor sit amet consectetur</p> -->
-                <a href="{{ asset('storage/' . $userPortfolioImages->file_url) }}" title="App 1" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="{{ asset('storage/app/public/' . $userPortfolioImages->file_url) }}" title="App 1" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                 <!-- <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a> -->
               </div>
             </div><!-- End Portfolio Item -->
@@ -388,16 +388,16 @@
 						@foreach ($userPortfolioDocument as $userPortfolioDocuments)
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
 										@if (Str::endsWith($userPortfolioDocuments->file_url, '.pdf'))
-											<object data="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" type="application/pdf" width="100%" height="250">
+											<object data="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" type="application/pdf" width="100%" height="250">
 												<p>Your browser does not support PDFs. <a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}">Download PDF</a> instead.</p>
 											</object>
                       <h4>{{ $userPortfolioDocuments->file_name }}</h4>
-                    <strong><p><a href="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
+                    <strong><p><a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
 										@else
-                    <img src="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" class="img-fluid" alt="">
-                    <strong><p><a href="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
+                    <img src="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" class="img-fluid" alt="">
+                    <strong><p><a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
                     <h4>{{ $userPortfolioDocuments->file_name }}</h4>
-                    <strong><p><a href="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
+                    <strong><p><a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
 										@endif
 									</div>															
 						@endforeach

@@ -13,6 +13,7 @@ use App\Models\UserMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Chat ;
+use App\Models\userResources;
 
 class PageController extends Controller
 {
@@ -697,6 +698,119 @@ class PageController extends Controller
             'postJobs', 'jobLocation', 'categories', 'postUpskill',
             'messages', 'unreadMessagesCount'
         ));
+    }
+
+    public function userResources()
+    {
+        $userId = auth()->user()->id;
+        $categories = UserCategory::all();
+        if(auth()->user()->user_type == 'Freelancer'){
+            $resourceEbook = userResources::where('resource_type' , 'ebook')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceVtutorial = userResources::where('resource_type' , 'video')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceArticle = userResources::where('resource_type' , 'article')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceTemplate = userResources::where('resource_type' , 'template')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceTool = userResources::where('resource_type' , 'tool')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceCheatSheet = userResources::where('resource_type' , 'cheat_sheet')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceChecklist = userResources::where('resource_type' , 'checklist')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceQuiz = userResources::where('resource_type' , 'quiz')->orderBy('created_at', 'desc')->paginate(10);
+            // Get unread messages
+        $messages = Chat::where('to_id', '=', $userId)   
+        ->where('seen', '=', 0)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        $unreadMessagesCount = $messages->count();
+
+        return view('dashboard.user-resources', compact('messages', 'unreadMessagesCount','resourceEbook',
+    'resourceVtutorial','resourceArticle','resourceTemplate','resourceTool','resourceCheatSheet',
+    'resourceChecklist','resourceQuiz','categories'));
+        }
+        elseif(auth()->user()->user_type == 'Organization'){
+            
+            $resourceEbook = userResources::where('resource_type' , 'ebook')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceVtutorial = userResources::where('resource_type' , 'video')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceArticle = userResources::where('resource_type' , 'article')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceTemplate = userResources::where('resource_type' , 'template')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceTool = userResources::where('resource_type' , 'tool')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceCheatSheet = userResources::where('resource_type' , 'cheat_sheet')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceChecklist = userResources::where('resource_type' , 'checklist')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceQuiz = userResources::where('resource_type' , 'quiz')->orderBy('created_at', 'desc')->paginate(10);          
+            // Get unread messages
+        $messages = Chat::where('to_id', '=', $userId)   
+        ->where('seen', '=', 0)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        $unreadMessagesCount = $messages->count();
+
+        return view('dashboard.org-resources', compact('messages', 'unreadMessagesCount','resourceEbook',
+        'resourceVtutorial','resourceArticle','resourceTemplate','resourceTool','resourceCheatSheet',
+        'resourceChecklist','resourceQuiz','categories'));
+        }
+    }
+
+    public function postResourceSave(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'resource_type' => 'required|string',
+            'file_path' => 'nullable|file|max:500048',
+            'url' => ['nullable', function ($attribute, $value, $fail) {
+                if (!filter_var($value, FILTER_VALIDATE_URL)) {
+                    $fail("The $attribute must be a valid URL.");
+                }
+            }],
+            'author' => 'nullable|string|max:255',
+            'skill_set' => 'required|string',
+            'is_active' => 'required|string',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        // Determine the file path and size based on the resource type
+        if ($request->hasFile('file_path')) {
+            $file = $request->file('file_path');
+            $fileType = $request->input('resource_type');
+            $directory = $this->getFileDirectory($fileType);
+            $filePath = $file->store($directory, 'public');
+            $fileSize = $file->getSize(); // Get file size
+        } else {
+            $filePath = null;
+            $fileSize = null;
+        }
+
+        // Create a new resource record
+        UserResources::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'resource_type' => $request->input('resource_type'),
+            'file_path' => $filePath,
+            'file_size' => $fileSize, // Store file size
+            'url' => $request->input('url'),
+            'author' => $request->input('author'),
+            'skill_set' => $request->input('skill_set'),
+            'is_active' => $request->input('is_active'),
+            'user_id' => $request->input('user_id'),
+            'uploaded_by' => $request->input('user_id'),
+        ]);
+        
+        return redirect()->route('user-resources')->with('success', 'Resource posted successfully!');
+    }
+
+
+    // Get the file directory based on the resource type
+    private function getFileDirectory($type)
+    {
+        switch ($type) {
+            case 'video':
+                return 'resources/videos';
+            case 'pdf':
+            case 'document':
+                return 'resources/documents';
+            default:
+                return 'resources/documents';
+        }
     }
     
     

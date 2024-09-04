@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
 <title>@yield('pageTitle')</title>
     <meta charset="utf-8" />
@@ -156,9 +158,8 @@ li {
                             <li><a href="{{ route('give-review') }}" aria-expanded="false"><i class="nav-icon ti ti-layout"></i><span class="nav-title">Review</span></a> </li>
                             
 <li><a href="{{ route('payment-setup') }}" aria-expanded="false"><i class="nav-icon ti ti-pencil-alt"></i><span class="nav-title">Payment Setup</span></a> </li> 
-<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li>
-
-<li class="nav-static-title">Account</li>                           
+<li><a href="{{ route('user-resources') }}" aria-expanded="false"><i class="nav-icon ti ti-layers"></i><span class="nav-title">Resources Hub</span></a></li>
+<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li><li class="nav-static-title">Account</li>                           
                             
                             <li><a href="{{ route('change-password') }}" aria-expanded="false"><i class="nav-icon ti ti-key"></i><span class="nav-title">Change Password</span></a>
                                                             </li>    
@@ -190,6 +191,7 @@ li {
                                                 </li>
                                                 <li class="breadcrumb-item"> TalentLoom</li>
 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
+<li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-resources')}}">Resources Hub</a></li>
 
                                                 <li class="breadcrumb-item active text-primary" aria-current="page">About</li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-role-organization')}}">Industry Sector</a></li>
@@ -334,7 +336,7 @@ li {
                                                                    <p class="style1">{{auth()->user()->email}}</p>
                                                                 </div>
                                                           </div>
-                                                          @if(auth()->user()->user_type == 'Freelancer')
+                                                            @if(auth()->user()->user_type == 'Freelancer')
                                                            <div class="form-group">
                                                                 <label for="add1"><span class="style1">Username</span></label>
                                                                 <input type="text" class="form-control" name="user_name" value="{{auth()->user()->user_name}}" style="color: black;">
@@ -345,7 +347,7 @@ li {
                                                             </div>  
                                                             @else
 
-                                                            @endif 
+                                                            @endif
                                                             <hr>
                                                             <div class="form-group">
                                                                 <label for="add1"><span class="style1">About yourself(200 words)</span></label>
@@ -379,20 +381,31 @@ li {
                                                                 <label for="fb"><span class="style1">Facebook URL:</span></label>
                                                                 <input type="text" class="form-control" name="user_facebook" value="{{auth()->user()->user_facebook}}" style="color: black;">
                                                             </div>
+                                                            @error('user_facebook')
+									<span class="invalid-feedback">{{ $message }}</span>
+									@enderror
                                                             <div class="form-group">
                                                                 <label for="tr"><span class="style1">Twitter URL:</span></label>
                                                               <input type="text" class="form-control" name="user_twitter" value="{{auth()->user()->user_twitter}}" style="color: black;">
                                                             </div>
-
+                                                            @error('user_twitter')
+									<span class="invalid-feedback">{{ $message }}</span>
+									@enderror
                                                             <div class="form-group">
                                                                 <label for="br"><span class="style1">Instagram URL:</span></label>
                                                               <input type="text" class="form-control" name="user_instagram" value="{{auth()->user()->user_instagram}}" style="color: black;">
                                                             </div>
+                                                            @error('user_instagram')
+									<span class="invalid-feedback">{{ $message }}</span>
+									@enderror
 
                                                             <div class="form-group">
                                                                 <label for="li"><span class="style1">LinkedIn URL:</span></label>
                                                                 <input type="text" class="form-control" name="user_linkedin" value="{{auth()->user()->user_linkedin}}" style="color: black;">
                                                             </div>
+                                                            @error('user_linkedin')
+									<span class="invalid-feedback">{{ $message }}</span>
+									@enderror
 
                                                             <button type="submit" class="btn btn-primary">Update Socials</button>
                                                         </form>

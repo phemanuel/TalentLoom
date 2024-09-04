@@ -6,11 +6,11 @@
 		<!-- Favicon-->
 		<link rel="shortcut icon" href="img/favicon_new.png">
 		<!-- Author Meta -->
-		<meta name="author" content="codepixer">
+		<meta name="author" content="Kings Branding Consult">
 		<!-- Meta Description -->
-		<meta name="description" content="">
+		<meta name="description" content="A platform that connect freelancers with organizations, with real-time chat features.">
 		<!-- Meta Keyword -->
-		<meta name="keywords" content="">
+		<meta name="keywords" content="Freelancers,Portfolio,Job Listing">
 		<!-- meta character set -->
 		<meta charset="UTF-8">
 		<!-- Site Title -->
@@ -91,7 +91,7 @@
 				          </li>				          
 						  <li>						
 							<div class="profile-frame">
-								<img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="Profile Picture">
+								<img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="Profile Picture">
 							</div>	
 						</li>
 						<li><a class="ticker-btn" href="{{ route('dashboard-organization') }}">Profile</a></li>
@@ -114,7 +114,7 @@
 				          </li>				          
 						  <li>						
 							<div class="profile-frame">
-								<img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="Profile Picture">
+								<img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="Profile Picture">
 							</div>	
 						</li>
 						<li><a class="ticker-btn" href="{{ route('dashboard') }}">Profile</a></li>
@@ -458,7 +458,7 @@
 
 										<div class="form-group row" style="width: 100%">
 											<div class="col-lg-8 col-md-12">
-												<input name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '" required="" type="email">
+												<input name="EMAIL" placeholder="Enter Email" onFocus="this.placeholder = ''" onBlur="this.placeholder = 'Enter Email '" required="" type="email">
 												<div style="position: absolute; left: -5000px;">
 													<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
 												</div>

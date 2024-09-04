@@ -17,7 +17,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('dashback/assets/css/vendors.css')}}" />
     <!-- app style -->
     <link rel="stylesheet" type="text/css" href="{{ asset('dashback/assets/css/style.css')}}" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <style>
     /* Success Alert */
     .alert.alert-success {
@@ -108,8 +109,7 @@ th {
                                         <i class="icon-size-fullscreen"></i>
                                     </a>
                                 </li>
-                            </ul>
-                            <ul class="navbar-nav nav-right ml-auto"> 
+                            </ul><ul class="navbar-nav nav-right ml-auto"> 
                             <li class="nav-item dropdown">
                                 @if($unreadMessagesCount == 0)
                                     <a class="nav-link dropdown-toggle" href="{{route('user-message')}}" id="navbarDropdown3" role="button"  aria-haspopup="true" aria-expanded="false">
@@ -162,29 +162,27 @@ th {
             <div class="app-container">
                 <!-- begin app-nabar -->
                 <aside class="app-navbar">
-                    <!-- begin sidebar-nav -->
-                    <div class="sidebar-nav scrollbar scroll_light">
+                     <!-- begin sidebar-nav -->
+                     <div class="sidebar-nav scrollbar scroll_light">
                         <ul class="metismenu " id="sidebarNav">
-                        <li class="nav-static-title">Dashboard</li>
+                            <li class="nav-static-title">Dashboard</li>
                             
                             <li><a href="{{ route('home') }}" aria-expanded="false"><i class="nav-icon ti ti-list"></i><span class="nav-title">TalentLoom Job Board</span></a> </li>
                             
-                            <li><a href="{{ route('user-about-organization') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">About Me</span></a> </li>
-                            <li><a href="{{ route('user-role-organization') }}" aria-expanded="false"><i class="nav-icon ti ti-info"></i><span class="nav-title">Industry Sector</span></a> </li>
-                            <li><a href="{{ route('post-job') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Post Jobs</span></a> </li>
-                            
-                            <li class="active"><a href="{{ route('post-upskill') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Post Upskill</span></a> </li>
-                            <li><a href="{{ route('give-review') }}" aria-expanded="false"><i class="nav-icon ti ti-layout"></i><span class="nav-title">Review</span></a> </li>
-                            
-<li><a href="{{ route('payment-setup') }}" aria-expanded="false"><i class="nav-icon ti ti-pencil-alt"></i><span class="nav-title">Payment Setup</span></a> </li> 
+                            <li><a href="{{ route('user-about') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">About Me</span></a> </li>
+                            <li><a href="{{ route('user-role') }}" aria-expanded="false"><i class="nav-icon ti ti-info"></i><span class="nav-title">Roles</span></a> </li>
+                            <li><a href="{{ route('user-skill') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Skills/Expertise</span></a> </li>
+<li><a href="{{ route('user-service') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Services</span></a> </li>
+                            <li><a href="{{ route('user-education') }}" aria-expanded="false"><i class="nav-icon ti ti-layout"></i><span class="nav-title">Education/Certification</span></a> </li>
+                            <li><a href="{{ route('user-experience') }}" aria-expanded="false"><i class="nav-icon ti ti-pencil-alt"></i><span class="nav-title">Work Experience</span></a> </li> <li><a href="{{ route('user-portfolio') }}" aria-expanded="false"><i class="nav-icon ti ti-list"></i><span class="nav-title">Project</span></a> </li>    
 
-<li><a href="{{ route('user-resources') }}" aria-expanded="false"><i class="nav-icon ti ti-layers"></i><span class="nav-title">Resources Hub</span></a></li>
+<li class="active"><a href="{{ route('user-resources') }}" aria-expanded="false"><i class="nav-icon ti ti-layers"></i><span class="nav-title">Resources Hub</span></a></li>
 <li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li><li class="nav-static-title">Account</li>                           
                             
                             <li><a href="{{ route('change-password') }}" aria-expanded="false"><i class="nav-icon ti ti-key"></i><span class="nav-title">Change Password</span></a>
                                                             </li>    
                             <li><a href="{{ route('logout') }}" aria-expanded="false"><i class="zmdi zmdi-power"></i><span class="nav-title">Logout</span></a>
-                                                            </li>                         
+                                                            </li>                        
                             
                         </ul>
                     </div>
@@ -201,10 +199,10 @@ th {
                                 <!-- begin page title -->
                                 <div class="d-block d-sm-flex flex-nowrap align-items-center">
                                     <div class="page-title mb-2 mb-sm-0">
-                                        <h1>Jobs</h1>
+                                        <h1>Resources Hub</h1>
                                     </div>
                                     <div class="ml-auto d-flex align-items-center">
-                                        <nav>
+                                    <nav>
                                             <ol class="breadcrumb p-0 m-b-0">
                                                 <li class="breadcrumb-item">
                                                     <a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a>
@@ -213,13 +211,13 @@ th {
 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-resources')}}">Resources Hub</a></li>
 
-                                                <li class="breadcrumb-item active text-primary" aria-current="page">Post Upskill</li>
-                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-about-organization')}}">About</a></li>
-                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-role-organization')}}">Industry Sector</a></li>
-                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('post-job')}}">Post Jobs</a></li>
-
-                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('give-review')}}">Review</a></li>
-                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('payment-setup')}}">Payment Setup</a></li>
+                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="#">Roles</a></li>
+                                                 <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-about')}}">About</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-skill')}}">Skills</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-service')}}">Services</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-education')}}">Education</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-experience')}}">Experience</a></li>
+                                                <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-portfolio')}}">Project</a></li>
                                             </ol>
                                         </nav>
                                     </div>
@@ -234,17 +232,17 @@ th {
                                 <div class="card card-statistics faq-contant p-0 p-sm-4">
                                     <div class="card-body">
                                         <div class="tab nav-center">
-                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
                                             <li class="nav-item">
-                                                    <a class="nav-link active show" id="design-tab" data-toggle="tab" href="#design" role="tab" aria-controls="design" aria-selected="false"> View Upskill Opportunities
+                                                    <a class="nav-link  active show" id="design-tab" data-toggle="tab" href="#design" role="tab" aria-controls="design" aria-selected="false"> View Resources
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="research-tab" data-toggle="tab" href="#research" role="tab" aria-controls="research" aria-selected="true"> Post Upskill Opportunities</a>
-                                                </li>                                               
+                                                    <a class="nav-link" id="research-tab" data-toggle="tab" href="#research" role="tab" aria-controls="research" aria-selected="true"> Post Jobs</a>
+                                                </li>                                                
                                                 
-                                            </ul>
-                                            <div class="tab-content" id="v-pills-tabContent">
+                                            </ul> -->
+                                            <div class="tab-content" id="v-pills-tabContent">                                           
                                                 <div class="tab-pane fade pt-20" id="research" role="tabpanel">
                                                     <div class="accordion" id="accordionsimplefill">
                                                         <div class="mb-2 acd-group">
@@ -269,69 +267,7 @@ th {
                                                     @endif 
                                                     </div>
                                                     <div class="p-4">
-                                                        <form name="asic-form" action="{{ route('post-upskill-save') }}" method="POST" enctype="multipart/form-data">
-                                                        @csrf														
-                                                        <div class="form-row">
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="name1"><span class="style1">Company Name</span></label>
-                                                                    <input type="text" class="form-control" name="company_name" placeholder="Lotan Consult"  style="color: black;">
-                                                                </div>
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="name1"><span class="style1">Company Logo(Optional)</span></label>
-                                                                    <input type="file" name="company_logo"  class="form-control" style="color: black;"/>
-                                                                </div>
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="name1"><span class="style1">Upskill Name</span></label>
-                                                                    <input type="text" class="form-control" name="upskill_name" placeholder="Web Design"  style="color: black;">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                <label for="add1"><span class="style1">Upskill Description</span></label>
-                                                                <textarea id="editor1" name="upskill_description" rows="10" cols="50"  required></textarea>
-                                                            </div>                                                             
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="name1"><span class="style1">Upskill Category</span></label>
-                                                                    <select name="upskill_category" class="form-control">
-                                                                    @foreach ($categories as $category)
-                                                                        <option value="{{ $category->category }}">{{ $category->category }}</option>
-                                                                    @endforeach
-                                                                    </select>
-                                                                </div> 
-                                                                <div class="form-group col-md-12">
-                                                                 <label for="name1"><span class="style1">Application Type</span></label>
-                                                                    <select name="application_type" class="form-control" required>
-                                                                        <option selected value="Application Link">Application Link</option>
-                                                                        <option value="Send to Mail">Send to Mail</option>
-                                                                    </select>
-                                                                </div>                                                                                                                              
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="name1"><span class="style1">Upskill Link for application or Email to send to(Optional)</span></label>
-                                                                    <input type="text" class="form-control" name="upskill_link" placeholder=""  style="color: black;">
-                                                                    @if($errors->has('upskill_link'))
-        <span class="text-danger">{{ $errors->first('upskill_link') }}</span>
-    @endif
-                                                                </div>
-                                                                <div class="form-group col-md-12">
-                                                                <label for="name1"><span class="style1">Job application deadline</span></label>
-                                                                <div class='input-group date' id='datepicker-top-left'>                                                                
-                                                                    <input class="form-control" name="application_deadline" type='text' value="{{ date('m/d/Y') }}" />
-
-                                                                    
-                                                                    <span class="input-group-addon">
-                                                                            <i class="fa fa-calendar"></i>
-                                                                        </span>
-                                                                </div>
-                                                                    </div>
-                                                                <div class="form-group col-md-12">
-                                                                 <label for="name1"><span class="style1">Upskill Status</span></label>
-                                                                    <select name="upskill_status" class="form-control">
-                                                                        <option selected value="Open">Open</option>
-                                                                        <option value="Closed">Closed</option>
-                                                                    </select>
-                                                                </div>
-                                                          </div>      
-                                                          <input type="hidden" name="user_id" value="{{auth()->user()->id}}">                                                                                                  
-                                                            <button type="submit" class="btn btn-primary">Post Upskill</button>
-                                                        </form>
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -341,121 +277,101 @@ th {
 
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade show pt-20 active" id="design" role="tabpanel">
-    <div class="accordion" id="accordionsimpleborder">
-        <div class="mb-2 acd-group">
-            <div class="card-header rounded-0 bg-primary">
-                <h5 class="mb-0">
-                    <a href="#collapse01" class="btn-block text-left text-white acd-heading" data-toggle="collapse"></a>
-                </h5>
-            </div>
+                                                 <div class="tab-pane fade show pt-20 active" id="design" role="tabpanel">
+                                                    <div class="accordion" id="accordionsimpleborder">
+                                                        <div class="mb-2 acd-group">
+                                                            <div class="card-header rounded-0 bg-primary">
+                                                                <h5 class="mb-0">
+                                                                    <a href="#collapse01" class="btn-block text-left text-white acd-heading" data-toggle="collapse"></a>
+                                                                </h5>
+                                                            </div>
+                                                            @if(session('success'))
+						<div class="alert alert-success">
+							{{ session('success') }}
+						</div>
+          @elseif(session('error'))
+						<div class="alert alert-error">
+							{{ session('error') }}
+						</div>
+						@endif
+                                                            <div id="collapse01" class="collapse show" data-parent="#accordionsimpleborder">
+                                                                <div class="card-body">                                                            
+                                                                  <p>
+                                                                  <div class="card-header d-sm-flex justify-content-between align-items-center py-3">
+                                        <div class="card-heading mb-3 mb-sm-0">
+                                            <h4 class="card-title"></h4>
+                                        </div>
+                                        <div class="dropdown">
+                                            <input type="text" class="form-control form-control-sm" placeholder="Search....." id="searchInput"/>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="table-container"></div> -->
+                                    <div class="row tabs-contant">
 
-            @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @elseif(session('error'))
-                <div class="alert alert-error">
-                    {{ session('error') }}
-                </div>
-            @endif
-
-            <div id="collapse01" class="collapse show" data-parent="#accordionsimpleborder">
-                <div class="card-body">
-                    <p>
-                        <div class="card-header d-sm-flex justify-content-between align-items-center py-3">
-                            <div class="card-heading mb-3 mb-sm-0">
-                                <h4 class="card-title">List of Upskill Opportunities posted</h4>
+                                    <br>
+                            <div class="col-xxl-6">
+                                <div class="card card-statistics">
+                                    <div class="card-header">
+                                        <div class="card-heading">
+                                            <h4 class="card-title"></h4>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab tab-border nav-center">
+                                            <ul class="nav nav-tabs" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active show" id="home-05-tab" data-toggle="tab" href="#e-books" role="tab" aria-controls="e-books" aria-selected="true"> <i class="fas fa-book"></i> E-Books</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="profile-05-tab" data-toggle="tab" href="#v-tutorial" role="tab" aria-controls="v-tutorial" aria-selected="false"><i class="fas fa-video"></i> Video Tutorials </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="portfolio-05-tab" data-toggle="tab" href="#article-blog" role="tab" aria-controls="article-blog" aria-selected="false"><i class="fas fa-newspaper"></i> Articles/Blogs </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="contact-05-tab" data-toggle="tab" href="#template" role="tab" aria-controls="template" aria-selected="false"><i class="fas fa-file-alt"></i> Templates </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="contact-05-tab" data-toggle="tab" href="#tools" role="tab" aria-controls="tools" aria-selected="false"><i class="fas fa-tools"></i> Tools/Softwares </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="contact-05-tab" data-toggle="tab" href="#guides" role="tab" aria-controls="guides" aria-selected="false"><i class="fas fa-bookmark"></i> Cheat Sheet/Guides </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="contact-05-tab" data-toggle="tab" href="#checklist" role="tab" aria-controls="checklist" aria-selected="false"><i class="fa fa-check-square"></i> Checklists </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="contact-05-tab" data-toggle="tab" href="#quiz" role="tab" aria-controls="quiz" aria-selected="false"><i class="fas fa-question-circle"></i> Interactive Quiz </a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade active show" id="home-05" role="tabpanel" aria-labelledby="home-05-tab">
+                                                    <p>Commitment is something that comes from understanding that everything has its price and then having the willingness to pay that price. This is important because nobody wants to put significant effort into something, only to find out after the fact that the price was too high. We all know people who live this truth.Give yourself the power of responsibility.</p>
+                                                </div>
+                                                <div class="tab-pane fade" id="profile-05" role="tabpanel" aria-labelledby="profile-05-tab">
+                                                    <p>Motivation is not an accident or something that someone else can give you — you are the only one with the power to motivate you. Motivation cannot be an external force, it must come from within as the natural product of your desire to achieve something and your belief that you are capable to succeed at your goal.</p>
+                                                </div>
+                                                <div class="tab-pane fade" id="portfolio-05" role="tabpanel" aria-labelledby="portfolio-05-tab">
+                                                    <p>What is the exact sequence of events that will take you to where you want to be? Have a think consciously of what you need to do. Every outcome begins with the first step. When you decide you want to have a romantic meal for two, there are many steps that you need to perform in order for that to happen. You need to determine the exact sequence of events and write it down.</p>
+                                                </div>
+                                                <div class="tab-pane fade" id="contact-05" role="tabpanel" aria-labelledby="contact-05-tab">
+                                                    <p>Begin with the outcome in mind. You must improve upon, clarify and make clear just exactly who and what you are going to be doing, experiencing, living and having in 10 years. This is the first step of the process! Key: Notice how you felt excited and optimistic when you did this? The reason is simple. It’s the life you are designing instead of the one that was given you and that you have lived with less intention and purpose to date.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="dropdown">
-                                <input type="text" class="form-control form-control-sm" placeholder="Search...." id="searchInput"/>
-                            </div>
-                        </div>
-                        <div class="table-container">
-                            <table id="upskillTable" class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="table-plus">#</th>
-                                        <th class="table-plus"><span class="style1"><strong>Company Name</strong></span></th>
-                                        <th><span class="style3">Upskill Name</span></th>
-                                        <th><span class="style3">Upskill Category</span></th>
-                                        <th><span class="style3">Status</span></th>
-                                        <th><span class="style3">Verified</span></th>
-                                        @if(auth()->user()->user_type_status == 'Superadmin')
-                                            <th><span class="style1"><strong>Posted By</strong></span></th>
-                                        @endif
-                                        <th><span class="style1"><strong>Posted On</strong></span></th>
-                                        <th><span class="style1"><strong>Application Type</strong></span></th>
-                                        <th><span class="style1"><strong>Upskill Url</strong></span></th>
-                                        <th><span class="style1"><strong>Views</strong></span></th>
-                                        <th><span class="style1"><strong>Applied</strong></span></th>
-                                        <th><span class="style3">Actions</span></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if ($records->count() > 0)
-                                        @foreach ($records as $rs)
-                                            <tr>
-                                                <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>
-                                                <td><span class="style1">{{ $rs->company_name }}</span></td>
-                                                <td><span class="style1">{{ $rs->upskill_name }}</span></td>
-                                                <td><span class="style1">{{ $rs->upskill_category }}</span></td>
-                                                <td>
-                                                    @if($rs->upskill_status == 'Open')
-                                                        <label class="badge mb-0 badge-success-inverse style1">{{ $rs->upskill_status }}</label>
-                                                    @elseif($rs->upskill_status == 'Closed')
-                                                        <label class="badge mb-0 badge-primary-inverse style1">{{ $rs->upskill_status }}</label>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($rs->verify_upskill == 0)
-                                                        <label class="btn btn-icon btn-xs btn-danger">No</label>
-                                                        @if(auth()->user()->user_type_status == 'Superadmin')
-                                                            <a class="badge mb-0 badge-success style2" href="{{ route('verify-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Verify">Verify</a>
-                                                        @endif
-                                                    @elseif($rs->verify_upskill == 1)
-                                                        <label class="btn btn-icon btn-xs btn-success">Yes</label>
-                                                        @if(auth()->user()->user_type_status == 'Superadmin')
-                                                            <a class="badge mb-0 badge-danger style2" href="{{ route('decline-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Decline">Decline</a>
-                                                        @endif
-                                                    @endif
-                                                </td>
-                                                @if(auth()->user()->user_type_status == 'Superadmin')
-                                                    <td><span class="style1">{{ $rs->user_name }}</span></td>
-                                                @endif
-                                                <td><span class="style1">{{ $rs->created_at }}</span></td>
-                                                <td><span class="style1">{{ $rs->application_type }}</span></td>
-                                                <td>
-                                                    <span class="style1">
-                                                        <a href="https://talentloom.kingsconsult.com.ng/upskill/{{ $rs->upskill_url }}">
-                                                            https://talentloom.kingsconsult.com.ng/upskill/{{ $rs->upskill_url }}
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                                <td><span class="style1">{{ $rs->no_of_views }}</span></td>
-                                                <td><span class="style1">{{ $rs->upskill_apply }}</span></td>
-                                                <td>
-                                                    <a class="mr-3" href="{{ route('edit-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-edit"></i></a>
-                                                    <a href="{{ route('delete-upskill', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan="8">No upskill opportunities have been posted yet.</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                            {{ $records->links() }}
-                        </div>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+                                                                    
+                                                                  
+                                                                  </p>
+                                               
+                                                                </div>
+                                                            </div>
+                                                        </div>                                                       
+                                                        
+                                                    </div>
+                                                </div>
                                                 
                                                <!-- Vertical Center Modal -->
                                                <!-- Job Viewers -->
@@ -463,35 +379,7 @@ th {
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="viewersModalLabel">Upskill Viewers</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Loading Spinner -->
-                <div id="loading-spinner" style="text-align: center;">
-                    <img src="{{ asset('dashback/assets/img/spinner.gif') }}" alt="Loading..." />
-                </div>
-                <!-- Data Content -->
-                <div id="job-viewers-content"></div>
-            </div>
-            <div class="modal-footer">
-            <button id="exportCsvBtn" class="btn btn-success" disabled>Export to CSV</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                        
-                                    </div>
-        </div>
-    </div>
-</div>
-    
-                                               <!-- Vertical Center Modal -->
-                                               <!-- Job Viewers -->
-<div class="modal fade" id="viewersModal" tabindex="-1" role="dialog" aria-labelledby="viewersModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="viewersModalLabel">Upskill Viewers</h5>
+                <h5 class="modal-title" id="viewersModalLabel">Job Viewers</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -519,7 +407,7 @@ th {
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="viewersModalLabel">Upskill Applications</h5>
+                <h5 class="modal-title" id="viewersModalLabel">Job Applications</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -540,6 +428,7 @@ th {
         </div>
     </div>
 </div>
+
                                                 
                                                 <div class="tab-pane fade pt-20" id="HTML5" role="tabpanel">
                                                     <div class="accordion" id="accordionsimple2">
@@ -744,219 +633,9 @@ $(function(){
                 }
             });
         });
-    });
-</script>
-<script>
-let jobViewersResponse = []; // Declare a global variable to store the response data
-
-function loadUpskillViewers(jobId) {
-    // Clear previous content
-    $('#job-viewers-content').html('');
-    
-    // Show the loading spinner
-    $('#loading-spinner').show();
-
-    // Perform AJAX request to fetch job viewers
-    $.ajax({
-        url: '/upskill/' + jobId + '/viewers',
-        type: 'GET',
-        success: function(response) {
-            jobViewersResponse = response; // Store the response in the global variable
-            
-            // Hide the loading spinner
-            $('#loading-spinner').hide();
-            
-            // Add the job title as a heading
-            let jobTitle = response.length > 0 ? response[0].upskill_name : 'Job';
-            let headingHtml = `<h4 style="color: black; text-align: center;">${jobTitle} - Viewers</h4>`;
-
-            // Update the modal with the new content (tabulated data)
-            let tableHtml = '<div class="table-container">';
-            tableHtml += '<table id="viewersTable" class="table table-bordered">';
-            tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
-            tableHtml += '<tbody>';
-            response.forEach((viewer, index) => {
-                let profilePictureUrl = `/storage/app/public/${viewer.profile_picture}`;
-                tableHtml += '<tr>';
-                tableHtml += `<td style="color: black;">${index + 1}</td>`;
-                tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${viewer.name}" width="50" /></td>`;
-                tableHtml += `<td style="color: black;">${viewer.name}</td>`;
-                tableHtml += `<td style="color: black;">${viewer.user_roles_major}</td>`;                
-                tableHtml += '</tr>';
-            });
-            tableHtml += '</tbody></table></div>';
-            
-            // Combine the heading and the table
-            $('#job-viewers-content').html(headingHtml + tableHtml);
-
-            // Enable export button if data is available
-            if (response.length > 0) {
-                $('#exportCsvBtn').prop('disabled', false);
-            }
-        },
-        error: function() {
-            // Hide the loading spinner
-            $('#loading-spinner').hide();
-
-            // Show an error message
-            $('#job-viewers-content').html('<p>Error loading data.</p>');
-        }
-    });
-}
-
-// Reset modal content when it is closed
-$('#viewersModal').on('hidden.bs.modal', function () {
-    // Clear modal content and show the spinner again
-    $('#job-viewers-content').html('');
-    $('#loading-spinner').show();
-});
-
-// Export to CSV
-$('#exportCsvBtn').click(function() {
-    let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "No,Avatar,Name,User Role\n"; // CSV header
-
-    $('#viewersTable tbody tr').each(function() {
-        let row = [];
-        $(this).find('td').each(function(index) {
-            let text = $(this).text().trim();
-            if (index === 1) { // If this is the Avatar column
-                text = $(this).find('img').attr('src'); // get image src
-            }
-            row.push(text);
-        });
-        csvContent += row.join(",") + "\n";
-    });
-
-    // Create a link to download the CSV file
-    let encodedUri = encodeURI(csvContent);
-    let link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    let jobTitle = jobViewersResponse.length > 0 ? jobViewersResponse[0].upskill_name : 'job';
-    let currentDate = new Date().toISOString().slice(0, 10);    
-    link.setAttribute("download", `UPSKILL_${jobTitle}_viewers_${currentDate}.csv`);
-    document.body.appendChild(link); // Required for Firefox
-    link.click();
-    document.body.removeChild(link); // Cleanup
-});
+    });    
 </script>
 
-<script>
-let jobApplicationsResponse = []; // Declare a global variable to store the response data
 
-function loadUpskillApplications(jobId) {
-    // Clear previous content
-    $('#job-applications-content').html('');
-    
-    // Show the loading spinner
-    $('#loading-spinner1').show();
 
-    // Perform AJAX request to fetch job applications
-    $.ajax({
-        url: '/upskill/' + jobId + '/applications',
-        type: 'GET',
-        success: function(response) {
-            jobApplicationsResponse = response; // Store the response in the global variable
-            
-            // Hide the loading spinner
-            $('#loading-spinner1').hide();
-
-            // Add the job title as a heading
-            let jobTitle = response.length > 0 ? response[0].upskill_name : 'Job';
-            let headingHtml = `<h4 style="color: black; text-align: center;">${jobTitle} - Applications</h4>`;
-            
-            // Update the modal with the new content (tabulated data)
-           let tableHtml = '<div class="table-container">';
-            tableHtml += '<table id="applicationsTable" class="table table-bordered">';
-            tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
-            tableHtml += '<tbody>';
-            response.forEach((application, index) => {
-                let profilePictureUrl = `/storage/app/public/${application.profile_picture}`;
-                tableHtml += '<tr>';
-                tableHtml += `<td style="color: black;">${index + 1}</td>`;
-                tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${application.name}" width="50" /></td>`;
-                tableHtml += `<td style="color: black;">${application.name}</td>`;
-                tableHtml += `<td style="color: black;">${application.user_roles_major}</td>`;                
-                tableHtml += '</tr>';
-            });
-            tableHtml += '</tbody></table></div>';
-
-            // Combine the heading and the table
-            $('#job-applications-content').html(headingHtml + tableHtml);
-
-            // Enable export button if data is available
-            if (response.length > 0) {
-                $('#exportApplicationsCsvBtn').prop('disabled', false);
-            }
-        },
-        error: function() {
-            // Hide the loading spinner
-            $('#loading-spinner1').hide();
-
-            // Show an error message
-            $('#job-applications-content').html('<p>Error loading data.</p>');
-        }
-    });
-}
-
-// Reset modal content when it is closed
-$('#applicationsModal').on('hidden.bs.modal', function () {
-    // Clear modal content and show the spinner again
-    $('#job-applications-content').html('');
-    $('#loading-spinner1').show();
-});
-
-// Export to CSV
-$('#exportApplicationsCsvBtn').click(function() {
-    let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "No,Avatar,Name,User Role\n"; // CSV header
-
-    $('#applicationsTable tbody tr').each(function() {
-        let row = [];
-        $(this).find('td').each(function(index) {
-            let text = $(this).text().trim();
-            if (index === 1) { // If this is the Avatar column
-                text = $(this).find('img').attr('src'); // get image src
-            }
-            row.push(text);
-        });
-        csvContent += row.join(",") + "\n";
-    });
-
-    // Create a link to download the CSV file
-    let encodedUri = encodeURI(csvContent);
-    let link = document.createElement("a");
-    link.setAttribute("href", encodedUri);    
-    let jobTitle = jobApplicationsResponse.length > 0 ? jobApplicationsResponse[0].upskill_name : 'job';
-    let currentDate = new Date().toISOString().slice(0, 10);    
-    link.setAttribute("download", `UPSKILL_${jobTitle}_applications_${currentDate}.csv`);
-    document.body.appendChild(link); // Required for Firefox
-    link.click();
-    document.body.removeChild(link); // Cleanup
-});
-</script>
-<script>
-    document.getElementById('searchInput').addEventListener('keyup', function() {
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById('searchInput');
-    filter = input.value.toUpperCase();
-    table = document.getElementById('upskillTable');
-    tr = table.getElementsByTagName('tr');
-
-    for (i = 1; i < tr.length; i++) { // Start from 1 to skip the table header
-        tr[i].style.display = 'none';
-        td = tr[i].getElementsByTagName('td');
-        for (var j = 0; j < td.length; j++) {
-            if (td[j]) {
-                txtValue = td[j].textContent || td[j].innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = '';
-                    break;
-                }
-            }
-        }
-    }
-});
-
-</script>
 

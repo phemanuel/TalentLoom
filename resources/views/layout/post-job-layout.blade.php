@@ -177,7 +177,8 @@ th {
                             
 <li><a href="{{ route('payment-setup') }}" aria-expanded="false"><i class="nav-icon ti ti-pencil-alt"></i><span class="nav-title">Payment Setup</span></a> </li> 
 
-<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li> <li class="nav-static-title">Account</li>                           
+<li><a href="{{ route('user-resources') }}" aria-expanded="false"><i class="nav-icon ti ti-layers"></i><span class="nav-title">Resources Hub</span></a></li>
+<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li><li class="nav-static-title">Account</li>                           
                             
                             <li><a href="{{ route('change-password') }}" aria-expanded="false"><i class="nav-icon ti ti-key"></i><span class="nav-title">Change Password</span></a>
                                                             </li>    
@@ -209,6 +210,7 @@ th {
                                                 </li>
                                                 <li class="breadcrumb-item"> TalentLoom</li>
 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
+<li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-resources')}}">Resources Hub</a></li>
 
                                                 <li class="breadcrumb-item active text-primary" aria-current="page">Post Jobs</li>                                                
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-about-organization')}}">About</a></li>
@@ -263,10 +265,9 @@ th {
                                                         {{ session('error') }}
                                                     </div>
                                                     @endif 
-                                                   
                                                     </div>
                                                     <div class="p-4">
-                                                        <form name="asic-form" action="{{ route('post-job-save') }}" method="POST" enctype="multipart/form-data">
+                                                       <form name="asic-form" action="{{ route('post-job-save') }}" method="POST" enctype="multipart/form-data">
                                                         @csrf														
                                                         <div class="form-row">
                                                                 <div class="form-group col-md-12">
@@ -296,7 +297,7 @@ th {
                                                                 <div class="form-group col-md-12">
                                                                  <label for="name1"><span class="style1">Job Type</span></label>
                                                                     <select name="job_type" class="form-control">
-                                                                    <option selected value="Full Time">Full Time</option>
+                                                                        <option selected value="Full Time">Full Time</option>
                                                                         <option value="Part Time">Part Time</option>
                                                                         <option value="Intern">Intern</option>
                                                                         <option value="Remote">Remote</option>
@@ -356,7 +357,7 @@ th {
 
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade show pt-20 active" id="design" role="tabpanel">
+                                                 <div class="tab-pane fade show pt-20 active" id="design" role="tabpanel">
                                                     <div class="accordion" id="accordionsimpleborder">
                                                         <div class="mb-2 acd-group">
                                                             <div class="card-header rounded-0 bg-primary">
@@ -416,7 +417,7 @@ th {
                                                                             <a href="{{ route('delete-job', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
                                                                             
                                                                         </td> 
-                                                                            <td><img src="{{ asset('storage/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
+                                                                            <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
                                                                             <td><span class="style1">{{ $rs->company_name }}</span></td>
                                                                           <td><span class="style1">{{ $rs->job_name }}</span></td>
                                                                           <td><span class="style1">{{ $rs->job_type }}</span></td>
@@ -798,7 +799,7 @@ function loadJobViewers(jobId) {
             tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((viewer, index) => {
-                let profilePictureUrl = `/storage/${viewer.profile_picture}`;
+                let profilePictureUrl = `/storage/app/public/${viewer.profile_picture}`;
                 tableHtml += '<tr>';
                 tableHtml += `<td style="color: black;">${index + 1}</td>`;
                 tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${viewer.name}" width="50" /></td>`;
@@ -888,12 +889,12 @@ function loadJobApplications(jobId) {
             let headingHtml = `<h4 style="color: black; text-align: center;">${jobTitle} - Applications</h4>`;
             
             // Update the modal with the new content (tabulated data)
-            let tableHtml = '<div class="table-container">';
+           let tableHtml = '<div class="table-container">';
             tableHtml += '<table id="applicationsTable" class="table table-bordered">';
             tableHtml += '<thead><tr style="color: black;"><th>#</th><th>Avatar</th><th>Name</th><th>User Role</th></tr></thead>';
             tableHtml += '<tbody>';
             response.forEach((application, index) => {
-                let profilePictureUrl = `/storage/${application.profile_picture}`;
+                let profilePictureUrl = `/storage/app/public/${application.profile_picture}`;
                 tableHtml += '<tr>';
                 tableHtml += `<td style="color: black;">${index + 1}</td>`;
                 tableHtml += `<td style="color: black;"><img src="${profilePictureUrl}" alt="${application.name}" width="50" /></td>`;
@@ -981,7 +982,6 @@ $('#exportApplicationsCsvBtn').click(function() {
 });
 
 </script>
-
 
 
 

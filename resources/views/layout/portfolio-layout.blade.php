@@ -4,25 +4,21 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-			<link rel="icon" href="{{ asset('portfolioback/img/favicon_new.png') }}" type="image/png">
-	<title>TalentLoom :: Portfolio</title>
-
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="{{ asset('portfolioback/css/bootstrap.css') }}">
-	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/linericon/style.css') }}">
-	<link rel="stylesheet" href="{{ asset('portfolioback/css/font-awesome.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/owl-carousel/owl.carousel.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/lightbox/simpleLightbox.css') }}">
-	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/nice-select/css/nice-select.css') }}">
-	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/animate-css/animate.css') }}">
-	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/popup/magnific-popup.css') }}">
-	<link rel="stylesheet" href="{{ asset('portfolioback/vendors/flaticon/flaticon.css') }}">
-
-	<!-- Main CSS -->
-	<link rel="stylesheet" href="{{ asset('portfolioback/css/style.css') }}">
-	<link rel="stylesheet" href="{{ asset('portfolioback/css/responsive.css') }}">
-
-		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
+        <link rel="icon" href="portfolioback/img/favicon_new.png" type="image/png">
+        <title>TalentLoom :: Portfolio</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="portfolioback/css/bootstrap.css">
+        <link rel="stylesheet" href="portfolioback/vendors/linericon/style.css">
+        <link rel="stylesheet" href="portfolioback/css/font-awesome.min.css">
+        <link rel="stylesheet" href="portfolioback/vendors/owl-carousel/owl.carousel.min.css">
+        <link rel="stylesheet" href="portfolioback/vendors/lightbox/simpleLightbox.css">
+        <link rel="stylesheet" href="portfolioback/vendors/nice-select/css/nice-select.css">
+        <link rel="stylesheet" href="portfolioback/vendors/animate-css/animate.css">
+        <link rel="stylesheet" href="portfolioback/vendors/popup/magnific-popup.css">
+        <link rel="stylesheet" href="portfolioback/vendors/flaticon/flaticon.css">
+        <!-- main css -->
+        <link rel="stylesheet" href="portfolioback/css/style.css">
+        <link rel="stylesheet" href="portfolioback/css/responsive.css">
 		<style>
 			.font-text {
 	font-size: 44px;
@@ -75,51 +71,20 @@
 					<div class="banner_content">
 						<div class="media">
 							<div class="d-flex">
-								<table>
-									<tr>
-										<td><img src="{{ asset('storage/app/public/' . $user->profile_picture) }}" width="468" height="483" alt=""></td>
-									</tr>
-									<tr>
-										<td>@if($actionType == 'Edit')<a href="{{ route('profile-picture') }}" title="Edit Profile Picture">
-        <img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon">@else  @endif</td>
-									</tr>
-								</table>	
-</div>
+								<img src="{{ asset('storage/app/public/' . $user->profile_picture) }}" width="468" height="483" alt="">
+							</div>
 							<div class="media-body">
 								<div class="personal_text">
 									<h6>Hello Everybody, i am</h6>
-									<table>
-										<tr>
-											<td><h1>{{$user->full_name}} </h1><a href="{{ route('user-about') }}" title="Edit Full name"></td>
-											<td>&nbsp;</td>
-											<td valign="top">
-												@if($actionType == 'Edit')
-												<a href="{{ route('user-about') }}" title="Edit Full name">
-												<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon">@else  @endif
-    </a></td>
-										</tr>
-									</table>
-									
-        <hr>
-		<table>
-			<tr>
-				<td><h1>
+									<h1>{{$user->full_name}}</h1>
+<hr>
+<h1>
 <strong>
 				<p class="style2" style="color: purple;">{{$user->user_roles_major}}</p>
 			</strong>
-</h1></td>
-				<td>&nbsp;</td>
-				<td valign="top">@if($actionType == 'Edit')<a href="{{ route('user-role') }}" title="Edit User Major Role">
-				<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif
-    </a></td>
-			</tr>
-		</table>
-
-
+</h1>
 <hr>
-<table>
-	<tr>
-		<td><h6>
+									<h6>
 									
                                                                <strong><p class="style2">
                                                                 @php
@@ -139,40 +104,17 @@
                                                             @endif
 
                                                          </p></strong> 
-									</h6></td>
-									<td>&nbsp;</td>
-									<td valign="top">@if($actionType == 'Edit')<a href="{{ route('user-role') }}" title="Edit User other roles">
-									<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif</td>
-	</tr>	
-</table>
-									
-									<hr>	
-									<table>
-										<tr>
-											<td>
-											<ul class="list basic_info">
-											@if($user->user_phone)										
-										<li><a href="#"><i class="lnr lnr-phone-handset"></i> {{ ($user->country_code ?? 'N/A') . ' ' . ($user->user_phone ?? 'N/A') }}</a></li>
+									</h6>
+									<hr>									
+									<ul class="list basic_info">
+										@if($user->user_phone)										
+										<li><a href="#"><i class="lnr lnr-phone-handset"></i> {{$user->country_code . '-' . $user->user_phone}}</a></li>
 										@else
-										<p>Phone no has not been updated.</p>
+										<p><a href="{{route('dashboard')}}" target="_blank">Update your phone number.</a></p>
 										@endif
-</ul>
-											</td>
-											<td>&nbsp;</td>
-											<td valign="top">@if($actionType == 'Edit')<a href="{{ route('user-about') }}" title="Edit phone no">
-											<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif</td>
-										</tr>
-									</table>								
-									<ul class="list basic_info">										
-										@if($user->email)
-										<li><a href="mailto:{{$user->email}}"><i class="lnr lnr-envelope"></i> {{$user->email}}</a></li>	
-										@else
-										<p></p>
-										@endif									
+										<li><a href="#"><i class="lnr lnr-envelope"></i> {{$user->email}}</a></li>										
 									</ul>
-									<table>
-										<tr>
-											<td><ul class="list personal_social">
+									<ul class="list personal_social">
 										@if($user->user_facebook)
 										<li><a href="{{$user->user_facebook}}"><i class="fa fa-facebook" target="_blank"></i></a></li>
 										@else
@@ -193,14 +135,7 @@
 										@else
 										<!-- <li><a href="#"><i class="fa fa-instagram"></i></a></li> -->
 										@endif
-									</ul></td>
-										</tr>
-										<tr>
-										<td>@if($actionType == 'Edit')<a href="{{ route('user-about') }}" title="Edit socials">
-										<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif</td>
-										</tr>										
-									</table>
-									
+									</ul>
 								</div>
 							</div>
 						</div>
@@ -216,35 +151,19 @@
         		<div class="row welcome_inner">
         			<div class="col-lg-6">
         				<div class="welcome_text">
-							<table>
-								<tr>
-									<td><h2 style="color: black;">ABOUT MYSELF</h2></td>
-									<td>&nbsp;&nbsp;&nbsp;</td>
-									<td valign="top">@if($actionType == 'Edit')<a href="{{ route('user-about') }}" title="Edit about info">
-										<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif</td>
-								</tr>
-							</table>
-        					
+        					<h2 style="color: black;">ABOUT MYSELF</h2>
 							<hr>
 							@if($user->user_about)
         					<p>{!!$user->user_about!!}</p>  
 							@else
-							<p>About me has not been updated.</p>
+							<p><a href="{{ route('dashboard') }}" target="_blank">Update About Me</a></p>
 							@endif
         				</div>
         			</div>
         			<div class="col-lg-6">
         				<div class="tools_expert">						
         					<div class="skill_main">
-								<table>
-									<tr>
-										<td><h4><strong><p class="style1 style1">Skills</p></strong> </h4></td>
-										<td>&nbsp;&nbsp;&nbsp;</td>
-										<td valign="top">@if($actionType == 'Edit')<a href="{{ route('user-about') }}" title="Edit skills info">
-										<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif</td>
-									</tr>
-								</table>
-								
+							<h4><strong><p class="style1 style1">Skills</p></strong> </h4>	
 							<hr>						
 								@if(!empty($userSkills))
 							@foreach($userSkills as $userSkill)
@@ -258,7 +177,7 @@
 								</div>
 									@endforeach	
 								@else
-								<p>Skills has not been updated.</p>
+								<p><a href="{{ route('user-skill') }}" target="_blank">Update your skills</a></p>
 								@endif
 							</div>
         				</div>
@@ -276,19 +195,15 @@
         		<div class="tabs_inner">
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Professional Experience</a>
-							@if($actionType == 'Edit')<a href="{{ route('user-experience') }}" title="Edit experience info">
-										<img src="{{asset('templates/classic/assets/img/edit1.png')}}" alt="Edit Icon"></a>@else  @endif
+							<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">My Experiences</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Education</a>
-							@if($actionType == 'Edit')<a href="{{ route('user-education') }}" title="Edit education info">
-										<img src="{{asset('templates/classic/assets/img/edit1.png')}}" alt="Edit Icon"></a>@else  @endif
+							<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">My Education</a>
 						</li>
 					</ul>
 					<div class="tab-content" id="myTabContent">
-						<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">						
-							<ul class="list">							
+						<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+							<ul class="list">
 								@if(!empty($userExperience))
 							@foreach($userExperience as $userExperiences)
 								<li>
@@ -307,7 +222,7 @@
 								</li>								
 								@endforeach
 								@else
-								<p>Work experience has not been updated.</p>
+								<p><a href="{{ route('user-experience') }}" target="_blank">Update your work experience</a></p>
 								@endif
 							</ul>
 						</div>
@@ -331,7 +246,7 @@
 								</li>
 								@endforeach
 								@else
-								<p>Education/certification has not been updated.</p>
+								<p><a href="{{ route('user-education') }}" target="_blank">Update your education/certification</a></p>
 								@endif
 							</ul>
 						</div>
@@ -344,11 +259,8 @@
         <!--================Feature Area =================-->
         <section class="feature_area p_120">
         	<div class="container" id="service">
-        		<div class="main_title">					
-					<h3 style="color: black;">WHAT I DO
-					@if($actionType == 'Edit')<a href="{{ route('user-service') }}" title="Edit services info">
-					<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif
-					</h3>
+        		<div class="main_title">
+				<h3 style="color: black;">WHAT I DO</h3>
         			<p>If you are looking for the best to grow and improve your business, you don't have to search for too long, i am available to work with you.</p>
         		</div>
         		<div class="feature_inner row">
@@ -363,7 +275,7 @@
         			</div>        			
         			@endforeach
 					@else
-					<p>Services has not been updated.</p>
+					<p><a href="{{ route('user-service') }}" target="_blank">Update your services</a></p>
 					@endif
         		</div>
         	</div>
@@ -374,10 +286,7 @@
         <section class="home_gallery_area p_120">
         	<div class="container" id="project">
         		<div class="main_title">
-        			<h3 style="color: black;">My Projects
-        			@if($actionType == 'Edit')<a href="{{ route('user-portfolio') }}" title="Edit projects info">
-							<img src="{{asset('templates/classic/assets/img/edit.png')}}" alt="Edit Icon"></a>@else  @endif
-        			</h3>
+        			<h3 style="color: black;">My Projects</h3>
         			<p>Check out some of my projects.</p>
         		</div>
         		<div class="isotope_fillter">
@@ -489,21 +398,20 @@
         
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="{{ asset('portfolioback/js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ asset('portfolioback/js/popper.js') }}"></script>
-<script src="{{ asset('portfolioback/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('portfolioback/js/stellar.js') }}"></script>
-<script src="{{ asset('portfolioback/vendors/lightbox/simpleLightbox.min.js') }}"></script>
-<script src="{{ asset('portfolioback/vendors/nice-select/js/jquery.nice-select.min.js') }}"></script>
-<script src="{{ asset('portfolioback/vendors/isotope/imagesloaded.pkgd.min.js') }}"></script>
-<script src="{{ asset('portfolioback/vendors/isotope/isotope.pkgd.min.js') }}"></script>
-<script src="{{ asset('portfolioback/vendors/owl-carousel/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('portfolioback/vendors/popup/jquery.magnific-popup.min.js') }}"></script>
-<script src="{{ asset('portfolioback/js/jquery.ajaxchimp.min.js') }}"></script>
-<script src="{{ asset('portfolioback/vendors/counter-up/jquery.waypoints.min.js') }}"></script>
-<script src="{{ asset('portfolioback/vendors/counter-up/jquery.counterup.min.js') }}"></script>
-<script src="{{ asset('portfolioback/js/mail-script.js') }}"></script>
-<script src="{{ asset('portfolioback/js/theme.js') }}"></script>
-
+        <script src="portfolioback/js/jquery-3.3.1.min.js"></script>
+        <script src="portfolioback/js/popper.js"></script>
+        <script src="portfolioback/js/bootstrap.min.js"></script>
+        <script src="portfolioback/js/stellar.js"></script>
+        <script src="portfolioback/vendors/lightbox/simpleLightbox.min.js"></script>
+        <script src="portfolioback/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+        <script src="portfolioback/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+        <script src="portfolioback/vendors/isotope/isotope.pkgd.min.js"></script>
+        <script src="portfolioback/vendors/owl-carousel/owl.carousel.min.js"></script>
+        <script src="portfolioback/vendors/popup/jquery.magnific-popup.min.js"></script>
+        <script src="portfolioback/js/jquery.ajaxchimp.min.js"></script>
+        <script src="portfolioback/vendors/counter-up/jquery.waypoints.min.js"></script>
+        <script src="portfolioback/vendors/counter-up/jquery.counterup.min.js"></script>
+        <script src="portfolioback/js/mail-script.js"></script>
+        <script src="portfolioback/js/theme.js"></script>
     </body>
 </html>

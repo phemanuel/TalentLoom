@@ -57,7 +57,7 @@
                 <strong>
                     <h4>
                         <img src="{{ asset('dashback/assets/img/spinner.gif') }}" alt="Loading..." />
-                        <p>Send your CV, cover letter, and portfolio to <u>{{$postJobsLink}}</u> .</p>
+                        <p>Send your CV, cover letter, and portfolio to <u>{{$postJobsLink}}</u>.</p>
                         <p>The page is redirecting. If it takes too long, <a href="mailto:{{ $postJobsLink }}">Click to send an email to the employer</a></p>
                     </h4>
                 </strong>

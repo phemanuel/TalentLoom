@@ -144,7 +144,8 @@
                             
 <li><a href="{{ route('payment-setup') }}" aria-expanded="false"><i class="nav-icon ti ti-pencil-alt"></i><span class="nav-title">Payment Setup</span></a> </li> 
 
-<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li> <li class="nav-static-title">Account</li>                           
+<li><a href="{{ route('user-resources') }}" aria-expanded="false"><i class="nav-icon ti ti-layers"></i><span class="nav-title">Resources Hub</span></a></li>
+<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li><li class="nav-static-title">Account</li>                           
                             
                             <li><a href="{{ route('change-password') }}" aria-expanded="false"><i class="nav-icon ti ti-key"></i><span class="nav-title">Change Password</span></a>
                                                             </li>    
@@ -176,6 +177,7 @@
                                                 </li>
                                                 <li class="breadcrumb-item"> TalentLoom</li>
 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
+<li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-resources')}}">Resources Hub</a></li>
 
                                                 <li class="breadcrumb-item active text-primary" aria-current="page">Post Upskill</li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-about-organization')}}">About</a></li>
@@ -245,7 +247,7 @@
                                                                     <table>
                                                                         <tr>
                                                                             <td><label for="name1"><span class="style1">Company Logo(Optional) </span></label></td>
-                                                                            <td><p><img src="{{ asset('storage/' . $postUpskill->company_logo) }}" alt="recruiter logo" width="50" height="50"> </p></td>
+                                                                            <td><p><img src="{{ asset('storage/app/public/' . $postUpskill->company_logo) }}" alt="recruiter logo" width="50" height="50"> </p></td>
                                                                         </tr>
                                                                     </table>                                                                    
                                                                     <input type="file" name="company_logo"  class="form-control" style="color: black;"/>                                                                    
@@ -270,15 +272,28 @@
                                                                 <div class="form-group col-md-12">
                                                                  <label for="name1"><span class="style1">Application Type</span></label>
                                                                     <select name="application_type" class="form-control" required>
-                                                                        <option value="{{$postJobs->application_type}}">{{$postJobs->application_type}}</option>
+                                                                        <option value="{{$postJobs->application_type}}">{{$postUpskill->application_type}}</option>
                                                                         <option value="Application Link">Application Link</option>
                                                                         <option value="Send to Mail">Send to Mail</option>
                                                                     </select>
                                                                 </div>                                                                                                                       
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="name1"><span class="style1">Upskill Link for application(Optional)</span></label>
-                                                                    <input type="text" class="form-control" name="upskill_link" placeholder="https://kingsconsult.com.ng/apply" value="{{$postUpskill->upskill_link}}"  style="color: black;">
+                                                                 <div class="form-group col-md-12">
+                                                                    <label for="name1"><span class="style1">JUpskill Link for application or Email to send to(Optional)</span></label>
+                                                                    <input type="text" class="form-control" name="upskill_link" placeholder=""  style="color: black;" value="{{$postUpskill->upskill_link}}">
+                                                                    @if($errors->has('upskill_link'))
+        <span class="text-danger">{{ $errors->first('upskill_link') }}</span>
+    @endif
                                                                 </div>
+                                                                <div class="form-group col-md-12">
+                                                                <label for="name1"><span class="style1">Upskill application deadline</span></label>
+                                                                <div class='input-group date' id='datepicker-top-left'>                                                                
+                                                                    <input class="form-control" name="application_deadline" type='text' placeholder="12-12-2024" value="{{$postUpskill->application_deadline}}" />
+                                                                    
+                                                                    <span class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </span>
+                                                                </div>
+                                                                    </div>
                                                                 <div class="form-group col-md-12">
                                                                  <label for="name1"><span class="style1">Upskill Status</span></label>
                                                                     <select name="upskill_status" class="form-control">

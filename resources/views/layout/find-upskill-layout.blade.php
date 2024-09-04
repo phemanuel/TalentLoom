@@ -6,11 +6,11 @@
 		<!-- Favicon-->
 		<link rel="shortcut icon" href="{{asset('homeback/img/favicon_new.png')}}">
 		<!-- Author Meta -->
-		<meta name="author" content="codepixer">
+		<meta name="author" content="Kings Branding Consult">
 		<!-- Meta Description -->
-		<meta name="description" content="">
+		<meta name="description" content="A platform that connect freelancers with organizations, with real-time chat features.">
 		<!-- Meta Keyword -->
-		<meta name="keywords" content="">
+		<meta name="keywords" content="Freelancers,Portfolio,Job Listing">
 		<!-- meta character set -->
 		<meta charset="UTF-8">
 		<!-- Site Title -->
@@ -63,43 +63,6 @@
 }
             .style2 {color: #000000}
             </style>
-			<style>
-	.message-icon-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.message-icon {
-  width: 24px; /* Adjust the size as needed */
-  height: auto;
-}
-
-.badge {
-  position: absolute;
-  top: -10px; /* Adjust as needed */
-  right: -10px; /* Adjust as needed */
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 5px 10px;
-  font-size: 12px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.blink {
-  animation: blink-animation 1s steps(2, start) infinite;
-}
-
-@keyframes blink-animation {
-  to {
-    visibility: hidden;
-  }
-}
-
-			</style>
 		</head>
 		<body>
 
@@ -131,15 +94,23 @@
                             @endif
 				            </ul>
 				          </li>	
-				          <li>
-							<a href="{{ route('user-message') }}" class="message-icon-wrapper">
+				          @if($unreadMessagesCount > 0)
+						  <li>
+							<a href="{{ route('user-message') }}" class="message-icon-wrapper" target="_blank">
 								<img src="{{ asset('homeback/img/message.png') }}" alt="message_icon" class="message-icon">
 								<span class="badge {{ $unreadMessagesCount > 1 ? 'blink' : '' }}">{{ $unreadMessagesCount }}</span>
 							</a>
 							</li>
+						  @else <li>
+							<a href="{{ route('user-message') }}" class="message-icon-wrapper" target="_blank">
+								<img src="{{ asset('homeback/img/message.png') }}" alt="message_icon" class="message-icon">
+								
+							</a>
+							</li>
+						  @endif
 						  <li class="menu-has-children">
 							<div class="profile-frame">
-								<img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="Profile Picture">
+								<img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="Profile Picture">
 							</div>	
 							<ul>
 							<li><a href="{{ route('dashboard-organization') }}">Profile</a></li>
@@ -164,22 +135,29 @@
                             @endif
 				            </ul>
 				          </li>				          
+						  @if($unreadMessagesCount > 0)
 						  <li>
-							<a href="{{ route('user-message') }}" class="message-icon-wrapper">
+							<a href="{{ route('user-message') }}" class="message-icon-wrapper" target="_blank">
 								<img src="{{ asset('homeback/img/message.png') }}" alt="message_icon" class="message-icon">
 								<span class="badge {{ $unreadMessagesCount > 1 ? 'blink' : '' }}">{{ $unreadMessagesCount }}</span>
 							</a>
-							</li>			          
+							</li>
+						  @else <li>
+							<a href="{{ route('user-message') }}" class="message-icon-wrapper" target="_blank">
+								<img src="{{ asset('homeback/img/message.png') }}" alt="message_icon" class="message-icon">
+								
+							</a>
+							</li>
+						  @endif
 						  <li class="menu-has-children">
 							<div class="profile-frame">
-								<img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="Profile Picture">
+								<img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="Profile Picture">
 							</div>	
 							<ul>
 							<li><a href="{{ route('dashboard') }}">Profile</a></li>
 							<li><a href="{{ route('logout') }}">Logout</a></li>
 							</ul>
-						</li>	
-						<!--<li><a class="ticker-btn" href="{{ route('dashboard') }}">Profile</a></li>-->
+						</li>	<!--<li><a class="ticker-btn" href="{{ route('dashboard') }}">Profile</a></li>-->
 						<!--<li><a class="ticker-btn" href="{{ route('logout') }}">Logout</a></li>-->
 						@endif
 						@endauth
@@ -236,7 +214,7 @@
                             @if($postUpskill->isEmpty())
                             <div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="{{ asset('storage/' . 'company_logo/blank.jpg') }}" alt="" width="60" height="60">
+									<img src="{{ asset('storage/app/public/' . 'company_logo/blank.jpg') }}" alt="" width="60" height="60">
 									<ul class="tags">
 										<li>
 											<a href="#"></a>
@@ -263,7 +241,7 @@
                             @foreach($postUpskill as $upskill)
                             <div class="single-post d-flex flex-row">
 								<div class="thumb">
-                                <img src="{{ asset('storage/' . $upskill->company_logo) }}" alt="Company Logo" width="60" height="60">
+                                <img src="{{ asset('storage/app/public/' . $upskill->company_logo) }}" alt="Company Logo" width="60" height="60">
 									
 								</div>
 								<div class="details">

@@ -6,11 +6,11 @@
 		<!-- Favicon-->
 		<link rel="shortcut icon" href="{{asset('homeback/img/fav.png')}}">
 		<!-- Author Meta -->
-		<meta name="author" content="codepixer">
+		<meta name="author" content="Kings Branding Consult">
 		<!-- Meta Description -->
-		<meta name="description" content="">
+		<meta name="description" content="A platform that connect freelancers with organizations, with real-time chat features.">
 		<!-- Meta Keyword -->
-		<meta name="keywords" content="">
+		<meta name="keywords" content="Freelancers,Portfolio,Job Listing">
 		<!-- meta character set -->
 		<meta charset="UTF-8">
 		<!-- Site Title -->
@@ -133,7 +133,7 @@
 				          </li>				          
 						  <li>						
 							<div class="profile-frame">
-								<img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="Profile Picture">
+								<img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="Profile Picture">
 							</div>	
 						</li>
 						<li><a class="ticker-btn" href="{{ route('dashboard-organization') }}">Profile</a></li>
@@ -156,7 +156,7 @@
 				          </li>				          
 						  <li>						
 							<div class="profile-frame">
-								<img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="Profile Picture">
+								<img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="Profile Picture">
 							</div>	
 						</li>
 						<li><a href="{{ route('dashboard') }}">Profile</a></li>
@@ -214,7 +214,7 @@
                             @if($Jobs->isEmpty())
                             <div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="{{ asset('storage/' . 'company_logo/blank.jpg') }}" alt="" width="60" height="60">
+									<img src="{{ asset('storage/app/public/' . 'company_logo/blank.jpg') }}" alt="" width="60" height="60">
 									<ul class="tags">
 										<li>
 											<a href="#"></a>
@@ -241,7 +241,7 @@
                             @foreach($Jobs as $job)
                             <div class="single-post d-flex flex-row">
 								<div class="thumb">
-                                <img src="{{ asset('storage/' . $job->company_logo) }}" alt="Company Logo" width="60" height="60">
+                                <img src="{{ asset('storage/app/public/' . $job->company_logo) }}" alt="Company Logo" width="60" height="60">
 									
 								</div>
 								<div class="details">
@@ -285,7 +285,7 @@
 								<div class="active-relatedjob-carusel">									
 									@foreach ($postUpskill as $postUpskills)
 									<div class="single-rated">
-										<img class="img-fluid" src="{{ asset('storage/' . $postUpskills->company_logo) }}" alt="" width="100" height="50">
+										<img class="img-fluid" src="{{ asset('storage/app/public/' . $postUpskills->company_logo) }}" alt="" width="100" height="50">
 										<a href="#"><h4>{{$postUpskills->upskill_name}}</h4></a>
 										<h6>Created by : {{$postUpskills->company_name}}</h6>										
 										<a href="{{route('view-upskill', ['id' => $postUpskills->id])}}" class="btns text-uppercase">View Details</a>

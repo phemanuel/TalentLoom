@@ -6,11 +6,11 @@
 		<!-- Favicon-->
 		<link rel="shortcut icon" href="img/fav.png">
 		<!-- Author Meta -->
-		<meta name="author" content="codepixer">
+		<meta name="author" content="Kings Branding Consult">
 		<!-- Meta Description -->
-		<meta name="description" content="">
+		<meta name="description" content="A platform that connect freelancers with organizations, with real-time chat features.">
 		<!-- Meta Keyword -->
-		<meta name="keywords" content="">
+		<meta name="keywords" content="Freelancers,Portfolio,Job Listing">
 		<!-- meta character set -->
 		<meta charset="UTF-8">
 		<!-- Site Title -->

@@ -5,8 +5,10 @@
 <title>@yield('pageTitle')</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Admin template that can be used to build dashboards for CRM, CMS, etc." />
-    <meta name="author" content="Potenza Global Solutions" />
+    <meta name="description" content="A platform that connect freelancers with organizations, with real-time chat features.">
+		<!-- Meta Keyword -->
+		<meta name="keywords" content="Freelancers,Portfolio,Job Listing">
+		<meta name="author" content="Kings Branding Consult" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- app favicon -->
     <link rel="shortcut icon" href="{{asset('dashback/assets/img/favicon_new.png')}}">
@@ -179,6 +181,7 @@
                                                 </li>
                                                 <li class="breadcrumb-item"> TalentLoom</li>
 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
+<li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-resources')}}">Resources Hub</a></li>
 
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="user-portfolio">Project</a></li>
                                                  <li class="breadcrumb-item text-primary" aria-current="page"><a href="{{route('user-about')}}">About</a></li>

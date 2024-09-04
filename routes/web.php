@@ -226,7 +226,17 @@ use App\Http\Controllers\MessageController;
         Route::get('payment-setup', [PageController::class, 'paymentSetup'])
             ->name('payment-setup');
         Route::get('give-review', [PageController::class, 'giveReview'])
-            ->name('give-review');        
+            ->name('give-review');  
+        Route::get('user-resources', [PageController::class, 'userResources'])
+            ->name('user-resources'); 
+        Route::post('post-resource-save', [PageController::class, 'postResourceSave'])
+        ->name('post-resource-save');
+            Route::get('edit-resource/{id}', [PageController::class, 'editResource'])
+        ->name('edit-resource');
+        Route::put('update-resource/{id}', [PageController::class, 'updateResource'])
+        ->name('update-resource');
+        Route::get('delete-resource/{id}', [PageController::class, 'deleteResource'])
+        ->name('delete-resource');       
 
     });
 

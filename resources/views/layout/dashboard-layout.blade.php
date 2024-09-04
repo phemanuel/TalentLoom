@@ -111,7 +111,7 @@ li {
                                 </li>
                                 <li class="nav-item dropdown user-profile">
                                     <a href="javascript:void(0)" class="nav-link dropdown-toggle " id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="avtar-img">
+                                        <img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="avtar-img">
                                         <span class="bg-success user-status"></span>
                                     </a>
                                     <div class="dropdown-menu animated fadeIn" aria-labelledby="navbarDropdown">
@@ -155,9 +155,9 @@ li {
 <li><a href="{{ route('user-service') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Services</span></a> </li>
                             <li><a href="{{ route('user-education') }}" aria-expanded="false"><i class="nav-icon ti ti-layout"></i><span class="nav-title">Education/Certification</span></a> </li>
                             <li><a href="{{ route('user-experience') }}" aria-expanded="false"><i class="nav-icon ti ti-pencil-alt"></i><span class="nav-title">Work Experience</span></a> </li> 
-                            <li><a href="{{ route('user-portfolio') }}" aria-expanded="false"><i class="nav-icon ti ti-list"></i><span class="nav-title">Project</span></a> </li>    
-
-<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li> <li class="nav-static-title">Account</li>                           
+                            <li><a href="{{ route('user-portfolio') }}" aria-expanded="false"><i class="nav-icon ti ti-list"></i><span class="nav-title">Project</span></a> </li>   
+<li><a href="{{ route('user-resources') }}" aria-expanded="false"><i class="nav-icon ti ti-layers"></i><span class="nav-title">Resources Hub</span></a></li>
+<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li><li class="nav-static-title">Account</li>                           
                             
                             <li><a href="{{ route('change-password') }}" aria-expanded="false"><i class="nav-icon ti ti-key"></i><span class="nav-title">Change Password</span></a>
                                                             </li>    
@@ -189,6 +189,7 @@ li {
                                                 </li>
                                                 <li class="breadcrumb-item"> TalentLoom</li>
 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
+<li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-resources')}}">Resources Hub</a></li>
 
                                                 <li class="breadcrumb-item active text-primary" aria-current="page">About</li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-role')}}">Roles</a></li>
@@ -229,7 +230,7 @@ li {
                                                     <div class="profile-img text-center rounded-circle">
                                                         <div class="pt-5">
                                                             <div class="bg-img m-auto">
-                                                                <img src="{{ asset('storage/' . auth()->user()->user_picture) }}" class="img-fluid" alt="users-avatar">
+                                                                <img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" class="img-fluid" alt="users-avatar">
                                                             </div>
                                                             <div class="profile pt-4">
                                                                 <h4 class="mb-1">{{ auth()->user()->full_name }}</h4>
@@ -258,10 +259,10 @@ li {
 
                                                     <hr>
                                                     <div class="profile-btn text-center">
-                                                    <table class="table" align="center" width="70%">
+                                                    <table class="table" align="center">
                                                         @if(auth()->user()->user_type == 'Freelancer')
                                                         <tr>
-                                                            <td><div><a href="{{route('profile-picture')}}" class="btn btn-info"><i class="fa fa-edit"></i> Profile Picture</a></div></td>                                                            
+                                                            <td><div><a href="{{route('profile-picture')}}" class="btn btn-info"><i class="fa fa-edit"></i> Profile Picture</a></div></td> 
                                                         </tr>
                                                         <tr>
                                                         <td><div><a href="{{route('cover-picture')}}" class="btn btn-success"><i class="fa fa-edit"></i> Cover Picture</a></div></td>

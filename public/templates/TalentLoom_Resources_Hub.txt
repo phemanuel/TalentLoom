@@ -1,0 +1,94 @@
+eBooks: Digital books related to various skills and industry topics.
+Webinars/Video Tutorial: Recorded or live webinars on relevant topics.
+Articles/Blogs: Curated articles and blog posts that provide valuable insights and tips.
+Templates: Downloadable templates for documents, resumes, proposals, or project planning.
+Tools and Software: Recommendations and guides on using specific tools or software relevant to their skills.
+Cheat Sheets/Guides: Quick reference guides for technical skills or best practices.
+Checklists: Downloadable checklists to ensure best practices are followed in various tasks.
+Interactive Quizzes: To test their knowledge or provide a fun way to learn new concepts.
+
+
+eBooks
+Video Tutorial
+Articles/Blogs
+Templates
+Tools and Software
+Cheat Sheets/Guides
+Checklists
+Interactive Quizzes
+
+
+<table id="jobTable" class="table">
+                                                                  <thead>
+                                                                                    <tr>
+                                                                                    <th><span class="style3">Actions</span></th>
+                                                                                        <th class="table-plus">#</th>                                                                                        
+                                                                                        <th class="table-plus"><span class="style1"><strong>Resource Name</strong></span></th>
+                                                                                      <th><span class="style3">Type</span></th>                                                                                      
+                                                                                      <th><span class="style1"><strong>File_Path</strong></span></th>
+                                                                                      <th><span class="style1"><strong>Url</strong></span></th>
+                                                                                      <th><span class="style3">Author</span></th>
+                                                                                      <th><span class="style3">Category</span></th>	
+                                                                                      <th><span class="style3">Access Level</span></th>
+                                                                                      <th><span class="style1"><strong>Posted On</strong></span></th>
+                                                                                      <th><span class="style1"><strong>Views</strong></span></th>
+                                                                                      <th><span class="style1"><strong>Downloads</strong></span></th>
+                                                                                      						
+                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                @if ($resourceEbook->count() > 0)
+                                                                    @foreach ($resourceEbook as $rs)
+                                                                        <tr>
+                                                                        <td>
+                                                                            <a class="mr-3" href="{{ route('edit-job', ['id' => $rs->id]) }}" data-placement="top" title="Edit"><i class="fe fe-edit"></i></a>
+                                                                            <a href="{{ route('delete-job', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
+                                                                            
+                                                                        </td> 
+                                                                            <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
+                                                                            <td><span class="style1">{{ $rs->title }}</span></td>
+                                                                          <td><span class="style1">{{ $rs->resource_type }}</span></td>
+                                                                          <td><span class="style1">{{ $rs->file_path }}</span></td>
+                                                                          <td><span class="style1">{{ $rs->url }}</span></td>
+                                                                          <td><span class="style1">{{ $rs->author }}</span></td>
+                                                                          <td><span class="style1">{{ $rs->skill_set }}</span></td>
+                                                                          <td><span class="style1">{{ $rs->access_level }}</span></td>
+                                                                          <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
+                                                                            <td>
+    <span class="style1">
+        <label class="btn btn-icon btn-xs btn-info" for="">{{ $rs->no_of_views }}</label>        
+        @if($rs->views_count != 0 && (auth()->user()->id == $rs->user_id || auth()->user()->user_type_status == 'Superadmin'))
+    <u><a data-toggle="modal" data-target="#viewersModal" href="#" data-placement="top" title="View"
+       onclick="loadJobViewers({{ $rs->id }})">
+        <img src="{{ asset('dashback/assets/img/view.jpg') }}" alt="">
+    </a></u>
+@endif
+    </span>
+</td>
+<td>
+    <span class="style1">
+        <label class="btn btn-icon btn-xs btn-primary" for="">{{ $rs->job_apply }}</label>
+        @if($rs->downloads_count != 0 && (auth()->user()->id == $rs->user_id || auth()->user()->user_type_status == 'Superadmin'))
+    <u>
+        <a data-toggle="modal" data-target="#applicationsModal" href="#" data-placement="top" title="View"
+           onclick="loadJobApplications({{ $rs->id }})">
+            <img src="{{ asset('dashback/assets/img/view.jpg') }}" alt="">
+        </a>
+    </u>
+@endif
+    </span>
+</td>
+                                                                      
+                                                                        
+                                                                                                                                                   				
+                                                                        </tr>
+                                                                    @endforeach
+                                                                @else
+                                                                <tr>
+                                                                    <td colspan="8">Resource has not been posted yet.</td>
+                                                                </tr>
+                                                                @endif
+
+                                                                                </tbody>
+                                                                    </table>
+                                                                    {{ $resourceEbook->links()}}

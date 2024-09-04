@@ -6,8 +6,10 @@
 <title>@yield('pageTitle')</title> 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Admin template that can be used to build dashboards for CRM, CMS, etc." />
-    <meta name="author" content="Potenza Global Solutions" />
+    <meta name="description" content="A platform that connect freelancers with organizations, with real-time chat features.">
+		<!-- Meta Keyword -->
+		<meta name="keywords" content="Freelancers,Portfolio,Job Listing">
+		<meta name="author" content="Kings Branding Consult" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- app favicon -->
     <link rel="shortcut icon" href="{{asset('dashback/assets/img/favicon_new.png')}}">
@@ -80,7 +82,7 @@
 
                                 <li class="nav-item dropdown user-profile">
                                     <a href="javascript:void(0)" class="nav-link dropdown-toggle " id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="{{ asset('storage/' . auth()->user()->user_picture) }}" alt="avtar-img">
+                                        <img src="{{ asset('storage/app/public/' . auth()->user()->user_picture) }}" alt="avtar-img">
                                         <span class="bg-success user-status"></span>
                                     </a>
                                     <div class="dropdown-menu animated fadeIn" aria-labelledby="navbarDropdown">
@@ -119,6 +121,7 @@
                             
                             <li><a href="{{ route('home') }}" aria-expanded="false"><i class="nav-icon ti ti-list"></i><span class="nav-title">TalentLoom Job Board</span></a> </li>
                             @auth
+                            @if(auth()->user()->user_type == 'Freelancer')
                             <li class="active"><a href="{{ route('user-about') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">About Me</span></a> </li>
                             <li><a href="{{ route('user-role') }}" aria-expanded="false"><i class="nav-icon ti ti-info"></i><span class="nav-title">Roles</span></a> </li>
                             <li><a href="{{ route('user-skill') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Skills/Expertise</span></a> </li>
@@ -127,12 +130,32 @@
                             <li><a href="{{ route('user-experience') }}" aria-expanded="false"><i class="nav-icon ti ti-pencil-alt"></i><span class="nav-title">Work Experience</span></a> </li> 
                             <li><a href="{{ route('user-portfolio') }}" aria-expanded="false"><i class="nav-icon ti ti-list"></i><span class="nav-title">Project</span></a> </li>    
 
-<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li> <li class="nav-static-title">Account</li>                           
+<li><a href="{{ route('user-resources') }}" aria-expanded="false"><i class="nav-icon ti ti-layers"></i><span class="nav-title">Resources Hub</span></a></li>
+<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li><li class="nav-static-title">Account</li>                           
                             
                             <li><a href="{{ route('change-password') }}" aria-expanded="false"><i class="nav-icon ti ti-key"></i><span class="nav-title">Change Password</span></a>
                                                             </li>    
                             <li><a href="{{ route('logout') }}" aria-expanded="false"><i class="zmdi zmdi-power"></i><span class="nav-title">Logout</span></a>
-                              @endauth                              </li>                        
+                                                         </li>    
+                        @elseif(auth()->user()->user_type == 'Organization')
+                          
+                            <li class="active"><a href="{{ route('user-about-organization') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">About Me</span></a> </li>
+                            <li><a href="{{ route('user-role-organization') }}" aria-expanded="false"><i class="nav-icon ti ti-info"></i><span class="nav-title">Industry Sector</span></a> </li>
+                            <li><a href="{{ route('post-job') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Post Jobs</span></a> </li>
+                            
+<li><a href="{{ route('post-upskill') }}" aria-expanded="false"><i class="nav-icon ti ti-layout-grid4-alt"></i><span class="nav-title">Post Upskill</span></a> </li>
+                            <li><a href="{{ route('give-review') }}" aria-expanded="false"><i class="nav-icon ti ti-layout"></i><span class="nav-title">Review</span></a> </li>
+                            
+<li><a href="{{ route('payment-setup') }}" aria-expanded="false"><i class="nav-icon ti ti-pencil-alt"></i><span class="nav-title">Payment Setup</span></a> </li> 
+<li><a href="{{ route('user-resources') }}" aria-expanded="false"><i class="nav-icon ti ti-layers"></i><span class="nav-title">Resources Hub</span></a></li>
+<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li><li class="nav-static-title">Account</li>                           
+                            
+                            <li><a href="{{ route('change-password') }}" aria-expanded="false"><i class="nav-icon ti ti-key"></i><span class="nav-title">Change Password</span></a>
+                                                            </li>    
+                            <li><a href="{{ route('logout') }}" aria-expanded="false"><i class="zmdi zmdi-power"></i><span class="nav-title">Logout</span></a>
+                                                            </li> 
+                        @endif
+                                                         @endauth                  
                             
                         </ul>
                     </div>
@@ -160,15 +183,27 @@
                                                 <li class="breadcrumb-item"><a href="{{route('home')}}">TalentLoom Job Board</a> </li>
 												<li class="breadcrumb-item active text-primary" aria-current="page">Freelancers</li>
 												@auth
+												@if(auth()->user()->user_type == 'Freelancer')
 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
+<li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-resources')}}">Resources Hub</a></li>
 
-                                                <li class="breadcrumb-item active text-primary" aria-current="page">About</li>
+                                               <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('dashboard')}}">About</a></li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-role')}}">Roles</a></li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-skill')}}">Skills</a></li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-service')}}">Services</a></li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-education')}}">Education</a></li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-experience')}}">Experience</a></li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-portfolio')}}">Project</a></li>
+                                        @elseif(auth()->user()->user_type == 'Organization')
+                                        
+                                         <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('dashboard-organization')}}">About</a></li>
+                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-role-organization')}}">Industry Sector</a></li>
+                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('post-job')}}">Post Jobs</a></li>
+
+                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('post-upskill')}}">Post Upskill</a></li>
+                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('give-review')}}">Review</a></li>
+                                                <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('payment-setup')}}">Payment Setup</a></li>
+                                        @endif
 												@endauth
                                             </ol>
                                         </nav>
@@ -204,7 +239,7 @@
                                             <div class="text-right">
                                                 <h4><span class="badge badge-primary badge-pill px-3 py-2">$0/hr</span></h4>
                                             </div>
-                                            <div class="pt-1 bg-img m-auto"><img src="{{ asset('storage/' . $allFreelancers->user_picture) }}" class="img-fluid" alt="employees-img"></div>
+                                            <div class="pt-1 bg-img m-auto"><img src="{{ asset('storage/app/public/' . $allFreelancers->user_picture) }}" class="img-fluid" alt="employees-img"></div>
                                             <div class="mt-3 employees-contant-inner">
                                                 <h4 class="mb-1">{{$allFreelancers->full_name}}</h4>
                                                 <h5 class="mb-0 text-muted">{{$allFreelancers->user_roles_major}}</h5>
@@ -237,8 +272,8 @@
 													@endif
 													<hr>
 													<div class="text-center">
-													<a class="btn btn-primary" href="{{ $allFreelancers->user_url }}">View Profile</a>
-													<a class="btn btn-success" href="">Send Message</a>
+													<a class="btn btn-primary" href="{{ $allFreelancers->user_url }}" target="_blank">View Profile</a>
+													<a class="btn btn-success" href="{{route('user-message')}}">Chat</a>
 													</div>  
                                                 </div>
                                             </div>
@@ -260,7 +295,7 @@
             <!-- begin footer -->
             <footer class="footer">
                 <div class="row">
-                <div class="col-12 col-sm-6 text-center text-sm-left">
+                    <div class="col-12 col-sm-6 text-center text-sm-left">
                     <p>&copy; Copyright 2022-<?php echo date("Y"); ?>. All rights reserved.</p>
                     </div>
                     <div class="col  col-sm-6 ml-sm-auto text-center text-sm-right">

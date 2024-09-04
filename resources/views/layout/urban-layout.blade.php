@@ -74,7 +74,7 @@
 					<div class="banner_content">
 						<div class="media">
 							<div class="d-flex">
-								<img src="{{ asset('storage/' . $user->profile_picture) }}" width="468" height="483" alt="">
+								<img src="{{ asset('storage/app/public/' . $user->profile_picture) }}" width="468" height="483" alt="">
 							</div>
 							<div class="media-body">
 								<div class="personal_text">
@@ -111,7 +111,7 @@
 									<hr>									
 									<ul class="list basic_info">
 										@if($user->user_phone)										
-										<li><a href="#"><i class="lnr lnr-phone-handset"></i> {{$user->country_code . ' ' . $user->user_phone}}</a></li>
+										<li><a href="#"><i class="lnr lnr-phone-handset"></i> {{ ($user->country_code ?? 'N/A') . ' ' . ($user->user_phone ?? 'N/A') }}</a></li>
 										@else
 										<p>Phone no has not been updated.</p>
 										@endif
@@ -202,10 +202,10 @@
         		<div class="tabs_inner">
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">My Experiences</a>
+							<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Professional Experience</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">My Education</a>
+							<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Education</a>
 						</li>
 					</ul>
 					<div class="tab-content" id="myTabContent">

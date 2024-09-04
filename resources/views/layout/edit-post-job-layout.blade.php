@@ -145,7 +145,8 @@
                             
 <li><a href="{{ route('payment-setup') }}" aria-expanded="false"><i class="nav-icon ti ti-pencil-alt"></i><span class="nav-title">Payment Setup</span></a> </li> 
 
-<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li> <li class="nav-static-title">Account</li>                           
+<li><a href="{{ route('user-resources') }}" aria-expanded="false"><i class="nav-icon ti ti-layers"></i><span class="nav-title">Resources Hub</span></a></li>
+<li><a href="{{ route('user-message') }}" aria-expanded="false"><i class="nav-icon ti ti-comment"></i><span class="nav-title">Message</span><span class="nav-label label label-success">{{$unreadMessagesCount}}</span></a></li><li class="nav-static-title">Account</li>                           
                             
                             <li><a href="{{ route('change-password') }}" aria-expanded="false"><i class="nav-icon ti ti-key"></i><span class="nav-title">Change Password</span></a>
                                                             </li>    
@@ -177,6 +178,7 @@
                                                 </li>
                                                 <li class="breadcrumb-item"> TalentLoom</li>
 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-message')}}">Message</a></li>
+<li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-resources')}}">Resources Hub</a></li>
 
                                                 <li class="breadcrumb-item active text-primary" aria-current="page">Post Jobs</li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{{route('user-about-organization')}}">About</a></li>
@@ -245,7 +247,7 @@
                                                                     <table>
                                                                         <tr>
                                                                             <td><label for="name1"><span class="style1">Recruiter Logo(Optional) </span></label></td>
-                                                                            <td><p><img src="{{ asset('storage/' . $postJobs->company_logo) }}" alt="recruiter logo" width="50" height="50"> </p></td>
+                                                                            <td><p><img src="{{ asset('storage/app/public/' . $postJobs->company_logo) }}" alt="recruiter logo" width="50" height="50"> </p></td>
                                                                         </tr>
                                                                     </table>                                                                    
                                                                     <input type="file" name="company_logo"  class="form-control" style="color: black;"/>                                                                    
@@ -271,7 +273,7 @@
                                                                  <label for="name1"><span class="style1">Job Type</span></label>
                                                                     <select name="job_type" class="form-control">
                                                                     <option value="{{$postJobs->job_type}}">{{$postJobs->job_type}}</option>
-                                                                    <option selected value="Full Time">Full Time</option>
+                                                                        <option selected value="Full Time">Full Time</option>
                                                                         <option value="Part Time">Part Time</option>
                                                                         <option value="Intern">Intern</option>
                                                                         <option value="Remote">Remote</option>
@@ -296,9 +298,22 @@
                                                                     </select>
                                                                 </div>  
                                                                 <div class="form-group col-md-12">
-                                                                    <label for="name1"><span class="style1">Job Link for application(Optional)</span></label>
-                                                                    <input type="text" class="form-control" name="job_link" placeholder="https://kingsconsult.com.ng/apply" value="{{$postJobs->job_link}}"  style="color: black;">
+                                                                    <label for="name1"><span class="style1">Job Link for application or Email to send to(Optional)</span></label>
+                                                                    <input type="text" class="form-control" name="job_link" placeholder=""  style="color: black;" value="{{$postJobs->job_link}}">
+                                                                    @if($errors->has('job_link'))
+        <span class="text-danger">{{ $errors->first('job_link') }}</span>
+    @endif
                                                                 </div>
+                                                                <div class="form-group col-md-12">
+                                                                <label for="name1"><span class="style1">Job application deadline</span></label>
+                                                                <div class='input-group date' id='datepicker-top-left'>                                                                
+                                                                    <input class="form-control" name="application_deadline" type='text' placeholder="12-12-2024" value="{{$postJobs->application_deadline}}" />
+                                                                    
+                                                                    <span class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </span>
+                                                                </div>
+                                                                    </div>
                                                                 <div class="form-group col-md-12">
                                                                  <label for="name1"><span class="style1">Job Status</span></label>
                                                                     <select name="job_status" class="form-control">

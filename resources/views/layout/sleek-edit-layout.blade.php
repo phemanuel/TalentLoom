@@ -41,9 +41,9 @@
   </div>
   
   <div class="topbar-nav fixed-top">
-    <!-- <div class="brand">
-      <img src="{{ asset('templates/sleek/assets/img/favicon_new.png') }}" alt="" width="30" height="30">
-    </div> -->
+    <!--<div class="brand">-->
+    <!--  <img src="{{ asset('templates/sleek/img/assets/favicon_new.png') }}" alt="" width="30" height="30">-->
+    <!--</div>-->
     <h3 class="ml-1"><img src="{{ asset('templates/sleek/assets/img/favicon_new.png') }}" alt="" width="30" height="30"></h3>
     <button class="btn-fab toggle-menu mr-3"><span class="ti-menu"></span></button>
   </div>
@@ -113,7 +113,7 @@
             <div class="img-place wow zoomIn">
             <table>
                   <tr>
-                    <td><img src="{{ asset('storage/' . $user->user_picture) }}" class="img-fluid" alt=""></td>
+                    <td><img src="{{ asset('storage/app/public/' . $user->user_picture) }}" class="img-fluid" alt=""></td>
                   </tr>
                   <tr>
                     <td>@if($actionType == 'Edit')<a href="{{ route('profile-picture') }}" title="Edit Profile Picture">
@@ -239,7 +239,7 @@
                 <div class="details">
                   <h5>{{$userEducations->college_qualification}}</h5>
                   <small class="fg-theme">{{$userEducations->college_name}}</small>
-                  <p><a href="{{ asset('storage/' . $userEducations->college_certificate) }}" target="_blank">View Certificate</a> </p>
+                  <p><a href="{{ asset('storage/app/public/' . $userEducations->college_certificate) }}" target="_blank">View Certificate</a> </p>
                 </div>
               </li>						
 								@endforeach
@@ -249,7 +249,7 @@
             </ul>
           </div>
           <div class="col-md-6 wow fadeInRight" data-wow-delay="200ms">
-            <h2 class="fg-dark">Experience
+            <h2 class="fg-dark">Professional Experience
             @if($actionType == 'Edit')<a href="{{ route('user-experience') }}" title="Edit experience info">
             <img src="{{asset('templates/classic/assets/img/edit1.png')}}" alt="Edit Icon"></a>@else  @endif
             </h2>
@@ -328,8 +328,8 @@
 					@if(!empty($userPortfolioImage))
 					@foreach($userPortfolioImage as $userPortfolioImages)
           <div class="grid-item apps wow zoomIn">
-            <div class="img-place" data-src="{{ asset('storage/' . $userPortfolioImages->file_url) }}" data-fancybox data-caption="<h5 class='fg-theme'>Mobile Travel App</h5> <p>Travel, Discovery</p>">
-              <img src="{{ asset('storage/' . $userPortfolioImages->file_url) }}" alt="">
+            <div class="img-place" data-src="{{ asset('storage/app/public/' . $userPortfolioImages->file_url) }}" data-fancybox data-caption="<h5 class='fg-theme'>{{$userPortfolioImages->file_name}}</h5>">
+              <img src="{{ asset('storage/app/public/' . $userPortfolioImages->file_url) }}" alt="">
               <div class="img-caption">
                 <h5 class="fg-theme">{{$userPortfolioImages->file_name}}</h5>
                 <!-- <p>Travel, Discovery</p> -->
@@ -347,16 +347,16 @@
 						@foreach ($userPortfolioDocument as $userPortfolioDocuments)
             <div class="grid-item template wireframes wow zoomIn">
 										@if (Str::endsWith($userPortfolioDocuments->file_url, '.pdf'))
-											<object data="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" type="application/pdf" width="100%" height="250">
+											<object data="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" type="application/pdf" width="100%" height="250">
 												<p>Your browser does not support PDFs. <a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}">Download PDF</a> instead.</p>
 											</object>
                       <h4>{{ $userPortfolioDocuments->file_name }}</h4>
                     <strong><p><a href="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
 										@else
                     <img src="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" class="img-fluid" alt="">
-                    <strong><p><a href="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
+                    <strong><p><a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
                     <h4>{{ $userPortfolioDocuments->file_name }}</h4>
-                    <strong><p><a href="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
+                    <strong><p><a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
 										@endif
 									</div>															
 						@endforeach
