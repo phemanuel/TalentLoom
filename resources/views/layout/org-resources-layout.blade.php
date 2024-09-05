@@ -580,17 +580,19 @@ th {
                                                  <!-- articles - start -->
                                                  <div class="tab-pane fade" id="article-blog" role="tabpanel" aria-labelledby="article-blog-tab">
                                                    <strong><p style="color: black;">Curated articles and blog posts that provide valuable insights and tips.</p></strong> 
+                                                <div class="table-container">
                                                 <table id="jobTable" class="table">
                                                                   <thead>
                                                                                     <tr>
                                                                                     <th><span class="style3">Actions</span></th>
-                                                                                        <th class="table-plus">#</th>                                                                                        
+                                                                                        <!-- <th class="table-plus">#</th>                                                                                         -->
+                                                                                        
+                                                                                      <th><span class="style3">Category</span></th>
                                                                                         <th class="table-plus"><span class="style1"><strong>Resource Name</strong></span></th>
-                                                                                      <th><span class="style3">Type</span></th>                                                                                      
+                                                                                      <!-- <th><span class="style3">Type</span></th>                                                                                       -->
                                                                                       <th><span class="style1"><strong>File_Path</strong></span></th>
                                                                                       <th><span class="style1"><strong>Url</strong></span></th>
-                                                                                      <th><span class="style3">Author</span></th>
-                                                                                      <th><span class="style3">Category</span></th>	
+                                                                                      <th><span class="style3">Author</span></th>	
                                                                                       <th><span class="style3">Access Level</span></th>
                                                                                       <th><span class="style1"><strong>Posted On</strong></span></th>
                                                                                       <th><span class="style1"><strong>Views</strong></span></th>
@@ -607,13 +609,14 @@ th {
                                                                             <a href="{{ route('delete-resource', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
                                                                             
                                                                         </td>
-                                                                            <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
+                                                                            <!-- <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                            -->
+                                                                            
+                                                                          <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->resource_type }}</span></td>
+                                                                          <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
                                                                           <td><span class="style1">{{ $rs->file_path }}</span></td>
                                                                           <td><span class="style1">{{ $rs->url }}</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
                                                                             <td>
@@ -657,22 +660,26 @@ th {
                                                                     </table>
                                                                     {{ $resourceArticle->links()}}
                                                 </div>
+                                                   
+                                                </div>
                                                 <!-- article - end -->
 
                                                 <!-- templates - start -->
                                                 <div class="tab-pane fade" id="template" role="tabpanel" aria-labelledby="template-tab">
                                                     <strong><p style="color: black;">Downloadable templates for documents, resumes, proposals, or project planning.</p></strong>
+                                               <div class="table-container">
                                                 <table id="jobTable" class="table">
                                                                   <thead>
                                                                                     <tr>
                                                                                     <th><span class="style3">Actions</span></th>
-                                                                                        <th class="table-plus">#</th>                                                                                        
+                                                                                        <!-- <th class="table-plus">#</th>                                                                                         -->
+                                                                                       
+                                                                                      <th><span class="style3">Category</span></th>
                                                                                         <th class="table-plus"><span class="style1"><strong>Resource Name</strong></span></th>
-                                                                                      <th><span class="style3">Type</span></th>                                                                                      
+                                                                                      <!-- <th><span class="style3">Type</span></th>                                                                                       -->
                                                                                       <th><span class="style1"><strong>File_Path</strong></span></th>
                                                                                       <th><span class="style1"><strong>Url</strong></span></th>
-                                                                                      <th><span class="style3">Author</span></th>
-                                                                                      <th><span class="style3">Category</span></th>	
+                                                                                      <th><span class="style3">Author</span></th>	
                                                                                       <th><span class="style3">Access Level</span></th>
                                                                                       <th><span class="style1"><strong>Posted On</strong></span></th>
                                                                                       <th><span class="style1"><strong>Views</strong></span></th>
@@ -689,13 +696,14 @@ th {
                                                                             <a href="{{ route('delete-resource', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
                                                                             
                                                                         </td>
-                                                                            <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
+                                                                            <!-- <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                            -->
+                                                                            
+                                                                          <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->resource_type }}</span></td>
+                                                                          <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
                                                                           <td><span class="style1">{{ $rs->file_path }}</span></td>
                                                                           <td><span class="style1">{{ $rs->url }}</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
                                                                             <td>
@@ -738,23 +746,27 @@ th {
                                                                                 </tbody>
                                                                     </table>
                                                                     {{ $resourceTemplate->links()}}
+                                               </div>
+                                                    
                                                 </div>
                                                 <!-- template - end -->
 
                                                 <!-- tools - start -->
                                                 <div class="tab-pane fade" id="tools" role="tabpanel" aria-labelledby="tools-tab">
                                                     <strong><p style="color: black;">Recommendations and guides on using specific tools or software relevant to their skills.</p></strong>
+                                                <div class="table-container">
                                                 <table id="jobTable" class="table">
                                                                   <thead>
                                                                                     <tr>
                                                                                     <th><span class="style3">Actions</span></th>
-                                                                                        <th class="table-plus">#</th>                                                                                        
+                                                                                        <!-- <th class="table-plus">#</th>                                                                                         -->
+                                                                                       
+                                                                                      <th><span class="style3">Category</span></th>
                                                                                         <th class="table-plus"><span class="style1"><strong>Resource Name</strong></span></th>
-                                                                                      <th><span class="style3">Type</span></th>                                                                                      
+                                                                                      <!-- <th><span class="style3">Type</span></th>                                                                                       -->
                                                                                       <th><span class="style1"><strong>File_Path</strong></span></th>
                                                                                       <th><span class="style1"><strong>Url</strong></span></th>
-                                                                                      <th><span class="style3">Author</span></th>
-                                                                                      <th><span class="style3">Category</span></th>	
+                                                                                      <th><span class="style3">Author</span></th>	
                                                                                       <th><span class="style3">Access Level</span></th>
                                                                                       <th><span class="style1"><strong>Posted On</strong></span></th>
                                                                                       <th><span class="style1"><strong>Views</strong></span></th>
@@ -771,13 +783,14 @@ th {
                                                                             <a href="{{ route('delete-resource', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
                                                                             
                                                                         </td>
-                                                                            <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
+                                                                            <!-- <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                            -->
+                                                                            
+                                                                          <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->resource_type }}</span></td>
+                                                                          <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
                                                                           <td><span class="style1">{{ $rs->file_path }}</span></td>
                                                                           <td><span class="style1">{{ $rs->url }}</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
                                                                             <td>
@@ -821,22 +834,26 @@ th {
                                                                     </table>
                                                                     {{ $resourceTool->links()}}
                                                 </div>
+                                                    
+                                                </div>
                                                 <!-- tools - end -->
 
                                                 <!-- cheatsheet/guides - start -->
                                                 <div class="tab-pane fade" id="guides" role="tabpanel" aria-labelledby="guides-tab">
                                                     <strong><p style="color: black;">Quick reference guides for technical skills or best practices.</p></strong>
+                                                <div class="table-container">
                                                 <table id="jobTable" class="table">
                                                                   <thead>
                                                                                     <tr>
                                                                                     <th><span class="style3">Actions</span></th>
-                                                                                        <th class="table-plus">#</th>                                                                                        
+                                                                                        <!-- <th class="table-plus">#</th>                                                                                         -->
+                                                                                       
+                                                                                      <th><span class="style3">Category</span></th>
                                                                                         <th class="table-plus"><span class="style1"><strong>Resource Name</strong></span></th>
-                                                                                      <th><span class="style3">Type</span></th>                                                                                      
+                                                                                      <!-- <th><span class="style3">Type</span></th>                                                                                       -->
                                                                                       <th><span class="style1"><strong>File_Path</strong></span></th>
                                                                                       <th><span class="style1"><strong>Url</strong></span></th>
-                                                                                      <th><span class="style3">Author</span></th>
-                                                                                      <th><span class="style3">Category</span></th>	
+                                                                                      <th><span class="style3">Author</span></th>	
                                                                                       <th><span class="style3">Access Level</span></th>
                                                                                       <th><span class="style1"><strong>Posted On</strong></span></th>
                                                                                       <th><span class="style1"><strong>Views</strong></span></th>
@@ -853,13 +870,14 @@ th {
                                                                             <a href="{{ route('delete-resource', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
                                                                             
                                                                         </td>
-                                                                            <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
+                                                                            <!-- <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                            -->
+                                                                            
+                                                                          <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->resource_type }}</span></td>
+                                                                          <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
                                                                           <td><span class="style1">{{ $rs->file_path }}</span></td>
                                                                           <td><span class="style1">{{ $rs->url }}</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
                                                                             <td>
@@ -902,6 +920,8 @@ th {
                                                                                 </tbody>
                                                                     </table>
                                                                     {{ $resourceCheatSheet->links()}}
+                                                </div>
+                                                    
                                                 </div>
                                                 <!-- cheatsheet/guides - end -->
 
