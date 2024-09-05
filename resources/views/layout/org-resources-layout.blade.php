@@ -928,17 +928,19 @@ th {
                                                 <!-- checklist - start -->
                                                 <div class="tab-pane fade" id="checklist" role="tabpanel" aria-labelledby="checklist-tab">
                                                     <strong><p style="color: black;">Downloadable checklists to ensure best practices are followed in various tasks.</p></strong>
+                                                <div class="table-container">
                                                 <table id="jobTable" class="table">
                                                                   <thead>
                                                                                     <tr>
                                                                                     <th><span class="style3">Actions</span></th>
-                                                                                        <th class="table-plus">#</th>                                                                                        
+                                                                                        <!-- <th class="table-plus">#</th>                                                                                         -->
+                                                                                        
+                                                                                      <th><span class="style3">Category</span></th>
                                                                                         <th class="table-plus"><span class="style1"><strong>Resource Name</strong></span></th>
-                                                                                      <th><span class="style3">Type</span></th>                                                                                      
+                                                                                      <!-- <th><span class="style3">Type</span></th>                                                                                       -->
                                                                                       <th><span class="style1"><strong>File_Path</strong></span></th>
                                                                                       <th><span class="style1"><strong>Url</strong></span></th>
-                                                                                      <th><span class="style3">Author</span></th>
-                                                                                      <th><span class="style3">Category</span></th>	
+                                                                                      <th><span class="style3">Author</span></th>	
                                                                                       <th><span class="style3">Access Level</span></th>
                                                                                       <th><span class="style1"><strong>Posted On</strong></span></th>
                                                                                       <th><span class="style1"><strong>Views</strong></span></th>
@@ -955,13 +957,14 @@ th {
                                                                             <a href="{{ route('delete-resource', ['id' => $rs->id]) }}" data-placement="top" title="Delete"><i class="fe fe-trash-2"></i></a>
                                                                             
                                                                         </td>
-                                                                            <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
+                                                                            <!-- <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                            -->
+                                                                            
+                                                                          <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->resource_type }}</span></td>
+                                                                          <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
                                                                           <td><span class="style1">{{ $rs->file_path }}</span></td>
                                                                           <td><span class="style1">{{ $rs->url }}</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
                                                                             <td>
@@ -1004,6 +1007,8 @@ th {
                                                                                 </tbody>
                                                                     </table>
                                                                     {{ $resourceChecklist->links()}}
+                                                </div>
+                                                    
                                                 </div>
                                                 <!-- checklist - end -->
 

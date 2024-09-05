@@ -812,6 +812,24 @@ class PageController extends Controller
                 return 'resources/documents';
         }
     }
+
+    public function editResource($id)
+    {   
+        $userId = auth()->user()->id;
+        $categories = UserCategory::all();
+        $userResource = UserResources::where('id', $id)->first();
+
+        // Get unread messages
+        $messages = Chat::where('to_id', '=', $userId)   
+        ->where('seen', '=', 0)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        $unreadMessagesCount = $messages->count();
+
+        Return view('dashboard.edit-org-resources', compact('unreadMessagesCount','messages', 
+        'userResource','categories'));
+    }
     
     
 }
