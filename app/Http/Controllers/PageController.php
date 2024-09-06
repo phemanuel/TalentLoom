@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Chat ;
 use App\Models\userResources;
+use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
@@ -796,22 +797,7 @@ class PageController extends Controller
         ]);
         
         return redirect()->route('user-resources')->with('success', 'Resource posted successfully!');
-    }
-
-
-    // Get the file directory based on the resource type
-    private function getFileDirectory($type)
-    {
-        switch ($type) {
-            case 'video':
-                return 'resources/videos';
-            case 'pdf':
-            case 'document':
-                return 'resources/documents';
-            default:
-                return 'resources/documents';
-        }
-    }
+    }    
 
     public function editResource($id)
     {   
@@ -829,6 +815,78 @@ class PageController extends Controller
 
         Return view('dashboard.edit-org-resources', compact('unreadMessagesCount','messages', 
         'userResource','categories'));
+    }
+
+    public function updateResource(Request $request, $id)
+    {
+        // Find the existing resource by ID
+        $resource = UserResources::findOrFail($id);
+
+        // Validate the request data
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'resource_type' => 'required|string',
+            'file_path' => 'nullable|file|max:500048',
+            'url' => ['nullable', function ($attribute, $value, $fail) {
+                if (!filter_var($value, FILTER_VALIDATE_URL)) {
+                    $fail("The $attribute must be a valid URL.");
+                }
+            }],
+            'author' => 'nullable|string|max:255',
+            'skill_set' => 'required|string',
+            'is_active' => 'required|string|in:Active,Inactive',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        // Handle file upload if a new file is provided
+        if ($request->hasFile('file_path')) {
+            // Delete the old file if it exists
+            if ($resource->file_path) {
+                Storage::disk('public')->delete($resource->file_path);
+            }
+
+            $file = $request->file('file_path');
+            $fileType = $request->input('resource_type');
+            $directory = $this->getFileDirectory($fileType);
+            $filePath = $file->store($directory, 'public');
+            $fileSize = $file->getSize(); // Get file size
+        } else {
+            $filePath = $resource->file_path; // Keep the old file path if no new file is uploaded
+            $fileSize = $resource->file_size; // Keep the old file size
+        }
+
+        // Update the resource record with the new data
+        $resource->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'resource_type' => $request->input('resource_type'),
+            'file_path' => $filePath,
+            'file_size' => $fileSize,
+            'url' => $request->input('url'),
+            'author' => $request->input('author'),
+            'skill_set' => $request->input('skill_set'),
+            'is_active' => $request->input('is_active'),
+            // 'user_id' => $request->input('user_id'),
+            // 'uploaded_by' => "Admin",
+        ]);
+
+        return redirect()->route('user-resources')->with('success', 'Resource updated successfully!');
+    }
+
+
+    // Get the file directory based on the resource type
+    private function getFileDirectory($type)
+    {
+        switch ($type) {
+            case 'video':
+                return 'resources/videos';
+            case 'pdf':
+            case 'document':
+                return 'resources/documents';
+            default:
+                return 'resources/documents';
+        }
     }
     
     

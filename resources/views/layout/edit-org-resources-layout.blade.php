@@ -204,7 +204,7 @@ th {
                                 <!-- begin page title -->
                                 <div class="d-block d-sm-flex flex-nowrap align-items-center">
                                     <div class="page-title mb-2 mb-sm-0">
-                                        <h1>Edit Resources Hub</h1>
+                                        <h1>Edit Resources</h1>
                                     </div>
                                     <div class="ml-auto d-flex align-items-center">
                                         <nav>
@@ -272,8 +272,9 @@ th {
                                                     @endif 
                                                     </div>
                                                     <div class="p-4">
-                                                    <form name="asic-form" action="{{ route('post-resource-save') }}" method="POST" enctype="multipart/form-data">
-                                                        @csrf														
+                                                    <form name="asic-form" action="{{ route('update-resource' , ['id' => $userResource->id]) }}" method="POST" enctype="multipart/form-data">
+                                                        @csrf	
+                                                        @method('PUT')													
                                                         <div class="form-row">
                                                                 <div class="form-group col-md-12">
                                                                     <label for="name1"><span class="style1">Resource Title</span></label>
@@ -298,7 +299,8 @@ th {
                                                                 </div>
                                                                 <div class="form-group col-md-12">
                                                                     <label for="name1"><span class="style1">File Path(if available)</span></label>
-                                                                    <input type="file" name="file_path"  class="form-control" style="color: black;" value="{{$userResource->file_path}}"/>
+                                                                    <input type="file" name="file_path"  class="form-control" style="color: black;"/>
+                                                                    <p>{{$userResource->file_path}}</p>
                                                                 </div>
                                                                 <div class="form-group col-md-12">
                                                                     <label for="name1"><span class="style1">Resource Link(if available)</span></label>
@@ -327,7 +329,7 @@ th {
                                                                 </div>
                                                           </div>      
                                                           <input type="hidden" name="user_id" value="{{auth()->user()->id}}">                                                                                                  
-                                                            <button type="submit" class="btn btn-primary">Post Resource</button>
+                                                            <button type="submit" class="btn btn-primary">Update Resource</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -338,89 +340,7 @@ th {
 
                                                     </div>
                                                 </div>
-                                                 <div class="tab-pane fade show pt-20 active" id="design" role="tabpanel">
-                                                    <div class="accordion" id="accordionsimpleborder">
-                                                        <div class="mb-2 acd-group">
-                                                            <div class="card-header rounded-0 bg-primary">
-                                                                <h5 class="mb-0">
-                                                                    <a href="#collapse01" class="btn-block text-left text-white acd-heading" data-toggle="collapse"></a>
-                                                                </h5>
-                                                            </div>
-                                                            @if(session('success'))
-						<div class="alert alert-success">
-							{{ session('success') }}
-						</div>
-          @elseif(session('error'))
-						<div class="alert alert-error">
-							{{ session('error') }}
-						</div>
-						@endif
-                                                            <div id="collapse01" class="collapse show" data-parent="#accordionsimpleborder">
-                                                                <div class="card-body">                                                            
-                                                                  <p>
-                                                                  <div class="card-header d-sm-flex justify-content-between align-items-center py-3">
-                                        <div class="card-heading mb-3 mb-sm-0">
-                                            <h4 class="card-title">List of Resources</h4>
-                                        </div>
-                                        <div class="dropdown">
-                                            <input type="text" class="form-control form-control-sm" placeholder="Search....." id="searchInput"/>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="table-container"> </div> -->
-                                    <div class="row tabs-contant">
-
-                                    <br>
-                            <div class="col-xxl-6">
-                                <div class="card card-statistics">
-                                    <div class="card-header">
-                                        <div class="card-heading">
-                                            <h4 class="card-title"></h4>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="tab tab-border nav-center">
-                                            <ul class="nav nav-tabs" role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active show" id="e-books-tab" data-toggle="tab" href="#e-books" role="tab" aria-controls="e-books" aria-selected="true"> <i class="fas fa-book"></i> E-Books</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="v-tutorial-tab" data-toggle="tab" href="#v-tutorial" role="tab" aria-controls="v-tutorial" aria-selected="false"><i class="fas fa-video"></i> Video Tutorials </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="article-blog-tab" data-toggle="tab" href="#article-blog" role="tab" aria-controls="article-blog" aria-selected="false"><i class="fas fa-newspaper"></i> Articles/Blogs </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="template-tab" data-toggle="tab" href="#template" role="tab" aria-controls="template" aria-selected="false"><i class="fas fa-file-alt"></i> Templates </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="tools-tab" data-toggle="tab" href="#tools" role="tab" aria-controls="tools" aria-selected="false"><i class="fas fa-tools"></i> Tools/Softwares </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="guides-tab" data-toggle="tab" href="#guides" role="tab" aria-controls="guides" aria-selected="false"><i class="fas fa-bookmark"></i> Cheat Sheet/Guides </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="checklist-tab" data-toggle="tab" href="#checklist" role="tab" aria-controls="checklist" aria-selected="false"><i class="fa fa-check-square"></i> Checklists </a>
-                                                </li>
-                                                <!-- <li class="nav-item">
-                                                    <a class="nav-link" id="quiz-tab" data-toggle="tab" href="#quiz" role="tab" aria-controls="quiz" aria-selected="false"><i class="fas fa-question-circle"></i> Interactive Quiz </a>
-                                                </li> -->
-                                            </ul>
-                                            <div class="tab-content">
-                                                
                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                                                                  </p>
-                                               
-                                                                </div>
-                                                            </div>
-                                                        </div>                                                       
-                                                        
-                                                    </div>
-                                                </div>
                                                 
                                                <!-- Vertical Center Modal -->
                                                <!-- Job Viewers -->

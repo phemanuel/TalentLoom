@@ -439,8 +439,10 @@ th {
                                                                           <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
                                                                           <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
-                                                                          <td><span class="style1">{{ $rs->file_path }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->url }}</span></td>
+                                                                          <td><span class="style1"> @if(!empty($rs->file_path))<a href="{{ asset('storage/' . $rs->file_path) }}" target="_blank">
+                                                                           View File</a> @else  @endif</span></td>
+                                                                          <td><span class="style1">@if(!empty($rs->url))<a href="{{ $rs->url }}" target="_blank">
+                                                                            View Url</a>@else  @endif</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
@@ -526,8 +528,10 @@ th {
                                                                           <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
                                                                           <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
-                                                                          <td><span class="style1">{{ $rs->file_path }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->url }}</span></td>
+                                                                          <td><span class="style1"> @if(!empty($rs->file_path))<a href="{{ asset('storage/' . $rs->file_path) }}" target="_blank">
+                                                                           View File</a> @else  @endif</span></td>
+                                                                          <td><span class="style1">@if(!empty($rs->url))<a href="{{ $rs->url }}" target="_blank">
+                                                                            View Url</a>@else  @endif</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
@@ -614,8 +618,10 @@ th {
                                                                           <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
                                                                           <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
-                                                                          <td><span class="style1">{{ $rs->file_path }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->url }}</span></td>
+                                                                          <td><span class="style1"> @if(!empty($rs->file_path))<a href="{{ asset('storage/' . $rs->file_path) }}" target="_blank">
+                                                                           View File</a> @else  @endif</span></td>
+                                                                          <td><span class="style1">@if(!empty($rs->url))<a href="{{ $rs->url }}" target="_blank">
+                                                                            View Url</a>@else  @endif</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
@@ -701,8 +707,10 @@ th {
                                                                           <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
                                                                           <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
-                                                                          <td><span class="style1">{{ $rs->file_path }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->url }}</span></td>
+                                                                          <td><span class="style1"> @if(!empty($rs->file_path))<a href="{{ asset('storage/' . $rs->file_path) }}" target="_blank">
+                                                                           View File</a> @else  @endif</span></td>
+                                                                          <td><span class="style1">@if(!empty($rs->url))<a href="{{ $rs->url }}" target="_blank">
+                                                                            View Url</a>@else  @endif</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
@@ -788,8 +796,10 @@ th {
                                                                           <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
                                                                           <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
-                                                                          <td><span class="style1">{{ $rs->file_path }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->url }}</span></td>
+                                                                          <td><span class="style1"> @if(!empty($rs->file_path))<a href="{{ asset('storage/' . $rs->file_path) }}" target="_blank">
+                                                                           View File</a> @else  @endif</span></td>
+                                                                          <td><span class="style1">@if(!empty($rs->url))<a href="{{ $rs->url }}" target="_blank">
+                                                                            View Url</a>@else  @endif</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
@@ -875,8 +885,10 @@ th {
                                                                           <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
                                                                           <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
-                                                                          <td><span class="style1">{{ $rs->file_path }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->url }}</span></td>
+                                                                          <td><span class="style1"> @if(!empty($rs->file_path))<a href="{{ asset('storage/' . $rs->file_path) }}" target="_blank">
+                                                                           View File</a> @else  @endif</span></td>
+                                                                          <td><span class="style1">@if(!empty($rs->url))<a href="{{ $rs->url }}" target="_blank">
+                                                                            View Url</a>@else  @endif</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
@@ -962,8 +974,10 @@ th {
                                                                           <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
                                                                           <!-- <td><span class="style1">{{ $rs->resource_type }}</span></td> -->
-                                                                          <td><span class="style1">{{ $rs->file_path }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->url }}</span></td>
+                                                                          <td><span class="style1"> @if(!empty($rs->file_path))<a href="{{ asset('storage/' . $rs->file_path) }}" target="_blank">
+                                                                           View File</a> @else  @endif</span></td>
+                                                                          <td><span class="style1">@if(!empty($rs->url))<a href="{{ $rs->url }}" target="_blank">
+                                                                            View Url</a>@else  @endif</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
                                                                           <td><span class="style1">{{ $rs->created_at }}</span></td>                                                                           
@@ -1045,8 +1059,10 @@ th {
                                                                             <td><img src="{{ asset('storage/app/public/' . $rs->company_logo) }}" alt="recruiter logo" width="30" height="30"></td>                                                                           
                                                                             <td><span class="style1">{{ $rs->title }}</span></td>
                                                                           <td><span class="style1">{{ $rs->resource_type }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->file_path }}</span></td>
-                                                                          <td><span class="style1">{{ $rs->url }}</span></td>
+                                                                          <td><span class="style1"> @if(!empty($rs->file_path))<a href="{{ asset('storage/' . $rs->file_path) }}" target="_blank">
+                                                                           View File</a> @else  @endif</span></td>
+                                                                          <td><span class="style1">@if(!empty($rs->url))<a href="{{ $rs->url }}" target="_blank">
+                                                                            View Url</a>@else  @endif</span></td>
                                                                           <td><span class="style1">{{ $rs->author }}</span></td>
                                                                           <td><span class="style1">{{ $rs->skill_set }}</span></td>
                                                                           <td><span class="style1">{{ $rs->access_level }}</span></td>
