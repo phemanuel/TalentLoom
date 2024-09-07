@@ -343,7 +343,7 @@
 									</div>
 									<div class="g_item_text">
 										<h4>{{ $userPortfolioDocuments->file_name }}</h4>
-										<strong><p><a href="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>
+										<strong><p><a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>
 									</div>
 								</div>
 							</div>

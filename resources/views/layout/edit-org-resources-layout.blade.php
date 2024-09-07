@@ -300,12 +300,19 @@ th {
                                                                 <div class="form-group col-md-12">
                                                                     <label for="name1"><span class="style1">File Path(if available)</span></label>
                                                                     <input type="file" name="file_path"  class="form-control" style="color: black;"/>
-                                                                    <p>{{$userResource->file_path}}</p>
+                                                                    <p>@if(!empty($userResource->file_path))
+                                                                        <a href="{{ asset('storage/app/public/' . $userResource->file_path)}}" target="_blank">View File</a>
+                                                                        @else  @endif
+                                                                    </p>
                                                                 </div>
                                                                 <div class="form-group col-md-12">
                                                                     <label for="name1"><span class="style1">Resource Link(if available)</span></label>
                                                                     <input type="text" class="form-control" name="url" placeholder=""  style="color: black;" value="{{$userResource->url}}">
                                                                 </div>
+                                                                <p>@if(!empty($userResource->url))
+                                                                        <a href="{{$userResource->url}}" target="_blank">View Link</a>
+                                                                        @else  @endif
+                                                                    </p>
                                                                 <div class="form-group  col-md-12">
                                                                 <label for="add1"><span class="style1">Author</span></label>
                                                                 <input type="text" class="form-control" name="author" placeholder=""  style="color: black;" value="{{$userResource->author}}">

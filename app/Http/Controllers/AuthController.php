@@ -530,17 +530,17 @@ class AuthController extends Controller
                 //$userAvatarPath = $userPictureFile->storeAs('users-avatar', $userPictureFilename, 'public');
         
                 // Resize and save the user_picture
-                $userPicture = Image::make(public_path('storage/' . $userPicturePath));
+                $userPicture = Image::make(public_path('storage/app/public/' . $userPicturePath));
                 $userPicture->fit(300, 300); // Adjust dimensions as needed
                 $userPicture->save();
         
                 // Resize and save the profile_picture
-                $profilePicture = Image::make(public_path('storage/' . $profilePicturePath));
+                $profilePicture = Image::make(public_path('storage/app/public/' . $profilePicturePath));
                 $profilePicture->fit(668, 690); // Adjust dimensions as needed
                 $profilePicture->save();
                 
                 // Resize and save the avatar
-                // $avatarPicture = Image::make(public_path('storage/' . $userAvatarPath));
+                // $avatarPicture = Image::make(public_path('storage/app/public/' . $userAvatarPath));
                 // $avatarPicture->fit(300, 300); // Adjust dimensions as needed
                 // $avatarPicture->save();
         
@@ -613,7 +613,7 @@ class AuthController extends Controller
                 $userPicturePath = $userPictureFile->storeAs('profile_pictures', $userPictureFilename, 'public');
                         
                 // Resize and save the cover_picture
-                $userPicture = Image::make(public_path('storage/' . $userPicturePath));
+                $userPicture = Image::make(public_path('storage/app/public/' . $userPicturePath));
                 $userPicture->fit(820, 320); // Adjust dimensions as needed
                 $userPicture->save();  
         

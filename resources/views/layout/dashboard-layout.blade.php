@@ -305,11 +305,12 @@ li {
                                                                     <label for="name1"><span class="style1">Category</span></label>
                                                                     <select name="user_category"  class="form-control">
                                                                     @if(auth()->user()->user_category)
-                                                                    <option value="" selected>{{auth()->user()->user_category}}</option>
+                                                                    <option value="{{auth()->user()->user_category}}" selected>{{auth()->user()->user_category}}</option>
                                                                     @foreach ($categories as $category)
                                                                         <option value="{{ $category->category }}">{{ $category->category }}</option>
                                                                     @endforeach
                                                                     @else
+                                                                    <option value="{{auth()->user()->user_category}}" selected>{{auth()->user()->user_category}}</option>
                                                                     @foreach ($categories as $category)
                                                                         <option value="{{ $category->category }}">{{ $category->category }}</option>
                                                                     @endforeach

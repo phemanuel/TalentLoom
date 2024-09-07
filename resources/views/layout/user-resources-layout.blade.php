@@ -318,45 +318,359 @@ th {
                                     </div>
                                     <div class="card-body">
                                         <div class="tab tab-border nav-center">
-                                            <ul class="nav nav-tabs" role="tablist">
+                                        <ul class="nav nav-tabs" role="tablist">
                                                 <li class="nav-item">
-                                                    <a class="nav-link active show" id="home-05-tab" data-toggle="tab" href="#e-books" role="tab" aria-controls="e-books" aria-selected="true"> <i class="fas fa-book"></i> E-Books</a>
+                                                    <a class="nav-link active show" id="e-books-tab" data-toggle="tab" href="#e-books" role="tab" aria-controls="e-books" aria-selected="true"> <i class="fas fa-book"></i> E-Books</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="profile-05-tab" data-toggle="tab" href="#v-tutorial" role="tab" aria-controls="v-tutorial" aria-selected="false"><i class="fas fa-video"></i> Video Tutorials </a>
+                                                    <a class="nav-link" id="v-tutorial-tab" data-toggle="tab" href="#v-tutorial" role="tab" aria-controls="v-tutorial" aria-selected="false"><i class="fas fa-video"></i> Video Tutorials </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="portfolio-05-tab" data-toggle="tab" href="#article-blog" role="tab" aria-controls="article-blog" aria-selected="false"><i class="fas fa-newspaper"></i> Articles/Blogs </a>
+                                                    <a class="nav-link" id="article-blog-tab" data-toggle="tab" href="#article-blog" role="tab" aria-controls="article-blog" aria-selected="false"><i class="fas fa-newspaper"></i> Articles/Blogs </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="contact-05-tab" data-toggle="tab" href="#template" role="tab" aria-controls="template" aria-selected="false"><i class="fas fa-file-alt"></i> Templates </a>
+                                                    <a class="nav-link" id="template-tab" data-toggle="tab" href="#template" role="tab" aria-controls="template" aria-selected="false"><i class="fas fa-file-alt"></i> Templates </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="contact-05-tab" data-toggle="tab" href="#tools" role="tab" aria-controls="tools" aria-selected="false"><i class="fas fa-tools"></i> Tools/Softwares </a>
+                                                    <a class="nav-link" id="tools-tab" data-toggle="tab" href="#tools" role="tab" aria-controls="tools" aria-selected="false"><i class="fas fa-tools"></i> Tools/Softwares </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="contact-05-tab" data-toggle="tab" href="#guides" role="tab" aria-controls="guides" aria-selected="false"><i class="fas fa-bookmark"></i> Cheat Sheet/Guides </a>
+                                                    <a class="nav-link" id="guides-tab" data-toggle="tab" href="#guides" role="tab" aria-controls="guides" aria-selected="false"><i class="fas fa-bookmark"></i> Cheat Sheet/Guides </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="contact-05-tab" data-toggle="tab" href="#checklist" role="tab" aria-controls="checklist" aria-selected="false"><i class="fa fa-check-square"></i> Checklists </a>
+                                                    <a class="nav-link" id="checklist-tab" data-toggle="tab" href="#checklist" role="tab" aria-controls="checklist" aria-selected="false"><i class="fa fa-check-square"></i> Checklists </a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="contact-05-tab" data-toggle="tab" href="#quiz" role="tab" aria-controls="quiz" aria-selected="false"><i class="fas fa-question-circle"></i> Interactive Quiz </a>
-                                                </li>
+                                                <!-- <li class="nav-item">
+                                                    <a class="nav-link" id="quiz-tab" data-toggle="tab" href="#quiz" role="tab" aria-controls="quiz" aria-selected="false"><i class="fas fa-question-circle"></i> Interactive Quiz </a>
+                                                </li> -->
                                             </ul>
                                             <div class="tab-content">
-                                                <div class="tab-pane fade active show" id="home-05" role="tabpanel" aria-labelledby="home-05-tab">
-                                                    <p>Commitment is something that comes from understanding that everything has its price and then having the willingness to pay that price. This is important because nobody wants to put significant effort into something, only to find out after the fact that the price was too high. We all know people who live this truth.Give yourself the power of responsibility.</p>
+                                                <!-- ebook - start -->
+                                                <div class="tab-pane fade active show" id="e-books" role="tabpanel" aria-labelledby="e-books-tab">
+                                                    <strong><p style="color: black;">Digital books related to various skill set and industry.</p></strong>
+                                                    <hr>
+                                                    <!-- <div class="table-container"> -->
+                                                    <!-- start app main -->
+                                                    <div class="row">
+                                                    @foreach($resourceEbook as $rs)
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="card card-statistics">                                    
+                                                                <div class="card-body">
+                                                                    <div class="text-center p-2">
+                                                                        <div class="mb-2">
+                                                                            @if(!empty($rs->file_path))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/pdf.png') }}" alt="pdf-img">
+                                                                            @elseif(!empty($rs->url))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/url.png') }}" alt="url-img">
+                                                                            @else  
+                                                                            <!-- Optionally add a default icon or leave empty -->
+                                                                            @endif
+                                                                        </div>
+                                                                        <h4 class="mb-0">{{ $rs->title }}</h4>
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <p class="mb-2">{{ formatFileSize($rs->file_size) }}</p>
+                                                                        @else  @endif
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <button class="btn btn-primary open-modal" data-toggle="modal" data-target="#resourceModal" 
+                                                                                data-file-path="{{ asset('storage/app/public/' . $rs->file_path) }}" 
+                                                                                data-title="{{ $rs->title }}">Read</button>
+                                                                        @elseif(!empty($rs->url))
+                                                                        <a href="{{ $rs->url }}" class="btn btn-primary" target="_blank">Read</a>
+                                                                        @else
+                                                                        <!-- Optionally add a default button or leave empty -->
+                                                                        @endif
+                                                                    </div>
+                                                                </div>                                    
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+                                                        {{$resourceEbook->links()}}
+                            
+</div>                                                    <!-- end app main -->
+                                                    <!-- </div> -->
+                                                
                                                 </div>
-                                                <div class="tab-pane fade" id="profile-05" role="tabpanel" aria-labelledby="profile-05-tab">
-                                                    <p>Motivation is not an accident or something that someone else can give you — you are the only one with the power to motivate you. Motivation cannot be an external force, it must come from within as the natural product of your desire to achieve something and your belief that you are capable to succeed at your goal.</p>
+                                                <!-- ebook - end -->
+
+                                        <!-- vtutorial - start -->
+                                        <div class="tab-pane fade" id="v-tutorial" role="tabpanel" aria-labelledby="v-tutorial-tab">
+                                                   <strong><p style="color: black;">Recorded or live tutorials on relevant topics relating to your skill set.</p></strong> 
+                                                   <!-- <div class="table-container"> -->
+                                                   <!-- start app main -->
+                                                    <div class="row">
+                                                    @foreach($resourceVtutorial as $rs)
+                                                    <div class="col-xl-3 col-sm-6">
+                                                        <div class="card card-statistics">
+                                                            <div class="card-body">
+                                                                <div class="text-center p-2">
+                                                                    <div class="mb-2">
+                                                                        @if(!empty($rs->file_path))
+                                                                        <img src="{{ asset('dashback/assets/img/file-icon/vid.png') }}" alt="vid-img">
+                                                                        @elseif(!empty($rs->url))
+                                                                        <img src="{{ asset('dashback/assets/img/file-icon/vid.png') }}" alt="vid-img">
+                                                                        @else
+                                                                        <!-- Optionally add a default icon or leave empty -->
+                                                                        @endif
+                                                                    </div>
+                                                                    <h4 class="mb-0">{{ $rs->title }}</h4>
+                                                                    @if(!empty($rs->file_path)) 
+                                                                        <p class="mb-2">{{ formatFileSize($rs->file_size) }}</p>
+                                                                        @else  @endif
+                                                                    <button class="btn btn-primary open-video-modal" 
+                                                                    data-toggle="modal" 
+                                                                    data-target="#videoModal" 
+                                                                    data-url="{{ $rs->file_path ? asset('storage/app/public/'.$rs->file_path) : str_replace('watch?v=', 'embed/', $rs->url) }}" 
+                                                                    data-title="{{ $rs->title }}">Watch Video</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endforeach
+                                                    {{$resourceVtutorial->links()}}
+                                                    </div>
+                                                   
+                                                   <!-- end app main -->
+
+                                                    <!-- </div> -->
+                                                   
                                                 </div>
-                                                <div class="tab-pane fade" id="portfolio-05" role="tabpanel" aria-labelledby="portfolio-05-tab">
-                                                    <p>What is the exact sequence of events that will take you to where you want to be? Have a think consciously of what you need to do. Every outcome begins with the first step. When you decide you want to have a romantic meal for two, there are many steps that you need to perform in order for that to happen. You need to determine the exact sequence of events and write it down.</p>
+                                                <!-- vtutorial - end -->
+
+                                                 <!-- article - start -->
+                                                 <div class="tab-pane fade" id="article-blog" role="tabpanel" aria-labelledby="article-blog-tab">
+                                                    <strong><p style="color: black;">Curated articles and blog posts that provide valuable insights and tips.</p></strong>
+                                                    <hr>
+                                                    <!-- <div class="table-container"> -->
+                                                    <!-- start app main -->
+                                                    <div class="row">
+                                                    @foreach($resourceArticle as $rs)
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="card card-statistics">                                    
+                                                                <div class="card-body">
+                                                                    <div class="text-center p-2">
+                                                                        <div class="mb-2">
+                                                                            @if(!empty($rs->file_path))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/pdf.png') }}" alt="pdf-img">
+                                                                            @elseif(!empty($rs->url))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/url.png') }}" alt="url-img">
+                                                                            @else  
+                                                                            <!-- Optionally add a default icon or leave empty -->
+                                                                            @endif
+                                                                        </div>
+                                                                        <h4 class="mb-0">{{ $rs->title }}</h4>
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <p class="mb-2">{{ formatFileSize($rs->file_size) }}</p>
+                                                                        @else  @endif
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <button class="btn btn-primary open-modal" data-toggle="modal" data-target="#resourceModal" 
+                                                                                data-file-path="{{ asset('storage/app/public/' . $rs->file_path) }}" 
+                                                                                data-title="{{ $rs->title }}">Read</button>
+                                                                        @elseif(!empty($rs->url))
+                                                                        <a href="{{ $rs->url }}" class="btn btn-primary" target="_blank">Read</a>
+                                                                        @else
+                                                                        <!-- Optionally add a default button or leave empty -->
+                                                                        @endif
+                                                                    </div>
+                                                                </div>                                    
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+                                                        {{$resourceArticle->links()}}
+                            
+</div>                                                    <!-- end app main -->
+                                                    <!-- </div> -->
+                                                
                                                 </div>
-                                                <div class="tab-pane fade" id="contact-05" role="tabpanel" aria-labelledby="contact-05-tab">
-                                                    <p>Begin with the outcome in mind. You must improve upon, clarify and make clear just exactly who and what you are going to be doing, experiencing, living and having in 10 years. This is the first step of the process! Key: Notice how you felt excited and optimistic when you did this? The reason is simple. It’s the life you are designing instead of the one that was given you and that you have lived with less intention and purpose to date.</p>
+                                                <!-- article - end -->
+
+                                                      <!-- template - start -->
+                                                      <div class="tab-pane fade" id="template" role="tabpanel" aria-labelledby="template-tab">
+                                                    <strong><p style="color: black;">Downloadable templates for documents, resumes, proposals, or project planning.</p></strong>
+                                                    <hr>
+                                                    <!-- <div class="table-container"> -->
+                                                    <!-- start app main -->
+                                                    <div class="row">
+                                                    @foreach($resourceTemplate as $rs)
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="card card-statistics">                                    
+                                                                <div class="card-body">
+                                                                    <div class="text-center p-2">
+                                                                        <div class="mb-2">
+                                                                            @if(!empty($rs->file_path))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/pdf.png') }}" alt="pdf-img">
+                                                                            @elseif(!empty($rs->url))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/url.png') }}" alt="url-img">
+                                                                            @else  
+                                                                            <!-- Optionally add a default icon or leave empty -->
+                                                                            @endif
+                                                                        </div>
+                                                                        <h4 class="mb-0">{{ $rs->title }}</h4>
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <p class="mb-2">{{ formatFileSize($rs->file_size) }}</p>
+                                                                        @else  @endif
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <button class="btn btn-primary open-modal" data-toggle="modal" data-target="#resourceModal" 
+                                                                                data-file-path="{{ asset('storage/app/public/' . $rs->file_path) }}" 
+                                                                                data-title="{{ $rs->title }}">View</button>
+                                                                        @elseif(!empty($rs->url))
+                                                                        <a href="{{ $rs->url }}" class="btn btn-primary" target="_blank">View</a>
+                                                                        @else
+                                                                        <!-- Optionally add a default button or leave empty -->
+                                                                        @endif
+                                                                    </div>
+                                                                </div>                                    
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+                                                        {{$resourceTemplate->links()}}
+                            
+</div>                                                    <!-- end app main -->
+                                                    <!-- </div> -->
+                                                
                                                 </div>
+                                                <!-- template - end -->
+
+                                                <!-- tools - start -->
+                                                <div class="tab-pane fade" id="tools" role="tabpanel" aria-labelledby="tools-tab">
+                                                    <strong><p style="color: black;">Recommendations and guides on using specific tools or software relevant to their skills.</p></strong>
+                                                    <hr>
+                                                    <!-- <div class="table-container"> -->
+                                                    <!-- start app main -->
+                                                    <div class="row">
+                                                    @foreach($resourceTool as $rs)
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="card card-statistics">                                    
+                                                                <div class="card-body">
+                                                                    <div class="text-center p-2">
+                                                                        <div class="mb-2">
+                                                                            @if(!empty($rs->file_path))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/pdf.png') }}" alt="pdf-img">
+                                                                            @elseif(!empty($rs->url))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/url.png') }}" alt="url-img">
+                                                                            @else  
+                                                                            <!-- Optionally add a default icon or leave empty -->
+                                                                            @endif
+                                                                        </div>
+                                                                        <h4 class="mb-0">{{ $rs->title }}</h4>
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <p class="mb-2">{{ formatFileSize($rs->file_size) }}</p>
+                                                                        @else  @endif
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <button class="btn btn-primary open-modal" data-toggle="modal" data-target="#resourceModal" 
+                                                                                data-file-path="{{ asset('storage/app/public/' . $rs->file_path) }}" 
+                                                                                data-title="{{ $rs->title }}">Read</button>
+                                                                        @elseif(!empty($rs->url))
+                                                                        <a href="{{ $rs->url }}" class="btn btn-primary" target="_blank">Download</a>
+                                                                        @else
+                                                                        <!-- Optionally add a default button or leave empty -->
+                                                                        @endif
+                                                                    </div>
+                                                                </div>                                    
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+                                                        {{$resourceTool->links()}}
+                            
+</div>                                                    <!-- end app main -->
+                                                    <!-- </div> -->
+                                                
+                                                </div>
+                                                <!-- tools - end -->
+
+                                                <!-- cheat-sheet - start -->
+                                                <div class="tab-pane fade" id="guides" role="tabpanel" aria-labelledby="guides-tab">
+                                                    <strong><p style="color: black;">Quick reference guides for technical skills or best practices.</p></strong>
+                                                    <hr>
+                                                    <!-- <div class="table-container"> -->
+                                                    <!-- start app main -->
+                                                    <div class="row">
+                                                    @foreach($resourceCheatSheet as $rs)
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="card card-statistics">                                    
+                                                                <div class="card-body">
+                                                                    <div class="text-center p-2">
+                                                                        <div class="mb-2">
+                                                                            @if(!empty($rs->file_path))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/pdf.png') }}" alt="pdf-img">
+                                                                            @elseif(!empty($rs->url))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/url.png') }}" alt="url-img">
+                                                                            @else  
+                                                                            <!-- Optionally add a default icon or leave empty -->
+                                                                            @endif
+                                                                        </div>
+                                                                        <h4 class="mb-0">{{ $rs->title }}</h4>
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <p class="mb-2">{{ formatFileSize($rs->file_size) }}</p>
+                                                                        @else  @endif
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <button class="btn btn-primary open-modal" data-toggle="modal" data-target="#resourceModal" 
+                                                                                data-file-path="{{ asset('storage/app/public/' . $rs->file_path) }}" 
+                                                                                data-title="{{ $rs->title }}">Read</button>
+                                                                        @elseif(!empty($rs->url))
+                                                                        <a href="{{ $rs->url }}" class="btn btn-primary" target="_blank">View</a>
+                                                                        @else
+                                                                        <!-- Optionally add a default button or leave empty -->
+                                                                        @endif
+                                                                    </div>
+                                                                </div>                                    
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+                                                        {{$resourceCheatSheet->links()}}
+                            
+</div>                                                    <!-- end app main -->
+                                                    <!-- </div> -->
+                                                
+                                                </div>
+                                                <!-- cheat-sheet - end -->
+
+                                                <!-- checklist - start -->
+                                                <div class="tab-pane fade" id="checklist" role="tabpanel" aria-labelledby="checklist-tab">
+                                                    <strong><p style="color: black;">Downloadable checklists to ensure best practices are followed in various tasks.</p></strong>
+                                                    <hr>
+                                                    <!-- <div class="table-container"> -->
+                                                    <!-- start app main -->
+                                                    <div class="row">
+                                                    @foreach($resourceChecklist as $rs)
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="card card-statistics">                                    
+                                                                <div class="card-body">
+                                                                    <div class="text-center p-2">
+                                                                        <div class="mb-2">
+                                                                            @if(!empty($rs->file_path))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/pdf.png') }}" alt="pdf-img">
+                                                                            @elseif(!empty($rs->url))
+                                                                            <img src="{{ asset('dashback/assets/img/file-icon/url.png') }}" alt="url-img">
+                                                                            @else  
+                                                                            <!-- Optionally add a default icon or leave empty -->
+                                                                            @endif
+                                                                        </div>
+                                                                        <h4 class="mb-0">{{ $rs->title }}</h4>
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <p class="mb-2">{{ formatFileSize($rs->file_size) }}</p>
+                                                                        @else  @endif
+                                                                        @if(!empty($rs->file_path)) 
+                                                                        <button class="btn btn-primary open-modal" data-toggle="modal" data-target="#resourceModal" 
+                                                                                data-file-path="{{ asset('storage/app/public/' . $rs->file_path) }}" 
+                                                                                data-title="{{ $rs->title }}">Read</button>
+                                                                        @elseif(!empty($rs->url))
+                                                                        <a href="{{ $rs->url }}" class="btn btn-primary" target="_blank">View</a>
+                                                                        @else
+                                                                        <!-- Optionally add a default button or leave empty -->
+                                                                        @endif
+                                                                    </div>
+                                                                </div>                                    
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+                                                        {{$resourceChecklist->links()}}
+                            
+</div>                                                    <!-- end app main -->
+                                                    <!-- </div> -->
+                                                
+                                                </div>
+                                                <!-- checklist- end -->
+
                                             </div>
                                         </div>
                                     </div>
@@ -374,61 +688,50 @@ th {
                                                 </div>
                                                 
                                                <!-- Vertical Center Modal -->
-                                               <!-- Job Viewers -->
-<div class="modal fade" id="viewersModal" tabindex="-1" role="dialog" aria-labelledby="viewersModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="viewersModalLabel">Job Viewers</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Loading Spinner -->
-                <div id="loading-spinner" style="text-align: center;">
-                    <img src="{{ asset('dashback/assets/img/spinner.gif') }}" alt="Loading..." />
-                </div>
-                <!-- Data Content -->
-                <div id="job-viewers-content"></div>
-            </div>
-            <div class="modal-footer">
-            <button id="exportCsvBtn" class="btn btn-success" disabled>Export to CSV</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                        
-                                    </div>
-        </div>
-    </div>
-</div>
+                                               <div class="modal fade" id="resourceModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="modalTitle">Resource Title</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body" id="modalContent">
+                                                            <!-- The file or content will be dynamically loaded here -->
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                        <!-- Vertical Center Modal -->
-                        <!-- Job Applications -->
-<div class="modal fade" id="applicationsModal" tabindex="-1" role="dialog" aria-labelledby="viewersModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="viewersModalLabel">Job Applications</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Loading Spinner -->
-                <div id="loading-spinner1" style="text-align: center;">
-                    <img src="{{ asset('dashback/assets/img/spinner.gif') }}" alt="Loading..." />
-                </div>
-                <!-- Data Content -->
-                <div id="job-applications-content"></div>
-            </div>
-            <div class="modal-footer">
-            <button id="exportApplicationsCsvBtn" class="btn btn-success" disabled>Export to CSV</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                        
-                                    </div>
-        </div>
-    </div>
-</div>
+                                            <!-- end -->
 
+                                            <!-- video Modal -->
+                                            <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="videoModalLabel">Video</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="embed-responsive embed-responsive-16by9">
+                                                                <iframe id="videoIframe" style="height: 100%; width: 100%;" 
+                                                                        src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                        <!-- end -->
+                                              
                                                 
                                                 <div class="tab-pane fade pt-20" id="HTML5" role="tabpanel">
                                                     <div class="accordion" id="accordionsimple2">
@@ -563,6 +866,7 @@ th {
 
 
 </html>
+
 <script src="{{asset('dashback/assets/js/jquery-3.6.0.min')}}"></script>
 <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
 <script>
@@ -635,6 +939,64 @@ $(function(){
         });
     });    
 </script>
+<!-- Display pdf with download option -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add event listener to buttons with class 'open-modal'
+        document.querySelectorAll('.open-modal').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var filePath = this.getAttribute('data-file-path');
+                var title = this.getAttribute('data-title');
+                
+                // Set modal title
+                document.getElementById('modalTitle').textContent = title;
+
+                // Set modal content based on file type
+                var modalContent = document.getElementById('modalContent');
+                modalContent.innerHTML = '';
+
+                // Assume it's a PDF or other viewable file
+                if (filePath.endsWith('.pdf')) {
+                    modalContent.innerHTML = '<iframe src="' + filePath + '" width="100%" height="400px"></iframe>';
+                } else {
+                    modalContent.innerHTML = '<p>Unable to display this file type.</p>';
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.open-video-modal').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var videoUrl = this.getAttribute('data-url');
+                var videoTitle = this.getAttribute('data-title');
+
+                // Convert the YouTube URL to the embed format if necessary
+                if (videoUrl.includes('youtu.be/')) {
+                    videoUrl = videoUrl.replace('youtu.be/', 'www.youtube.com/embed/');
+                } else if (videoUrl.includes('watch?v=')) {
+                    videoUrl = videoUrl.replace('watch?v=', 'embed/');
+                }
+
+                // Set the modal title
+                document.getElementById('videoModalLabel').textContent = videoTitle;
+
+                // Set the video URL in the iframe
+                var videoIframe = document.getElementById('videoIframe');
+                videoIframe.src = videoUrl;
+            });
+        });
+
+        // Clear the video URL when the modal is closed to stop the video
+        $('#videoModal').on('hide.bs.modal', function () {
+            var videoIframe = document.getElementById('videoIframe');
+            videoIframe.src = '';
+        });
+    });
+</script>
+
+
 
 
 

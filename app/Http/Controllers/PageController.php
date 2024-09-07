@@ -13,7 +13,7 @@ use App\Models\UserMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Chat ;
-use App\Models\userResources;
+use App\Models\UserResources;
 use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
@@ -489,7 +489,7 @@ class PageController extends Controller
                                     <h4><span class="badge badge-primary badge-pill px-3 py-2">$0/hr</span></h4>
                                 </div>
                                 <div class="pt-1 bg-img m-auto">
-                                    <img src="'. asset('storage/' . $allFreelancers->user_picture) .'" class="img-fluid" alt="employees-img">
+                                    <img src="'. asset('storage/app/public/' . $allFreelancers->user_picture) .'" class="img-fluid" alt="employees-img">
                                 </div>
                                 <div class="mt-3 employees-contant-inner">
                                     <h4 class="mb-1">'. $allFreelancers->full_name .'</h4>
@@ -703,17 +703,31 @@ class PageController extends Controller
 
     public function userResources()
     {
-        $userId = auth()->user()->id;
+        $userId = auth()->user()->id;        
         $categories = UserCategory::all();
         if(auth()->user()->user_type == 'Freelancer'){
-            $resourceEbook = userResources::where('resource_type' , 'ebook')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceVtutorial = userResources::where('resource_type' , 'video')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceArticle = userResources::where('resource_type' , 'article')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceTemplate = userResources::where('resource_type' , 'template')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceTool = userResources::where('resource_type' , 'tool')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceCheatSheet = userResources::where('resource_type' , 'cheat_sheet')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceChecklist = userResources::where('resource_type' , 'checklist')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceQuiz = userResources::where('resource_type' , 'quiz')->orderBy('created_at', 'desc')->paginate(10);
+            $userCategory = auth()->user()->user_category;
+        //----Check if the user has a category----
+        if (empty($userCategory)) {
+            return redirect()->route('dashboard')->with('error', 'You need to update your category, 
+            to be able to access the resource hub.');
+        }
+            $resourceEbook = UserResources::where('resource_type' , 'ebook')->where('skill_set', $userCategory)
+            ->orderBy('created_at', 'desc')->paginate(20);
+            $resourceVtutorial = UserResources::where('resource_type' , 'video')->where('skill_set', $userCategory)
+            ->orderBy('created_at', 'desc')->paginate(20);
+            $resourceArticle = UserResources::where('resource_type' , 'article')->where('skill_set', $userCategory)
+            ->orderBy('created_at', 'desc')->paginate(20);
+            $resourceTemplate = UserResources::where('resource_type' , 'template')->where('skill_set', $userCategory)
+            ->orderBy('created_at', 'desc')->paginate(20);
+            $resourceTool = UserResources::where('resource_type' , 'tool')->where('skill_set', $userCategory)
+            ->orderBy('created_at', 'desc')->paginate(20);
+            $resourceCheatSheet = UserResources::where('resource_type' , 'cheat_sheet')->where('skill_set', $userCategory)
+            ->orderBy('created_at', 'desc')->paginate(20);
+            $resourceChecklist = UserResources::where('resource_type' , 'checklist')->where('skill_set', $userCategory)
+            ->orderBy('created_at', 'desc')->paginate(20);
+            $resourceQuiz = UserResources::where('resource_type' , 'quiz')->where('skill_set', $userCategory)
+            ->orderBy('created_at', 'desc')->paginate(20);
             // Get unread messages
         $messages = Chat::where('to_id', '=', $userId)   
         ->where('seen', '=', 0)
@@ -724,18 +738,18 @@ class PageController extends Controller
 
         return view('dashboard.user-resources', compact('messages', 'unreadMessagesCount','resourceEbook',
     'resourceVtutorial','resourceArticle','resourceTemplate','resourceTool','resourceCheatSheet',
-    'resourceChecklist','resourceQuiz','categories'));
+    'resourceChecklist','resourceQuiz'));
         }
         elseif(auth()->user()->user_type == 'Organization'){
             
-            $resourceEbook = userResources::where('resource_type' , 'ebook')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceVtutorial = userResources::where('resource_type' , 'video')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceArticle = userResources::where('resource_type' , 'article')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceTemplate = userResources::where('resource_type' , 'template')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceTool = userResources::where('resource_type' , 'tool')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceCheatSheet = userResources::where('resource_type' , 'cheat_sheet')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceChecklist = userResources::where('resource_type' , 'checklist')->orderBy('created_at', 'desc')->paginate(10);
-            $resourceQuiz = userResources::where('resource_type' , 'quiz')->orderBy('created_at', 'desc')->paginate(10);          
+            $resourceEbook = UserResources::where('resource_type' , 'ebook')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceVtutorial = UserResources::where('resource_type' , 'video')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceArticle = UserResources::where('resource_type' , 'article')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceTemplate = UserResources::where('resource_type' , 'template')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceTool = UserResources::where('resource_type' , 'tool')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceCheatSheet = UserResources::where('resource_type' , 'cheat_sheet')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceChecklist = UserResources::where('resource_type' , 'checklist')->orderBy('created_at', 'desc')->paginate(10);
+            $resourceQuiz = UserResources::where('resource_type' , 'quiz')->orderBy('created_at', 'desc')->paginate(10);          
             // Get unread messages
         $messages = Chat::where('to_id', '=', $userId)   
         ->where('seen', '=', 0)
@@ -873,6 +887,25 @@ class PageController extends Controller
 
         return redirect()->route('user-resources')->with('success', 'Resource updated successfully!');
     }
+
+    public function deleteResource($id)
+    {
+        // Find the resource by ID
+        $userResource = UserResources::findOrFail($id);
+
+        // Check if the resource has a file associated with it
+        if ($userResource->file_path) {
+            // Delete the file from the storage
+            Storage::disk('public')->delete($userResource->file_path);
+        }
+
+        // Delete the resource record from the database
+        $userResource->delete();
+
+        // Redirect with a success message
+        return redirect()->route('user-resources')->with('success', 'Resource deleted successfully!');
+    }
+
 
 
     // Get the file directory based on the resource type

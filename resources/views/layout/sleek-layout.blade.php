@@ -351,9 +351,9 @@
 												<p>Your browser does not support PDFs. <a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}">Download PDF</a> instead.</p>
 											</object>
                       <h4>{{ $userPortfolioDocuments->file_name }}</h4>
-                    <strong><p><a href="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
+                    <strong><p><a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
 										@else
-                    <img src="{{ asset('storage/' . $userPortfolioDocuments->file_url) }}" class="img-fluid" alt="">
+                    <img src="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" class="img-fluid" alt="">
                     <strong><p><a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
                     <h4>{{ $userPortfolioDocuments->file_name }}</h4>
                     <strong><p><a href="{{ asset('storage/app/public/' . $userPortfolioDocuments->file_url) }}" target="_blank">View File</a> </p></strong>	
